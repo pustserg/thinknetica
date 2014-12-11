@@ -17,6 +17,16 @@ RSpec.describe AnswersController, :type => :controller do
   end
 
   describe 'GET #new' do
+    before { get :new }
+
+    it 'assigns new answer as @answer' do
+      expect(assigns(:answer)).to be_a_new(Answer)
+    end
+
+    it 'render new view' do
+      expect(response).to render_template :new
+    end
+    
   end
 
   describe 'POST #create' do
