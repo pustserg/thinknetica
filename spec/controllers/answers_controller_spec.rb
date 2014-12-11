@@ -109,6 +109,11 @@ RSpec.describe AnswersController, :type => :controller do
   end
 
   describe 'DELETE #destroy' do
+    before { answer }
+
+    it 'deletes answer from db' do
+      expect{ delete :destroy, id: answer }.to change(Answer, :count).by(-1)
+    end
   end
 
 

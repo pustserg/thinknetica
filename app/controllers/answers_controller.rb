@@ -28,6 +28,12 @@ class AnswersController < ApplicationController
     end
   end
 
+  def destroy
+    question = @answer.question
+    @answer.destroy
+    redirect_to question
+  end
+
   private
 
   def set_answer
