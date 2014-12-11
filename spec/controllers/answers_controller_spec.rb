@@ -59,6 +59,16 @@ RSpec.describe AnswersController, :type => :controller do
   end
 
   describe 'GET #edit' do
+    before { get :edit, id: answer }
+
+    it 'assigns requested answer as @answer' do
+      expect(assigns(:answer)).to eq answer
+    end
+
+    it 'render edit view' do
+      expect(response).to render_template :edit
+    end
+    
   end
 
   describe 'PATCH #update' do

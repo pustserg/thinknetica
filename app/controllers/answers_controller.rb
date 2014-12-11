@@ -1,5 +1,5 @@
 class AnswersController < ApplicationController
-  before_action :set_answer, only: :show
+  before_action :set_answer, only: [:show, :edit, :destroy, :update]
 
   def show
   end
@@ -15,6 +15,9 @@ class AnswersController < ApplicationController
     else
       render :new
     end
+  end
+
+  def edit
   end
 
   private
