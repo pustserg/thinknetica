@@ -68,10 +68,44 @@ RSpec.describe AnswersController, :type => :controller do
     it 'render edit view' do
       expect(response).to render_template :edit
     end
-    
+
   end
 
   describe 'PATCH #update' do
+    context 'with valid attributes' do
+
+      it 'assigns requested answer as answer' do
+        patch :update, id: answer, answer: attributes_for(:answer)
+        expect(assigns(:answer)).to eq answer
+      end
+
+      it 'changes answer attributes' do
+        patch :update, id: answer, answer: { body: "new body"}
+        answer.reload
+        expect(answer.body).to eq "new body"
+      end
+
+      it 'redirects to answer' do
+        patch :update, id: answer, answer: attributes_for(:answer)
+        expect(response).to redirect_to answer
+      end
+
+    end
+
+    context 'with invalid attributes' do
+      before { patch :update, id: answer, answer: attributes_for(:invalid_answer) }
+
+      it 'does not change answer attributes' do
+        answer.reload
+        expect(answer.body).to eq "my answer"
+      end
+
+      it 're-render edit view' do
+        expect(response).to render_template :edit
+      end
+
+    end
+
   end
 
   describe 'DELETE #destroy' do

@@ -20,6 +20,14 @@ class AnswersController < ApplicationController
   def edit
   end
 
+  def update
+    if @answer.update(answer_params)
+      redirect_to @answer
+    else
+      render :edit
+    end
+  end
+
   private
 
   def set_answer
