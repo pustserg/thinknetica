@@ -36,9 +36,9 @@ RSpec.describe AnswersController, :type => :controller do
         expect{ post :create, answer: attributes_for(:answer) }.to change(Answer, :count).by(1)
       end
 
-      it 'redirects to answer' do
+      it 'redirects to answer question' do
         post :create, answer: attributes_for(:answer)
-        expect(response).to redirect_to answer_path(assigns(:answer))
+        expect(response).to redirect_to question_path(assigns(:answer).question)
       end
 
     end
@@ -87,7 +87,7 @@ RSpec.describe AnswersController, :type => :controller do
 
       it 'redirects to answer' do
         patch :update, id: answer, answer: attributes_for(:answer)
-        expect(response).to redirect_to answer
+        expect(response).to redirect_to answer.question
       end
 
     end
@@ -114,6 +114,13 @@ RSpec.describe AnswersController, :type => :controller do
     it 'deletes answer from db' do
       expect{ delete :destroy, id: answer }.to change(Answer, :count).by(-1)
     end
+
+    it 'redirect to answer question' do
+      question = answer.question
+      delete :destroy, id: answer
+      expect(response).to redirect_to question
+    end
+
   end
 
 

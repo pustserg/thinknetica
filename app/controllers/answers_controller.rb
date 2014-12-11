@@ -11,7 +11,7 @@ class AnswersController < ApplicationController
   def create
     @answer = Answer.new(answer_params)
     if @answer.save
-      redirect_to @answer
+      redirect_to @answer.question
     else
       render :new
     end
@@ -22,7 +22,7 @@ class AnswersController < ApplicationController
 
   def update
     if @answer.update(answer_params)
-      redirect_to @answer
+      redirect_to @answer.question
     else
       render :edit
     end
@@ -30,8 +30,9 @@ class AnswersController < ApplicationController
 
   def destroy
     question = @answer.question
-    @answer.destroy
-    redirect_to question
+    if @answer.destroy
+      redirect_to question
+    end
   end
 
   private
@@ -41,7 +42,7 @@ class AnswersController < ApplicationController
   end
 
   def answer_params
-    params.require(:answer).permit(:body)
+    params.require(:answer).permit(:body, :question_id)
   end
 
 end
