@@ -1,6 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe AnswersController, :type => :controller do
+  let(:question) { create(:question) }
   let(:answer) { create(:answer) }
 
   describe 'GET #show' do
@@ -17,7 +18,7 @@ RSpec.describe AnswersController, :type => :controller do
   end
 
   describe 'GET #new' do
-    before { get :new, question_id: answer.question }
+    before { get :new, question_id: question }
 
     it 'assigns new answer as @answer' do
       expect(assigns(:answer)).to be_a_new(Answer)
@@ -33,11 +34,11 @@ RSpec.describe AnswersController, :type => :controller do
     context 'with valid attributes' do
 
       it 'saves answer in db' do
-        expect{ post :create, question_id: answer.question, answer: attributes_for(:answer) }.to change(Answer, :count).by(1)
+        expect{ post :create, question_id: question, answer: attributes_for(:answer) }.to change(Answer, :count).by(1)
       end
 
       it 'redirects to answer question' do
-        post :create, question_id: answer.question, answer: attributes_for(:answer)
+        post :create, question_id: question, answer: attributes_for(:answer)
         expect(response).to redirect_to question_path(assigns(:answer).question)
       end
 
@@ -46,11 +47,11 @@ RSpec.describe AnswersController, :type => :controller do
     context 'with invalid attributes' do
       
       it 'does not saves answer in db' do
-        expect{ post :create, question_id: answer.question, answer: attributes_for(:invalid_answer) }.to_not change(Answer, :count)
+        expect{ post :create, question_id: question, answer: attributes_for(:invalid_answer) }.to_not change(Answer, :count)
       end
 
       it 'render new view' do
-        post :create, question_id: answer.question, answer: attributes_for(:invalid_answer)
+        post :create, question_id: question, answer: attributes_for(:invalid_answer)
         expect(response).to render_template :new
       end
 
@@ -115,9 +116,9 @@ RSpec.describe AnswersController, :type => :controller do
       expect{ delete :destroy, question_id: answer.question, id: answer }.to change(Answer, :count).by(-1)
     end
 
-    it 'redirect to answer question' do
+    it 'redirect to answer answer.question' do
       question = answer.question
-      delete :destroy, question_id: answer.question, id: answer
+      delete :destroy, question_id: question, id: answer
       expect(response).to redirect_to question
     end
 
