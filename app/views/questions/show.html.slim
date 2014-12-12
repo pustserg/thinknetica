@@ -1,0 +1,9 @@
+.row.question
+  .col-md-2
+  .col-md-10
+    =render @question
+    p.stat
+      ="#{@question.answers.count} answers"
+
+    =if @question.answers.any?
+      =render @question.answers
