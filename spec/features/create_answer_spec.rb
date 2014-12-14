@@ -14,7 +14,7 @@ feature 'Create answer', %q{
     visit question_path(question)
 
     click_on 'Add answer'
-    # save_and_open_page
+    
     fill_in 'Body', with: 'body of test answer'
     click_on 'Save answer'
 
