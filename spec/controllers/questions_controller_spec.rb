@@ -31,6 +31,7 @@ RSpec.describe QuestionsController, :type => :controller do
   end
 
   describe 'GET #new' do
+    sign_in_user
     before { get :new }
 
     it 'assigns new Question to question' do
@@ -44,6 +45,7 @@ RSpec.describe QuestionsController, :type => :controller do
   end
 
   describe 'POST #create' do
+    sign_in_user
     context 'with valid attributes' do
       
       it 'saves a question in the db' do
@@ -72,6 +74,7 @@ RSpec.describe QuestionsController, :type => :controller do
   end
 
   describe 'GET #edit' do
+    sign_in_user
     before { get :edit, id: question }
 
     it 'assigns requested question as question' do
@@ -85,6 +88,7 @@ RSpec.describe QuestionsController, :type => :controller do
   end
 
   describe 'PATCH #update' do
+    sign_in_user
     context 'with valid attributes' do
 
       it 'assigns requested question as question' do
@@ -123,6 +127,7 @@ RSpec.describe QuestionsController, :type => :controller do
   end
 
   describe 'DELETE #destroy' do
+    sign_in_user
     before { question }
 
     it 'deletes question from db' do
