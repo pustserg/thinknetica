@@ -5,4 +5,5 @@
     p.stat
       ="#{@question.answers.count} answers"
 
+    =link_to "Add answer",  new_question_answer_path(@question)
     =render @question.answers
