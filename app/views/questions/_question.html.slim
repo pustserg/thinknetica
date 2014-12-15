@@ -4,4 +4,6 @@ p.body
   =question.body
 p.actions
   =link_to 'Edit question', edit_question_path(question) if question.user == current_user
+  br
+  =link_to 'Delete question', question, method: :delete if question.user == current_user
 hr
