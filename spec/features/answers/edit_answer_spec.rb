@@ -8,7 +8,7 @@ feature 'edit answer', %q{
 	
 	given(:jack) { create(:user) }
 	given(:dave) { create(:user) }
-	given(:question) { create(:question) }
+	given(:question) { dave.questions.create(attributes_for(:question)) }
 	given(:answer) { question.answers.create(attributes_for(:answer, user_id: jack.id)) }
 	
 	scenario 'authenticated user tries to edit his answer' do
@@ -17,7 +17,7 @@ feature 'edit answer', %q{
 		
 		click_on 'Edit answer'
 		fill_in 'Body', with: 'edited body of test answer' 
-		click_on 'Save'
+		click_on 'Update answer'
 
 		expect(page).to have_content 'edited body of test answer'
 		expect(current_path).to eq question_path(answer.question)

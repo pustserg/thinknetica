@@ -1,3 +1,8 @@
-=answer.user.email if answer.user.email
+.actions
+  p
+   =answer.user.email
+  p
+    =link_to 'Edit answer', edit_answer_path(answer) if answer.user == current_user
+
 br
 =answer.body

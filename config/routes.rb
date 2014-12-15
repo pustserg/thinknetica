@@ -8,7 +8,7 @@ Rails.application.routes.draw do
   # See how all your routes lay out with "rake routes".
 
   resources :questions do
-    resources :answers
+    resources :answers, shallow: true
   end
 
   root 'questions#index'

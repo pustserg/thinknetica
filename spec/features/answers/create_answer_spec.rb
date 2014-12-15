@@ -7,7 +7,7 @@ feature 'Create answer', %q{
 } do
   
   given(:user) { create(:user) }
-  given(:question) { create(:question) }
+  given(:question) { user.questions.create(attributes_for(:question)) }
 
   scenario 'authenticated user tries to create answer' do
     sign_in(user)

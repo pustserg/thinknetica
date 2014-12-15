@@ -1,8 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe AnswersController, :type => :controller do
-  let(:question) { create(:question) }
-  let(:answer) { create(:answer) }
+  let(:user) { create(:user) }
+  let(:question) { user.questions.create(attributes_for(:question)) }
+  let(:answer) { user.answers.create(attributes_for(:answer, question_id: question.id)) }
 
   describe 'GET #show' do
     before { get :show, question_id: answer.question, id: answer }

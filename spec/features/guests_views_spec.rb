@@ -6,8 +6,9 @@ feature 'Guests are able to see questions and answers', %q{
   I want to be able see questions and answers
 } do
   
-  given!(:question) { create(:question) }
-  given!(:answer) { create(:answer) }
+  given(:user) { create(:user) }
+  given!(:question) { user.questions.create(attributes_for(:question)) }
+  given!(:answer) { question.answers.create(attributes_for(:answer, user_id: user.id)) }
 
   scenario 'guests visit question_index_path' do
     visit root_path
