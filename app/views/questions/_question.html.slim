@@ -2,5 +2,6 @@ p.title
   = link_to question.title, question_path(question)
 p.body
   =question.body
-
+p.actions
+  =link_to 'Edit question', edit_question_path(question) if question.user == current_user
 hr
