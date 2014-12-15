@@ -1,9 +1,14 @@
 .row.question
   .col-md-2
-  .col-md-10
+  	p
+		=current_user.email if current_user
+    p
+      = link_to 'Ask question', new_question_path
+  .col-md-9
     =render @question
     p.stat
       ="#{@question.answers.count} answers"
 
     =link_to "Add answer",  new_question_answer_path(@question)
+    br
     =render @question.answers
