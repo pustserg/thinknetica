@@ -1,13 +1,17 @@
 class AnswersController < ApplicationController
-  before_action :set_question, except: [:edit, :show, :update, :destroy]
-  before_action :set_answer, only: [:show, :edit, :destroy, :update]
+
   before_action :authenticate_user!, except: :show
+  
+  before_action :set_question, only: [:new, :create]
+  before_action :set_answer, except: [:new, :create]
+  before_action :check_author, only: :destroy
+  # [:destroy, :edit]
 
   def show
   end
 
   def new
-    @answer = @question.answers.new
+    @answer = Answer.new
   end
 
   def create
@@ -49,7 +53,13 @@ class AnswersController < ApplicationController
   end
 
   def answer_params
-    params.require(:answer).permit(:body, :question_id, :user_id)
+    params.require(:answer).permit(:body)
+  end
+
+  def check_author
+    if current_user != @answer.user
+      render json: { error: "fufufu" }, status: 403
+    end
   end
 
 end

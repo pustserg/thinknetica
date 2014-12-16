@@ -1,8 +1,9 @@
 class QuestionsController < ApplicationController
 
   before_action :authenticate_user!, except: [:index, :show] 
+  
   before_action :set_question, only: [:show, :edit, :update, :destroy]
-  before_action :check_author, only: :destroy
+  before_action :check_author, only: [:destroy, :edit]
 
   def index
     @questions = Question.all
@@ -12,7 +13,7 @@ class QuestionsController < ApplicationController
   end
 
   def new
-    @question = current_user.questions.new
+    @question = Question.new
   end
 
   def create
@@ -47,7 +48,7 @@ class QuestionsController < ApplicationController
   end
 
   def question_params
-    params.require(:question).permit(:title, :body, :user_id)
+    params.require(:question).permit(:title, :body)
   end
 
   def check_author

@@ -7,7 +7,7 @@ RSpec.describe QuestionsController, :type => :controller do
   let(:another_question) { another_user.questions.create(attributes_for(:question)) }
 
   describe 'GET #index' do
-    let(:questions) { create_list(:question, 2, user_id: user.id) }
+    let(:questions) { create_list(:question, 2, user: user) }
 
     before { get :index }
 
@@ -136,9 +136,6 @@ RSpec.describe QuestionsController, :type => :controller do
     context 'author tries to delete his question' do
       before { question }
 
-      # puts question.user.email
-      # puts @user.email
-
       it 'deletes question from db' do
         expect{ delete :destroy, id: question }.to change(Question, :count).by(-1)
       end
@@ -156,6 +153,7 @@ RSpec.describe QuestionsController, :type => :controller do
       it 'does not deletes question from db' do
         expect{ delete :destroy, id: another_question }.to_not change(Question, :count)
       end
+
     end
 
   end
