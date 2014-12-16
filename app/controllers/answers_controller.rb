@@ -1,5 +1,5 @@
 class AnswersController < ApplicationController
-  before_action :set_question, except: [:edit, :show, :update]
+  before_action :set_question, except: [:edit, :show, :update, :destroy]
   before_action :set_answer, only: [:show, :edit, :destroy, :update]
   before_action :authenticate_user!, except: :show
 
@@ -32,6 +32,7 @@ class AnswersController < ApplicationController
   end
 
   def destroy
+    @question = @answer.question
     if @answer.destroy
       redirect_to @question
     end

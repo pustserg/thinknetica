@@ -3,6 +3,8 @@
    =answer.user.email
   p
     =link_to 'Edit answer', edit_answer_path(answer) if answer.user == current_user
+  p
+    =link_to 'Delete answer', answer, method: :delete if answer.user == current_user
 
 br
 =answer.body
