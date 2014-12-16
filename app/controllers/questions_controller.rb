@@ -2,6 +2,7 @@ class QuestionsController < ApplicationController
 
   before_action :authenticate_user!, except: [:index, :show] 
   before_action :set_question, only: [:show, :edit, :update, :destroy]
+  before_action :check_author, only: :destroy
 
   def index
     @questions = Question.all
@@ -47,6 +48,12 @@ class QuestionsController < ApplicationController
 
   def question_params
     params.require(:question).permit(:title, :body, :user_id)
+  end
+
+  def check_author
+    if current_user != @question.user
+      render json: { error: 'fufufu' }, status: 403
+    end
   end
 
 end

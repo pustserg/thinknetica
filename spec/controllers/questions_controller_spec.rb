@@ -2,7 +2,9 @@ require 'rails_helper'
 
 RSpec.describe QuestionsController, :type => :controller do
   let(:user) { create(:user) }
-  let(:question) { user.questions.create(attributes_for(:question)) }
+  let(:another_user) { create(:user) }
+  let(:question) { create(:question, user: @user) }
+  let(:another_question) { another_user.questions.create(attributes_for(:question)) }
 
   describe 'GET #index' do
     let(:questions) { create_list(:question, 2, user_id: user.id) }
@@ -19,6 +21,7 @@ RSpec.describe QuestionsController, :type => :controller do
   end
 
   describe 'GET #show' do
+    sign_in_user
     before { get :show, id: question }
 
     it 'assigns requested question as @question' do
@@ -129,15 +132,30 @@ RSpec.describe QuestionsController, :type => :controller do
 
   describe 'DELETE #destroy' do
     sign_in_user
-    before { question }
+    
+    context 'author tries to delete his question' do
+      before { question }
 
-    it 'deletes question from db' do
-      expect{ delete :destroy, id: question }.to change(Question, :count).by(-1)
+      # puts question.user.email
+      # puts @user.email
+
+      it 'deletes question from db' do
+        expect{ delete :destroy, id: question }.to change(Question, :count).by(-1)
+      end
+
+      it 'redirect to index' do
+        delete :destroy, id: question
+        expect(response).to redirect_to questions_path
+      end
+
     end
 
-    it 'redirect to index' do
-      delete :destroy, id: question
-      expect(response).to redirect_to questions_path
+    context 'another user tries to delete question' do
+      before { another_question }
+
+      it 'does not deletes question from db' do
+        expect{ delete :destroy, id: another_question }.to_not change(Question, :count)
+      end
     end
 
   end
