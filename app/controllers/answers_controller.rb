@@ -5,6 +5,7 @@ class AnswersController < ApplicationController
   before_action :set_question, only: [:new, :create]
   before_action :set_answer, except: [:new, :create]
   before_action :check_author, only: [:destroy, :edit, :update]
+  before_action :check_question_author, only: :make_best
 
   def show
   end
@@ -41,6 +42,12 @@ class AnswersController < ApplicationController
     end
   end
 
+  def make_best
+    if @answer.make_best
+      redirect_to @answer.question
+    end
+  end
+
   private
 
   def set_answer
@@ -57,6 +64,12 @@ class AnswersController < ApplicationController
 
   def check_author
     if current_user != @answer.user
+      render json: { error: "fufufu" }, status: 403
+    end
+  end
+
+  def check_question_author
+    if current_user != @answer.question.user
       render json: { error: "fufufu" }, status: 403
     end
   end

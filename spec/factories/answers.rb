@@ -8,6 +8,7 @@
 #  updated_at  :datetime
 #  question_id :integer
 #  user_id     :integer
+#  best        :boolean          default(FALSE)
 #
 
 FactoryGirl.define do
