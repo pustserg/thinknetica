@@ -4,7 +4,7 @@ class AnswersController < ApplicationController
   
   before_action :set_question, only: [:new, :create]
   before_action :set_answer, except: [:new, :create]
-  before_action :check_author, only: [:destroy, :edit]
+  before_action :check_author, only: [:destroy, :edit, :update]
 
   def show
   end

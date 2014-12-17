@@ -4,8 +4,8 @@ RSpec.describe AnswersController, :type => :controller do
   let(:user) { create(:user) }
   let(:another_user) { create(:user) }
   let(:question) { user.questions.create(attributes_for(:question)) }
-  let(:answer) { @user.answers.create(attributes_for(:answer, question_id: question.id)) }
-  let(:another_answer) { another_user.answers.create(attributes_for(:answer, question_id: question.id)) }
+  let(:answer) { create(:answer, user: @user, question: question) }
+  let(:another_answer) { create(:answer, user: another_user, question: question) }
 
   describe 'GET #show' do
     sign_in_user
@@ -68,14 +68,31 @@ RSpec.describe AnswersController, :type => :controller do
 
   describe 'GET #edit' do
     sign_in_user
-    before { get :edit, id: answer }
 
-    it 'assigns requested answer as @answer' do
-      expect(assigns(:answer)).to eq answer
+    context 'author tries to edit his answer' do
+      before { get :edit, id: answer }
+
+      it 'assigns requested answer as @answer' do
+        expect(assigns(:answer)).to eq answer
+      end
+
+      it 'render edit view' do
+        expect(response).to render_template :edit
+      end
+
     end
 
-    it 'render edit view' do
-      expect(response).to render_template :edit
+    context 'user tries to edit another_answer' do
+      before { get :edit, id: another_answer }
+
+      it 'does not render edit view' do
+        expect(response).to_not render_template :edit
+      end
+
+      it 'render 403 status' do
+        expect(response.status).to eq 403
+      end
+
     end
 
   end
@@ -83,39 +100,55 @@ RSpec.describe AnswersController, :type => :controller do
   describe 'PATCH #update' do
     sign_in_user
 
-    context 'with valid attributes' do
+    context 'author tries to update his answer' do
 
-      it 'assigns requested answer as answer' do
-        patch :update, question_id: answer.question, id: answer, answer: attributes_for(:answer)
-        expect(assigns(:answer)).to eq answer
+      context 'with valid attributes' do
+
+        it 'assigns requested answer as answer' do
+          patch :update, question_id: answer.question, id: answer, answer: attributes_for(:answer)
+          expect(assigns(:answer)).to eq answer
+        end
+
+        it 'changes answer attributes' do
+          patch :update, question_id: answer.question, id: answer, answer: { body: "new body"}
+          answer.reload
+          expect(answer.body).to eq "new body"
+        end
+
+        it 'redirects to answer' do
+          patch :update, question_id: answer.question, id: answer, answer: attributes_for(:answer)
+          expect(response).to redirect_to answer.question
+        end
+
       end
 
-      it 'changes answer attributes' do
-        patch :update, question_id: answer.question, id: answer, answer: { body: "new body"}
-        answer.reload
-        expect(answer.body).to eq "new body"
-      end
+      context 'with invalid attributes' do
+        before { patch :update, question_id: answer.question, id: answer, answer: attributes_for(:invalid_answer) }
 
-      it 'redirects to answer' do
-        patch :update, question_id: answer.question, id: answer, answer: attributes_for(:answer)
-        expect(response).to redirect_to answer.question
+        it 'does not change answer attributes' do
+          answer.reload
+          expect(answer.body).to eq "my answer"
+        end
+
+        it 're-render edit view' do
+          expect(response).to render_template :edit
+        end
+
       end
 
     end
 
-    context 'with invalid attributes' do
-      before { patch :update, question_id: answer.question, id: answer, answer: attributes_for(:invalid_answer) }
+    context 'user tries to update another_answer' do
 
-      it 'does not change answer attributes' do
-        answer.reload
-        expect(answer.body).to eq "my answer"
-      end
+      it 'response status 403' do
+        patch :update, question_id: another_answer.question, id: another_answer, answer: { body: 'new body' }
 
-      it 're-render edit view' do
-        expect(response).to render_template :edit
+        expect(response.status).to eq 403
       end
 
     end
+
+    
 
   end
 
