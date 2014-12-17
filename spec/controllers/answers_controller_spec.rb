@@ -3,8 +3,8 @@ require 'rails_helper'
 RSpec.describe AnswersController, :type => :controller do
   let(:user) { create(:user) }
   let(:another_user) { create(:user) }
-  let(:question) { @user.questions.create(attributes_for(:question)) }
-  let(:answer) { user.answers.create(attributes_for(:answer, question_id: question.id)) }
+  let(:question) { user.questions.create(attributes_for(:question)) }
+  let(:answer) { @user.answers.create(attributes_for(:answer, question_id: question.id)) }
   let(:another_answer) { another_user.answers.create(attributes_for(:answer, question_id: question.id)) }
 
   describe 'GET #show' do
@@ -121,16 +121,28 @@ RSpec.describe AnswersController, :type => :controller do
 
   describe 'DELETE #destroy' do
     sign_in_user
-    before { answer }
 
-    it 'deletes answer from db' do
-      expect{ delete :destroy, question_id: answer.question, id: answer }.to change(Answer, :count).by(-1)
+    context 'author tries to delete his answer' do
+      before { answer }
+
+      it 'deletes answer from db' do
+        expect{ delete :destroy, question_id: answer.question, id: answer }.to change(Answer, :count).by(-1)
+      end
+
+      it 'redirect to answer answer.question' do
+        question = answer.question
+        delete :destroy, question_id: question, id: answer
+        expect(response).to redirect_to question
+      end
     end
 
-    it 'redirect to answer answer.question' do
-      question = answer.question
-      delete :destroy, question_id: question, id: answer
-      expect(response).to redirect_to question
+    context 'user tries to delete another answer' do
+      before { another_answer }
+
+      it 'does not deletes answer from db' do
+        expect{ delete :destroy, question_id: another_answer.question, id: another_answer }.to_not change(Answer, :count)
+      end
+
     end
 
   end

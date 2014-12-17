@@ -4,7 +4,7 @@ RSpec.describe QuestionsController, :type => :controller do
   let(:user) { create(:user) }
   let(:another_user) { create(:user) }
   let(:question) { create(:question, user: @user) }
-  let(:another_question) { another_user.questions.create(attributes_for(:question)) }
+  let(:another_question) { create(:question, user: another_user) }
 
   describe 'GET #index' do
     let(:questions) { create_list(:question, 2, user: user) }
@@ -21,11 +21,10 @@ RSpec.describe QuestionsController, :type => :controller do
   end
 
   describe 'GET #show' do
-    sign_in_user
-    before { get :show, id: question }
+    before { get :show, id: another_question }
 
     it 'assigns requested question as @question' do
-      expect(assigns(:question)).to eq question
+      expect(assigns(:question)).to eq another_question
     end
 
     it 'render template show' do
@@ -79,52 +78,81 @@ RSpec.describe QuestionsController, :type => :controller do
 
   describe 'GET #edit' do
     sign_in_user
-    before { get :edit, id: question }
+    
+    context 'user tries to edit his question' do
+      before { get :edit, id: question }
 
-    it 'assigns requested question as question' do
-      expect(assigns(:question)).to eq question
+      it 'assigns requested question as question' do
+        expect(assigns(:question)).to eq question
+      end
+
+      it 'renders template edit' do
+        expect(response).to render_template :edit
+      end
+    
     end
 
-    it 'renders template edit' do
-      expect(response).to render_template :edit
+    context 'another_question' do
+      before { get :edit, id: another_question }
+
+      it 'does not render edit view' do
+        expect(response).to_not render_template :edit
+      end
+
+      it 'render 403 status' do
+        expect(response.status).to eq 403
+      end
     end
 
   end
 
   describe 'PATCH #update' do
     sign_in_user
-    context 'with valid attributes' do
 
-      it 'assigns requested question as question' do
-        patch :update, id: question, question: attributes_for(:question)
-        expect(assigns(:question)).to eq question
-      end
-      
-      it 'changes question attributes' do
-        patch :update, id: question, question: { title: "new title", body: "new body" }
-        question.reload
-        expect(question.title).to eq "new title"
-        expect(question.body).to eq "new body"
-      end
-      
-      it 'redirect to show template' do
-        patch :update, id: question, question: attributes_for(:question)
-        expect(response).to redirect_to question
-      end  
+    context 'user tries to update his question' do
+      context 'with valid attributes' do
 
+        it 'assigns requested question as question' do
+          patch :update, id: question, question: attributes_for(:question)
+          expect(assigns(:question)).to eq question
+        end
+        
+        it 'changes question attributes' do
+          patch :update, id: question, question: { title: "new title", body: "new body" }
+          question.reload
+          expect(question.title).to eq "new title"
+          expect(question.body).to eq "new body"
+        end
+        
+        it 'redirect to show template' do
+          patch :update, id: question, question: attributes_for(:question)
+          expect(response).to redirect_to question
+        end  
+
+      end
+
+      context 'with invalid attributes' do
+        before { patch :update, id: question, question: attributes_for(:invalid_question) }
+
+        it 'does not change question attributes' do
+          question.reload
+          expect(question.title).to eq "MyString"
+          expect(question.body).to eq "MyText"
+        end
+
+        it 're-render edit template' do
+          expect(response).to render_template :edit
+        end
+
+      end
     end
 
-    context 'with invalid attributes' do
-      before { patch :update, id: question, question: attributes_for(:invalid_question) }
+    context 'user tries to update another_question' do
 
-      it 'does not change question attributes' do
-        question.reload
-        expect(question.title).to eq "MyString"
-        expect(question.body).to eq "MyText"
-      end
-
-      it 're-render edit template' do
-        expect(response).to render_template :edit
+      before {patch :update, id: another_question, question: { title: "new title", body: "new body" } }
+      
+      it 'response status 403' do
+        expect(response.status).to eq 403
       end
 
     end
@@ -152,6 +180,12 @@ RSpec.describe QuestionsController, :type => :controller do
 
       it 'does not deletes question from db' do
         expect{ delete :destroy, id: another_question }.to_not change(Question, :count)
+      end
+
+      it 'render 403 status' do
+        delete :destroy, id: another_question
+
+        expect(response.status).to eq 403
       end
 
     end
