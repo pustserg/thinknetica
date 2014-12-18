@@ -18,7 +18,7 @@ feature 'make an answer the best', %q{
     click_on 'Mark as best'
 
     expect(current_path).to eq question_path(jack_answer.question)
-    expect(page).to have_content 'best answer'
+    expect(page).to have_content 'Best answer'
   end
 
   scenario 'user (not a question author) tries to mark the answer as the best' do
