@@ -27,6 +27,10 @@ RSpec.describe QuestionsController, :type => :controller do
       expect(assigns(:question)).to eq another_question
     end
 
+    it 'assigns a new answer for question' do
+      expect(assigns(:answer)).to be_a_new(Answer)
+    end
+
     it 'render template show' do
       expect(response).to render_template :show
     end

@@ -1,30 +1,32 @@
 require 'rails_helper'
 
 feature 'Create answer', %q{
-  In order to help other user
+  In order to help other users
   As an authenticated user
   I want to be able to create answer for question
 } do
   
   given(:user) { create(:user) }
-  given(:question) { user.questions.create(attributes_for(:question)) }
+  given(:question) { create(:question) }
 
   scenario 'authenticated user tries to create answer' do
     sign_in(user)
     visit question_path(question)
-
-    click_on 'Add answer'
     
-    fill_in 'Body', with: 'body of test answer'
+    fill_in 'Your answer', with: 'body of test answer'
     click_on 'Save answer'
 
-    expect(page).to have_content 'body of test answer'
+    expect(current_path).to eq question_path(question)
+    within '.answers' do
+      expect(page).to have_content 'body of test answer'
+    end
   end
 
   scenario 'non-authenticated user tries to create answer' do
     visit question_path(question)
 
-    click_on 'Add answer'
+    fill_in 'Your answer', with: 'body of test answer'
+    click_on 'Save answer'
 
     expect(page).to have_content 'You need to sign in or sign up before continuing.'
 
