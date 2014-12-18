@@ -1,18 +1,19 @@
 hr
-- if answer.best
-  p.best-title
-    | Best answer
-.col-md-6
-  =answer.body
-.col-md-2
-  -if answer.user == current_user
-    .actions
-      p
-       =answer.user.email
-      p
-        =link_to 'Edit answer', edit_answer_path(answer) if answer.user == current_user
-      p
-        =link_to 'Delete answer', answer, method: :delete if answer.user == current_user
-  - if answer.question.user == current_user and !answer.best
-    p.make_best
-      = link_to 'Mark as best', make_best_answer_path(answer), method: :patch
+-unless answer.new_record?
+  - if answer.best
+    p.best-title
+      | Best answer
+  .col-md-6
+    =answer.body
+  .col-md-2
+    -if answer.user == current_user
+      .actions
+        p
+         =answer.user.email
+        p
+          =link_to 'Edit answer', edit_answer_path(answer) if answer.user == current_user
+        p
+          =link_to 'Delete answer', answer, method: :delete if answer.user == current_user
+    - if answer.question.user == current_user and !answer.best
+      p.make_best
+        = link_to 'Mark as best', make_best_answer_path(answer), method: :patch

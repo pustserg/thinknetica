@@ -3,7 +3,6 @@ require 'rails_helper'
 RSpec.describe AnswersController, :type => :controller do
   let(:user) { create(:user) }
   let(:another_user) { create(:user) }
-  # let(:question) { user.questions.create(attributes_for(:question)) }
   let(:question) { create(:question, user: @user) }
   let(:another_question) { create(:question, user: another_user) }
   let(:answer) { create(:answer, user: @user, question: question) }
@@ -43,12 +42,14 @@ RSpec.describe AnswersController, :type => :controller do
     context 'with valid attributes' do
 
       it 'saves answer in db' do
-        expect{ post :create, question_id: question, answer: attributes_for(:answer) }.to change(Answer, :count).by(1)
+        expect{ 
+          post :create, question_id: question, answer: attributes_for(:answer) 
+        }.to change(question.answers, :count).by(1)
       end
 
       it 'redirects to answer question' do
         post :create, question_id: question, answer: attributes_for(:answer)
-        expect(response).to redirect_to question_path(assigns(:answer).question)
+        expect(response).to redirect_to question_path(question)
       end
 
     end
@@ -56,12 +57,14 @@ RSpec.describe AnswersController, :type => :controller do
     context 'with invalid attributes' do
       
       it 'does not saves answer in db' do
-        expect{ post :create, question_id: question, answer: attributes_for(:invalid_answer) }.to_not change(Answer, :count)
+        expect{
+          post :create, question_id: question, answer: attributes_for(:invalid_answer) 
+        }.to_not change(Answer, :count)
       end
 
       it 'render new view' do
         post :create, question_id: question, answer: attributes_for(:invalid_answer)
-        expect(response).to render_template :new
+        expect(response).to redirect_to question_path(question)
       end
 
     end
@@ -125,7 +128,9 @@ RSpec.describe AnswersController, :type => :controller do
       end
 
       context 'with invalid attributes' do
-        before { patch :update, question_id: answer.question, id: answer, answer: attributes_for(:invalid_answer) }
+        before {
+          patch :update, question_id: answer.question, id: answer, answer: attributes_for(:invalid_answer)
+        }
 
         it 'does not change answer attributes' do
           answer.reload

@@ -7,3 +7,11 @@
       =link_to "Add answer",  new_question_answer_path(@question), class: "btn btn-success"
   .col-md-9.answers
     =render @question.answers
+
+  .col-md-9
+    =form_for([@question, @answer]) do |f|
+      =f.label :body, 'Your answer'
+      br
+      =f.text_area :body
+      br
+      =f.submit 'Save answer'
