@@ -1,11 +1,15 @@
-p.title
-  / # = link_to question.title, question_path(question)
-  =link_to_unless_current(question.title, { action: 'show', id: question.id })
-p.body
-  =question.body
-- if question.user == current_user
-    p.actions 
-      =link_to 'Edit question', edit_question_path(question)
-      br
-      =link_to 'Delete question', question, method: :delete
+.row
+  .col-md-12
+    p.title
+      / # = link_to question.title, question_path(question)
+      =link_to_unless_current(question.title, { action: 'show', id: question.id })
+  .col-md-8
+    p.body
+    =question.body
+  .col-md-3
+    - if question.user == current_user
+        p.actions 
+          =link_to 'Edit question', edit_question_path(question)
+          br
+          =link_to 'Delete question', question, method: :delete
 hr

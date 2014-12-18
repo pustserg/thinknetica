@@ -16,3 +16,17 @@
 // "bootstrap-sprockets" must be imported before "bootstrap" and "bootstrap/variables"
 @import "bootstrap-sprockets";
 @import "bootstrap";
+
+.navbar {
+  background-color: #06266F;
+  padding-top: 15px;
+}
+
+.sidebar {
+  background-color: #4671D5;
+  min-height: 800px;
+  color: white;
+  a {
+    color: white;
+  }
+}

@@ -8,13 +8,25 @@
 </head>
 <body>
 <div class="container-fluid">
+
+  <%= render 'layouts/header' %>
+
   <p class="notice">
     <%= notice %>
   </p>
   <p class="alert">
     <%= alert %>
   </p>
+
+  <!-- left sidebar -->
+  <div class="col-md-2 sidebar">
+    <%= render 'layouts/sidebar' %>
+  </div>
+
+  <!-- main content -->
   <%= yield %>
+
+  <!-- right sidebar -->
 </div>
 
 </body>
