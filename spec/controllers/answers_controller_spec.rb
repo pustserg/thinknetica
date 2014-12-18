@@ -7,7 +7,7 @@ RSpec.describe AnswersController, :type => :controller do
   let(:question) { create(:question, user: @user) }
   let(:another_question) { create(:question, user: another_user) }
   let(:answer) { create(:answer, user: @user, question: question) }
-  let(:another_answer) { create(:answer, user: another_user, question: question) }
+  let(:another_answer) { create(:answer, user: another_user, question: another_question) }
 
   describe 'GET #show' do
     sign_in_user
@@ -183,27 +183,21 @@ RSpec.describe AnswersController, :type => :controller do
   describe 'patch #make_best' do
     sign_in_user
     context 'question author tries to mark answer as best' do
-      before do
-        puts answer.best
-        patch :make_best, id: answer
-      end
+      before { patch :make_best, id: answer }
 
       it 'change best_attribute for answer' do
         answer.reload
-        puts answer.best
+        
         expect(answer.best).to be true
       end
     end
 
     context 'user tries to mark answer as best' do
-      before do
-        puts another_answer.best
-        patch :make_best, id: another_answer
-     end
+      before { patch :make_best, id: another_answer }
 
       it 'does not change best_attribute for answer' do
         another_answer.reload
-        puts another_answer.best
+
         expect(another_answer.best).to be false
       end
     end
