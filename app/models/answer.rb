@@ -20,7 +20,9 @@ class Answer < ActiveRecord::Base
 
   def make_best
     
-    unless question.best_answer == self
+    if question.best_answer.nil?
+      update(best: true)
+    elsif question.best_answer != self
       question.best_answer.update(best: false)
       update(best: true)
     end
