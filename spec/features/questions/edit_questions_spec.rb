@@ -11,7 +11,7 @@ feature 'edit question', %q{
 
   given(:question) { dave.questions.create(attributes_for(:question)) }
 
-  scenario 'authenticated user tries to edit his question' do
+  scenario 'authenticated user tries to edit his question', js: true do
     
     sign_in(dave)
     visit question_path(question)
@@ -28,7 +28,7 @@ feature 'edit question', %q{
 
   end
 
-  scenario 'authenticated user tries to edit question of another user' do
+  scenario 'authenticated user tries to edit question of another user', js: true do
     
     sign_in(jack)
     visit question_path(question)
@@ -37,7 +37,7 @@ feature 'edit question', %q{
 
   end
   
-  scenario 'non-authenticated user tries to edit question' do
+  scenario 'non-authenticated user tries to edit question', js: true do
     
     visit question_path(question)
 

@@ -1,4 +1,4 @@
-.row
+=content_tag(:div, class: "question-#{question.id}" )
   .col-md-12
     p.title
       / # = link_to question.title, question_path(question)
@@ -9,7 +9,7 @@
   .col-md-3
     - if question.user == current_user
         p.actions 
-          =link_to 'Edit question', edit_question_path(question)
+          =link_to 'Edit question', edit_question_path(question), remote: true
           br
           =link_to 'Delete question', question, method: :delete
 hr

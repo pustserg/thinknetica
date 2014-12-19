@@ -117,26 +117,26 @@ RSpec.describe QuestionsController, :type => :controller do
       context 'with valid attributes' do
 
         it 'assigns requested question as question' do
-          patch :update, id: question, question: attributes_for(:question)
+          patch :update, id: question, question: attributes_for(:question), format: :js
           expect(assigns(:question)).to eq question
         end
         
         it 'changes question attributes' do
-          patch :update, id: question, question: { title: "new title", body: "new body" }
+          patch :update, id: question, question: { title: "new title", body: "new body" }, format: :js
           question.reload
           expect(question.title).to eq "new title"
           expect(question.body).to eq "new body"
         end
         
         it 'redirect to show template' do
-          patch :update, id: question, question: attributes_for(:question)
-          expect(response).to redirect_to question
+          patch :update, id: question, question: attributes_for(:question), format: :js
+          expect(response).to render_template :update
         end  
 
       end
 
       context 'with invalid attributes' do
-        before { patch :update, id: question, question: attributes_for(:invalid_question) }
+        before { patch :update, id: question, question: attributes_for(:invalid_question), format: :js }
 
         it 'does not change question attributes' do
           question.reload
@@ -144,8 +144,8 @@ RSpec.describe QuestionsController, :type => :controller do
           expect(question.body).to eq "MyText"
         end
 
-        it 're-render edit template' do
-          expect(response).to render_template :edit
+        it 'render view template' do
+          expect(response).to render_template :update
         end
 
       end
@@ -153,7 +153,7 @@ RSpec.describe QuestionsController, :type => :controller do
 
     context 'user tries to update another_question' do
 
-      before {patch :update, id: another_question, question: { title: "new title", body: "new body" } }
+      before {patch :update, id: another_question, question: { title: "new title", body: "new body" }, format: :js }
       
       it 'response status 403' do
         expect(response.status).to eq 403
