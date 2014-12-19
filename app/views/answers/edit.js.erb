@@ -1,0 +1,4 @@
+// alert('id is <%= @answer.id %>');
+
+$('.answer-<%= @answer.id %>').after("<div id='edit_form' class='col-md-12'></div>");
+$('#edit_form').html('<%= j render 'edit_form' %>')

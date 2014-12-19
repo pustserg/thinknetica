@@ -110,26 +110,26 @@ RSpec.describe AnswersController, :type => :controller do
       context 'with valid attributes' do
 
         it 'assigns requested answer as answer' do
-          patch :update, question_id: answer.question, id: answer, answer: attributes_for(:answer)
+          patch :update, question_id: answer.question, id: answer, answer: attributes_for(:answer), format: :js
           expect(assigns(:answer)).to eq answer
         end
 
         it 'changes answer attributes' do
-          patch :update, question_id: answer.question, id: answer, answer: { body: "new body"}
+          patch :update, question_id: answer.question, id: answer, answer: { body: "new body"}, format: :js
           answer.reload
           expect(answer.body).to eq "new body"
         end
 
         it 'redirects to answer' do
-          patch :update, question_id: answer.question, id: answer, answer: attributes_for(:answer)
-          expect(response).to redirect_to answer.question
+          patch :update, question_id: answer.question, id: answer, answer: attributes_for(:answer), format: :js
+          expect(response).to render_template :update
         end
 
       end
 
       context 'with invalid attributes' do
         before {
-          patch :update, question_id: answer.question, id: answer, answer: attributes_for(:invalid_answer)
+          patch :update, question_id: answer.question, id: answer, answer: attributes_for(:invalid_answer), format: :js
         }
 
         it 'does not change answer attributes' do
@@ -137,8 +137,8 @@ RSpec.describe AnswersController, :type => :controller do
           expect(answer.body).to eq "my answer"
         end
 
-        it 're-render edit view' do
-          expect(response).to render_template :edit
+        it 'render update view' do
+          expect(response).to render_template :update
         end
 
       end
@@ -148,7 +148,7 @@ RSpec.describe AnswersController, :type => :controller do
     context 'user tries to update another_answer' do
 
       it 'response status 403' do
-        patch :update, question_id: another_answer.question, id: another_answer, answer: { body: 'new body' }
+        patch :update, question_id: another_answer.question, id: another_answer, answer: { body: 'new body' }, format: :js
 
         expect(response.status).to eq 403
       end

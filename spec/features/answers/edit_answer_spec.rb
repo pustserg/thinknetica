@@ -16,21 +16,24 @@ feature 'edit answer', %q{
 		visit question_path(answer.question)
 		
 		click_on 'Edit answer'
-		fill_in 'Body', with: 'edited body of test answer' 
+		within '#edit_form' do
+			fill_in 'Body', with: 'edited body of test answer' 
+		end
 		click_on 'Update answer'
-
-		expect(page).to have_content 'edited body of test answer'
+		within('.answers') do
+			expect(page).to have_content 'edited body of test answer'
+		end
 		expect(current_path).to eq question_path(answer.question)
 	end
 
-	scenario 'authenticated user tries to edit answer of another user' do
+	scenario 'authenticated user tries to edit answer of another user', js: true do
 		sign_in(dave)
 		visit question_path(answer.question)
 
 		expect(page).to_not have_content 'Edit answer'
 	end
 
-	scenario 'non-authenticated user tries to edit answer' do
+	scenario 'non-authenticated user tries to edit answer', js: true do
 		visit question_path(answer.question)
 
 		expect(page).to_not have_content 'Edit answer'

@@ -1,7 +1,7 @@
 -unless answer.new_record?
-  =content_tag :div, class: "answer-#{answer.id}"
+  =content_tag :div, class: "answer-#{answer.id} col-md-12"
     - if answer.best
-      p.best-title
+      .best-title.col-md-12
         | Best answer
     .col-md-6
       =answer.body
@@ -11,7 +11,7 @@
           p
            =answer.user.email
           p
-            =link_to 'Edit answer', edit_answer_path(answer) if answer.user == current_user
+            =link_to 'Edit answer', edit_answer_path(answer), remote: true if answer.user == current_user
           p
             =link_to 'Delete answer', answer, method: :delete if answer.user == current_user
       - if answer.question.user == current_user and !answer.best
