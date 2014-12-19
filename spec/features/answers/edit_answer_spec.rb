@@ -11,7 +11,7 @@ feature 'edit answer', %q{
 	given(:question) { dave.questions.create(attributes_for(:question)) }
 	given(:answer) { question.answers.create(attributes_for(:answer, user_id: jack.id)) }
 	
-	scenario 'authenticated user tries to edit his answer' do
+	scenario 'authenticated user tries to edit his answer', js: true do
 		sign_in(jack)
 		visit question_path(answer.question)
 		

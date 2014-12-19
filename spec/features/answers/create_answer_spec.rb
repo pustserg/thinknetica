@@ -22,13 +22,11 @@ feature 'Create answer', %q{
     end
   end
 
-  scenario 'non-authenticated user tries to create answer' do
+  scenario 'non-authenticated user tries to create answer', js: true do
     visit question_path(question)
 
-    fill_in 'Your answer', with: 'body of test answer'
-    click_on 'Save answer'
-
-    expect(page).to have_content 'You need to sign in or sign up before continuing.'
+    expect(page).to_not have_content 'Your answer'
+    expect(page).to have_content 'You must authorize to answer'
 
   end
 
