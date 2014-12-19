@@ -19,7 +19,12 @@ class Answer < ActiveRecord::Base
   belongs_to :user
 
   def make_best
-    update(best: true)
+    
+    unless question.best_answer == self
+      question.best_answer.update(best: false)
+      update(best: true)
+    end
+
   end
 
 end
