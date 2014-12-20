@@ -36,7 +36,7 @@ feature 'edit answer', %q{
 	scenario 'non-authenticated user tries to edit answer', js: true do
 		visit question_path(answer.question)
 
-		expect(page).to_not have_content 'Edit answer'
+		expect(page).to_not have_link 'Edit answer'
 	end	
 
 end

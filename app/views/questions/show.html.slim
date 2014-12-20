@@ -11,7 +11,7 @@
     -if current_user
       =form_for [@question, @answer], remote: true do |f|
         =f.label :body, 'Your answer'
-        br
+        .answer-errors
         =f.text_area :body
         br
         =f.submit 'Save answer', class: "btn btn-success"

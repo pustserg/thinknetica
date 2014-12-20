@@ -30,4 +30,14 @@ feature 'Create answer', %q{
 
   end
 
+  scenario 'User tries to create invalid answer', js: true do
+    sign_in(user)
+    visit question_path(question)
+
+    click_on 'Save answer'
+
+    expect(page).to have_content "Body can't be blank"
+
+  end
+
 end
