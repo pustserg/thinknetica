@@ -1,4 +1,4 @@
-require 'rails_helper'
+require 'feature_helper'
 
 feature 'delete_answer', %q{
   In order to remove silly answer

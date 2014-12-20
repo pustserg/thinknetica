@@ -1,4 +1,4 @@
-require 'rails_helper'
+require 'feature_helper'
 
 feature 'make an answer the best', %q{
   In order to show the best answer

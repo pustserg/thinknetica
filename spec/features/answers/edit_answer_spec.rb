@@ -1,4 +1,4 @@
-require 'rails_helper'
+require 'feature_helper'
 
 feature 'edit answer', %q{
 	In order to improve my answer
