@@ -5,16 +5,22 @@
       ="#{@question.answers.count} answers"
     
   .col-md-9.answers
-    =render @question.answers
+    / =render @question.answers
+    -@question.answers.each do |answer|
+      -unless answer.new_record?
+        =content_tag :div, class: "answer-#{answer.id} col-md-12"
+          =render answer
 
   .col-md-9
     -if current_user
       =form_for [@question, @answer], remote: true do |f|
-        =f.label :body, 'Your answer'
-        .answer-errors
-        =f.text_area :body
-        br
-        =f.submit 'Save answer', class: "btn btn-success"
+        .form-group.col-md-9
+          =f.label :body, 'Your answer'
+          .answer-errors
+          =f.text_area :body, class: "col-md-9", rows: 10
+  
+        .form-group.col-md-9
+          =f.submit 'Save answer', class: "btn btn-success"
     -else
       p
         | You must authorize to answer
