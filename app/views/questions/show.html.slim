@@ -1,8 +1,9 @@
 .row.question
   .col-md-9
-    =render @question
-    .col-md-6.stat
-      ="#{@question.answers.count} answers"
+    =content_tag(:div, class: "question-#{@question.id}" )
+      =render @question
+      .col-md-6.stat
+        ="#{@question.answers.count} answers"
     
   .col-md-9.answers
     / =render @question.answers
