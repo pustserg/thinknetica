@@ -3,7 +3,7 @@ class CommentsController < ApplicationController
   before_action :set_commentable
 
   def new
-    @comment = Comment.new
+    @comment = @commentable.comments.new
   end
 
   def create

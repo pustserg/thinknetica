@@ -15,7 +15,7 @@ feature 'User can create comment to a question', %q{
       sign_in user
       visit question_path(question)
 
-      within ('.question-comments') do
+      within ('.question') do
         click_on 'Add comment'
       end  
       
@@ -56,7 +56,7 @@ feature 'User can create comment to a question', %q{
     scenario 'Authenticated user tries to create comment for answer', js: true do
       sign_in user
       visit question_path(answer.question)
-      save_and_open_page
+      
       within('.answers') do
         click_on 'Add comment'
       end

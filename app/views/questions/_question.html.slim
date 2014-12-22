@@ -4,7 +4,7 @@
     =link_to_unless_current(question.title, { action: 'show', id: question.id })
 .col-md-8
   p.body
-  =question.body
+    =question.body
 .col-md-3
   - if question.user == current_user
       p.actions 
