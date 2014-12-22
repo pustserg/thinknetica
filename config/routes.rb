@@ -10,6 +10,7 @@ Rails.application.routes.draw do
   resources :questions do
     resources :answers, shallow: true do
       patch :make_best, on: :member
+      resources :comments, shallow: true
     end
     resources :comments, shallow: true
   end

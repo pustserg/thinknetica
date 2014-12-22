@@ -12,6 +12,8 @@
         =link_to 'Edit answer', edit_answer_path(answer), remote: true if answer.user == current_user
       p
         =link_to 'Delete answer', answer, method: :delete if answer.user == current_user
+      p 
+        =link_to 'Add comment', new_answer_comment_path(answer), remote: true if current_user
   - if answer.question.user == current_user and !answer.best
     p.make_best
       = link_to 'Mark as best', make_best_answer_path(answer), method: :patch
