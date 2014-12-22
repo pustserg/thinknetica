@@ -11,6 +11,7 @@ Rails.application.routes.draw do
     resources :answers, shallow: true do
       patch :make_best, on: :member
     end
+    resources :comments, shallow: true
   end
 
   root 'questions#index'

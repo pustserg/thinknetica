@@ -4,6 +4,8 @@
       =render @question
       .col-md-6.stat
         ="#{@question.answers.count} answers"
+      .col-md-9.comments
+        =link_to 'Add comment', new_question_comment_path(@question), remote: true
     
   .col-md-9.answers
     / =render @question.answers

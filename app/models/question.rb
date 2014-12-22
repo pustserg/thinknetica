@@ -15,6 +15,7 @@ class Question < ActiveRecord::Base
   validates :title, :body, :user_id, presence: true
 
   has_many :answers
+  has_many :comments, as: :commentable
   belongs_to :user
 
   def best_answer
