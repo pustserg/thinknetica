@@ -1,0 +1,8 @@
+<% if @comment.errors.present? %>
+  <% @comment.errors.full_messages.each do |msg| %>
+    $('#comment-errors').html('<%= j msg %>');
+  <% end %>
+<% else %>
+  $('#comments-list').html('<%= j render @question.comments %>');
+  $('#comment-form').remove();
+<% end %>

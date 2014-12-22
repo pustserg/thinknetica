@@ -19,4 +19,25 @@ RSpec.describe CommentsController, :type => :controller do
 
   end
 
+  describe 'POST #create' do
+    sign_in_user
+
+    context 'with valid attributes' do
+      
+      it 'saves comment in db' do
+        expect{ post :create, question_id: question, comment: {body: 'test comment'}, format: :js }.to change(Comment, :count).by(1)
+      end
+
+    end
+
+    context 'with invalid attributes' do
+
+      it 'saves comment in db' do
+        expect{ post :create, question_id: question, comment: { body: nil }, format: :js }.to_not change(Comment, :count)
+      end
+
+    end
+
+  end
+
 end

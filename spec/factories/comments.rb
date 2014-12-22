@@ -10,9 +10,15 @@
 #  user_id        :integer
 #
 
-class Comment < ActiveRecord::Base
+FactoryGirl.define do
+  factory :comment do
+    body "MyText"
+    association :commentable, factory: :question
+  end
 
-  validates :body, :user_id, :commentable_id, presence: true
-  belongs_to :commentable, polymorphic: true
-  belongs_to :user
+  factory :wrong_comment, class: "Comment" do
+    body nil
+    commentable nil
+  end
+
 end
