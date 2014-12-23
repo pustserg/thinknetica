@@ -8,20 +8,19 @@
 </head>
 <body>
 <div class="container-fluid">
+  <div class="row">
+    <%= render 'layouts/header' %>
+    
+    <%= render 'layouts/errors' %>
 
-  <%= render 'layouts/header' %>
-  
-  <%= render 'layouts/errors' %>
-
-  <!-- left sidebar -->
-  <div class="col-md-2 sidebar">
+    <!-- left sidebar -->
     <%= render 'layouts/sidebar' %>
+
+    <!-- main content -->
+    <%= yield %>
+
+    <!-- right sidebar -->
   </div>
-
-  <!-- main content -->
-  <%= yield %>
-
-  <!-- right sidebar -->
 </div>
 
 </body>
