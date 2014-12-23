@@ -1,14 +1,12 @@
-.col-md-12
-  p.title
-    / # = link_to question.title, question_path(question)
-    =link_to_unless_current(question.title, { action: 'show', id: question.id })
-.col-md-8
+.col-md-12.title
+  =link_to_unless_current(question.title, { action: 'show', id: question.id })
+.col-md-9
   p.body
     =question.body
-.col-md-3
-  - if question.user == current_user
-      p.actions 
-        =link_to 'Edit question', edit_question_path(question), remote: true
-        br
-        =link_to 'Delete question', question, method: :delete
-hr
+- if question.user == current_user
+  .col-md-3.actions
+    ul.nav.nav-stacked 
+      li =link_to 'Edit question', edit_question_path(question), remote: true
+      li =link_to 'Delete question', question, method: :delete
+.col-md-12.question-stats
+  ="#{question.answers.count} answers"

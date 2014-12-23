@@ -18,5 +18,5 @@
     p.make_best
       = link_to 'Mark as best', make_best_answer_path(answer), method: :patch
 / .col-md-12.answer-comments
-=content_tag(:div, class: "answer-#{answer.id}-comments col-md-12 answer-comments")
+=content_tag :div, class: "col-md-12 answer-comments", id: "answer-#{answer.id}-comments"
   =render answer.comments

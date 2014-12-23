@@ -15,7 +15,7 @@ feature 'User can create comment to a question', %q{
       sign_in user
       visit question_path(question)
 
-      within ('.question') do
+      within ('.question-comments') do
         click_on 'Add comment'
       end  
       

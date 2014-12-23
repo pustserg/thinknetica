@@ -1,31 +1,21 @@
-.row.question
-  .col-md-9
-    =content_tag(:div, class: "question-#{@resource.id}" )
-      =render @resource
-      .col-md-6.stat
-        ="#{@resource.answers.count} answers"
-      .col-md-9.question-comments
-        =link_to 'Add comment', new_polymorphic_path([@resource, :comment]), remote: true if current_user
-        =content_tag(:div, class: "question-#{@resource.id}-comments col-md-12")
-          =render @resource.comments
-    
-  .col-md-9.answers
-    
-    -@resource.answers.each do |answer|
-      -unless answer.new_record?
-        =content_tag :div, class: "answer-#{answer.id} col-md-12"
-          =render answer
+=content_tag :div, class: "question col-md-9", id: "question-#{@resource.id}"
+  =render @resource
+.col-md-9.question-comments
 
-  .col-md-9
-    -if current_user
-      =form_for [@resource, @answer], remote: true do |f|
-        .form-group.col-md-9
-          =f.label :body, 'Your answer'
-          .answer-errors
-          =f.text_area :body, class: "col-md-9", rows: 10
+  =link_to 'Add comment', new_polymorphic_path([@resource, :comment]), remote: true if current_user
+  =content_tag :div, id: "question-#{@resource.id}-comments" 
+    =render @resource.comments
   
-        .form-group.col-md-9
-          =f.submit 'Save answer', class: "btn btn-success"
-    -else
-      p
-        | You must authorize to answer
+.col-md-9.answers
+  
+  -@resource.answers.each do |answer|
+    -unless answer.new_record?
+      =content_tag :div, class: "col-md-12", id: "answer-#{answer.id}"
+        =render answer
+
+.col-md-9
+  -if current_user
+    =render 'answers/new_form'
+  -else
+    p
+      | You must authorize to answer

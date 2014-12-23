@@ -3,6 +3,6 @@
     $('.answer-errors').html('<%= j message %>')
   <% end %>
 <% else %>
-  $('.answer-<%= @answer.id %>').html('<%= j render @answer %>');
+  $('#answer-<%= @answer.id %>').html('<%= j render @answer %>');
   $('#edit_form').remove();
 <% end %>

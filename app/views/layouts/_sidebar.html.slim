@@ -1,7 +1,7 @@
 .col-md-2.sidebar
   ul.nav.nav-pills.nav-stacked
     - if current_user
-      li =current_user.email
+      li =link_to current_user.email, '#'
       li =link_to 'Logout', destroy_user_session_path, method: :delete
     - else
       li =link_to 'Sign in', new_user_session_path

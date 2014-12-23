@@ -1,0 +1,8 @@
+=form_for [@resource, @answer], remote: true do |f|
+  .form-group.col-md-9
+    =f.label :body, 'Your answer'
+    .answer-errors
+    =f.text_area :body, class: "col-md-9", rows: 10
+
+  .form-group.col-md-9
+    =f.submit 'Save answer', class: "btn btn-success"
