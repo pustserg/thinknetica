@@ -1,1 +1,8 @@
-alert('Update');
+<% if @resource.errors.present? %>
+  <% @resource.errors.full_messages.each do |msg| %>
+    $('#comment-errors').html('<%= j msg %>');
+  <% end %>
+<% else %>
+  $('.<%= "#{@resource.commentable_type.downcase}-#{@commentable.id}-comments" %>').html('<%= j render @commentable.comments %>');
+  $('#comment-form').remove();
+<% end %>

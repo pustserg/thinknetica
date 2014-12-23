@@ -1,6 +1,6 @@
 class CommentsController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_commentable
+  before_action :set_commentable, only: [:new, :create]
   before_action :set_resource, only: [:edit, :update]
   before_action :check_author, only: [:destroy, :edit, :update]
 
@@ -17,6 +17,7 @@ class CommentsController < ApplicationController
   end
 
   def update
+    @commentable = @resource.commentable
     @resource.update(comment_params)
   end
 

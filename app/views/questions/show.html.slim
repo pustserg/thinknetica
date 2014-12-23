@@ -6,7 +6,7 @@
         ="#{@resource.answers.count} answers"
       .col-md-9.question-comments
         =link_to 'Add comment', new_polymorphic_path([@resource, :comment]), remote: true if current_user
-        .question-comments-list
+        =content_tag(:div, class: "question-#{@resource.id}-comments col-md-12")
           =render @resource.comments
     
   .col-md-9.answers

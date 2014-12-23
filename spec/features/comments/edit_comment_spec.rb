@@ -30,7 +30,8 @@ feature 'User can edit his comment' do
       click_on 'Edit comment'
     end
     fill_in 'Your comment', with: 'edited comment'
-
+    click_on 'Update comment'
+    
     expect(page).to have_content 'edited comment'
   end
 
