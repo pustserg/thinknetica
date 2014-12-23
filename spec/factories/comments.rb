@@ -11,14 +11,14 @@
 #
 
 FactoryGirl.define do
-  factory :comment do
-    body "MyText"
+  factory :question_comment, class: "Comment" do
+    body "question comment"
     association :commentable, factory: :question
   end
 
-  factory :wrong_comment, class: "Comment" do
-    body nil
-    commentable nil
+  factory :answer_comment, class: "Comment" do
+    body "answer comment"
+    association :commentable, factory: :answer
   end
 
 end

@@ -1,6 +1,7 @@
 class CommentsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_commentable
+  before_action :set_resource, only: :edit
 
   def new
     @comment = @commentable.comments.new
@@ -8,6 +9,9 @@ class CommentsController < ApplicationController
 
   def create
     @comment = @commentable.comments.create(comment_params.merge(user: current_user))
+  end
+
+  def edit
   end
 
   private
@@ -23,6 +27,10 @@ class CommentsController < ApplicationController
                     Answer.find(params[:answer_id])
                   end
                     
+  end
+
+  def set_resource
+    @resource = Comment.find(params[:id])
   end
 
 end

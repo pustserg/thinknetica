@@ -2,7 +2,7 @@ class QuestionsController < ApplicationController
 
   before_action :authenticate_user!, except: [:index, :show] 
   
-  before_action :set_question, only: [:show, :edit, :update, :destroy]
+  before_action :set_resource, only: [:show, :edit, :update, :destroy]
   before_action :check_author, only: [:destroy, :edit, :update]
 
   def index
@@ -10,7 +10,7 @@ class QuestionsController < ApplicationController
   end
 
   def show
-    @answer = @question.answers.build
+    @answer = @resource.answers.build
   end
 
   def new
@@ -27,31 +27,32 @@ class QuestionsController < ApplicationController
   end
 
   def edit
+    @question = @resource
   end
 
   def update
-    @question.update(question_params)
+    @resource.update(question_params)
   end
 
   def destroy
-    @question.destroy
+    @resource.destroy
     redirect_to questions_path
   end
 
   private
 
-  def set_question
-    @question = Question.find(params[:id])
+  def set_resource
+    @resource = Question.find(params[:id])
   end
 
   def question_params
     params.require(:question).permit(:title, :body)
   end
 
-  def check_author
-    if current_user != @question.user
-      render json: { error: 'fufufu' }, status: 403
-    end
-  end
+  # def check_author
+  #   if current_user != @question.user
+  #     render json: { error: 'fufufu' }, status: 403
+  #   end
+  # end
 
 end

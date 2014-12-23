@@ -1,24 +1,24 @@
 .row.question
   .col-md-9
-    =content_tag(:div, class: "question-#{@question.id}" )
-      =render @question
+    =content_tag(:div, class: "question-#{@resource.id}" )
+      =render @resource
       .col-md-6.stat
-        ="#{@question.answers.count} answers"
+        ="#{@resource.answers.count} answers"
       .col-md-9.question-comments
-        =link_to 'Add comment', new_polymorphic_path([@question, :comment]), remote: true if current_user
-        .question-comments
-          =render @question.comments
+        =link_to 'Add comment', new_polymorphic_path([@resource, :comment]), remote: true if current_user
+        .question-comments-list
+          =render @resource.comments
     
   .col-md-9.answers
-    / =render @question.answers
-    -@question.answers.each do |answer|
+    
+    -@resource.answers.each do |answer|
       -unless answer.new_record?
         =content_tag :div, class: "answer-#{answer.id} col-md-12"
           =render answer
 
   .col-md-9
     -if current_user
-      =form_for [@question, @answer], remote: true do |f|
+      =form_for [@resource, @answer], remote: true do |f|
         .form-group.col-md-9
           =f.label :body, 'Your answer'
           .answer-errors

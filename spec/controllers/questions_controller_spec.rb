@@ -24,7 +24,7 @@ RSpec.describe QuestionsController, :type => :controller do
     before { get :show, id: another_question }
 
     it 'assigns requested question as @question' do
-      expect(assigns(:question)).to eq another_question
+      expect(assigns(:resource)).to eq another_question
     end
 
     it 'assigns a new answer for question' do
@@ -118,7 +118,7 @@ RSpec.describe QuestionsController, :type => :controller do
 
         it 'assigns requested question as question' do
           patch :update, id: question, question: attributes_for(:question), format: :js
-          expect(assigns(:question)).to eq question
+          expect(assigns(:resource)).to eq question
         end
         
         it 'changes question attributes' do

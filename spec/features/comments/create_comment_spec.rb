@@ -50,8 +50,6 @@ feature 'User can create comment to a question', %q{
   end
 
   describe 'comment for answer' do
-
-    
     
     scenario 'Authenticated user tries to create comment for answer', js: true do
       sign_in user

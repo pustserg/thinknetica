@@ -1,2 +1,4 @@
-=comment.body
-br
+.comment-body.col-md-6
+  =comment.body
+.comment-actions.col-md-2
+  =link_to 'Edit comment', edit_comment_path(comment), remote: true if comment.user == current_user

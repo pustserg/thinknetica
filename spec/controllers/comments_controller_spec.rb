@@ -4,9 +4,12 @@ RSpec.describe CommentsController, :type => :controller do
 
   let(:question) { create(:question) }
   let(:user) { create(:user) }
+  let(:comment) { create(:question_comment, commentable: question, user: user) }
+
+  sign_in_user
 
   describe 'GET #new' do
-    sign_in_user
+    
     before { xhr :get, :new, question_id: question }
 
     it 'assigns new Comment as comment' do
@@ -20,7 +23,7 @@ RSpec.describe CommentsController, :type => :controller do
   end
 
   describe 'POST #create' do
-    sign_in_user
+    
 
     context 'with valid attributes' do
       
@@ -36,6 +39,19 @@ RSpec.describe CommentsController, :type => :controller do
         expect{ post :create, question_id: question, comment: { body: nil }, format: :js }.to_not change(Comment, :count)
       end
 
+    end
+
+  end
+
+  describe 'GET #edit' do
+    before { xhr :get, :edit, id: comment, format: :js }
+
+    it 'assigns requested comment as resource' do
+      expect(assigns(:resource)).to eq comment
+    end
+
+    it 'render edit template' do
+      expect(response).to render_template :edit
     end
 
   end
