@@ -1,14 +1,11 @@
 class AnswersController < ApplicationController
 
-  before_action :authenticate_user!, except: :show
+  before_action :authenticate_user!
   
   before_action :set_question, only: [:new, :create]
   before_action :set_answer, except: [:new, :create]
   before_action :check_author, only: [:destroy, :edit, :update]
   before_action :check_question_author, only: :make_best
-
-  def show
-  end
 
   def create
     @answer = @question.answers.create(answer_params.merge(user: current_user))

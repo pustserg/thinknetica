@@ -8,20 +8,6 @@ RSpec.describe AnswersController, :type => :controller do
   let(:answer) { create(:answer, user: @user, question: question) }
   let(:another_answer) { create(:answer, user: another_user, question: another_question) }
 
-  describe 'GET #show' do
-    sign_in_user
-    before { get :show, question_id: answer.question, id: answer }
-
-    it 'assign requested answer as @answer' do
-      expect(assigns(:answer)).to eq answer
-    end
-
-    it 'render show view' do
-      expect(response).to render_template :show
-    end
-
-  end
-
   describe 'POST #create' do
     sign_in_user
 
