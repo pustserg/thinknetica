@@ -9,20 +9,20 @@ feature 'User can edit his comment' do
   given!(:question_comment) { create(:question_comment, commentable: question, user: jack) }
   # given!(:answer_comment) { create(:answer_comment, commentable: answer, user: jack) }
 
-  scenario 'guest tries to edit comment' do
+  scenario 'guest tries to edit comment', js: true do
     visit question_path(question)
 
     expect(page).to_not have_content 'Edit comment'
   end
 
-  scenario 'user tries to edit comment another user' do
+  scenario 'user tries to edit comment another user', js: true do
     sign_in dave
     visit question_path(question)
 
     expect(page).to_not have_content 'Edit comment'
   end
 
-  scenario 'user tries to edit comment for question' do
+  scenario 'user tries to edit comment for question', js: true do
     sign_in jack
     visit question_path(question)
 
