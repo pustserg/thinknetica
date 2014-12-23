@@ -10,10 +10,6 @@ class AnswersController < ApplicationController
   def show
   end
 
-  def new
-    @answer = Answer.new
-  end
-
   def create
     @answer = @question.answers.create(answer_params.merge(user: current_user))
     # redirect_to @question

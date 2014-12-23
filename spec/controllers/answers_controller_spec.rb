@@ -22,20 +22,6 @@ RSpec.describe AnswersController, :type => :controller do
 
   end
 
-  describe 'GET #new' do
-    sign_in_user
-    before { get :new, question_id: question }
-
-    it 'assigns new answer as @answer' do
-      expect(assigns(:answer)).to be_a_new(Answer)
-    end
-
-    it 'render new view' do
-      expect(response).to render_template :new
-    end
-
-  end
-
   describe 'POST #create' do
     sign_in_user
 
@@ -75,7 +61,7 @@ RSpec.describe AnswersController, :type => :controller do
     sign_in_user
 
     context 'author tries to edit his answer' do
-      before { get :edit, id: answer }
+      before { xhr :get, :edit, id: answer, format: :js }
 
       it 'assigns requested answer as @answer' do
         expect(assigns(:answer)).to eq answer
@@ -88,7 +74,7 @@ RSpec.describe AnswersController, :type => :controller do
     end
 
     context 'user tries to edit another_answer' do
-      before { get :edit, id: another_answer }
+      before { xhr :get, :edit, id: another_answer, format: :js }
 
       it 'does not render edit view' do
         expect(response).to_not render_template :edit
