@@ -102,4 +102,36 @@ RSpec.describe CommentsController, :type => :controller do
 
   end
 
+  describe 'DELETE #destroy' do
+
+    context 'user tries to delete another user comment' do
+      before { another_comment }
+
+      it 'should not change Comment count' do
+        expect{ delete :update, id: another_comment }.to_not change(Comment, :count)
+      end
+
+      it 'response status must be 403' do
+        delete :update, id: another_comment
+        expect(response.status).to eq 403
+      end
+    end
+
+    context 'user tries to delete his comment' do
+      before { comment }
+
+      it 'should change Comment count' do
+        expect{ delete :destroy, id: comment }.to change(Comment, :count).by(-1)
+      end
+
+      it 'redirect to commentable' do
+        commentable = comment.commentable
+        delete :destroy, id: comment
+
+        expect(response).to redirect_to commentable
+      end
+    end
+
+  end
+
 end
