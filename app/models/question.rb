@@ -16,7 +16,10 @@ class Question < ActiveRecord::Base
 
   has_many :answers
   has_many :comments, as: :commentable
+  has_many :attachments, as: :attachmentable 
   belongs_to :user
+
+  accepts_nested_attributes_for :attachments
 
   def best_answer
     answers.where(best: true).first
