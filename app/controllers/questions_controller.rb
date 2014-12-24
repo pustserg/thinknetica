@@ -11,6 +11,7 @@ class QuestionsController < ApplicationController
 
   def show
     @answer = @resource.answers.build
+    @answer.attachments.build
   end
 
   def new

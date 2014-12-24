@@ -3,6 +3,11 @@
     =f.label :body, 'Your answer'
     .answer-errors
     =f.text_area :body, class: "col-md-9", rows: 10
+  .form-group.col-md-9
+    p Attachments:
+    =f.fields_for :attachments do |a|
+      =a.label :file
+      =a.file_field :file
 
   .form-group.col-md-9
     =f.submit 'Save answer', class: "btn btn-success"

@@ -11,6 +11,11 @@
     li =link_to 'Add comment', new_answer_comment_path(answer), remote: true if current_user
     - if answer.question.user == current_user and !answer.best
       li= link_to 'Mark as best', make_best_answer_path(answer), method: :patch
+.col-md-12
+  p Attachments:
+  ul 
+    -answer.attachments.each do |attach|
+      li = link_to attach.file.identifier, attach.file.url
 
 =content_tag :div, class: "col-md-10 col-md-offset-1 answer-comments", id: "answer-#{answer.id}-comments"
   =render answer.comments
