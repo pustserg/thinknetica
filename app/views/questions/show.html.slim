@@ -2,7 +2,9 @@
   =render @resource
 
   p Attachments:
-  ul @resource 
+  ul 
+    -@resource.attachments.each do |attach|
+      li = attach.file.file.filename
 
 .col-md-9.question-comments
 
