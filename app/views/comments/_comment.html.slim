@@ -3,3 +3,4 @@
 .comment-actions.col-md-4
   ul.nav.nav-stacked
     li =link_to 'Edit comment', edit_comment_path(comment), remote: true if comment.user == current_user
+    li =link_to 'Delete comment', comment_path(comment), method: :delete if comment.user == current_user
