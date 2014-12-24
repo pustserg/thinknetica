@@ -1,6 +1,9 @@
 =content_tag :div, class: "question col-md-9", id: "question-#{@resource.id}"
   =render @resource
 
+  p Attachments:
+  ul @resource 
+
 .col-md-9.question-comments
 
   =link_to 'Add comment', new_polymorphic_path([@resource, :comment]), remote: true if current_user

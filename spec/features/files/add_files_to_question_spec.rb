@@ -1,4 +1,4 @@
-require 'feature'
+require 'feature_helper'
 
 feature 'Add files to question', %q{
   In order to illustrate my question
@@ -13,7 +13,7 @@ feature 'Add files to question', %q{
     visit new_question_path
   end
 
-  scenario 'User adds file when creates a question', do
+  scenario 'User adds file when creates a question' do
     fill_in 'Title', with: 'question title'
     fill_in 'Body', with: 'question body'
     attach_file 'File', "#{Rails.root}/spec/spec_helper.rb"
@@ -21,7 +21,4 @@ feature 'Add files to question', %q{
 
     expect(page).to have_content 'spec_helper.rb'
   end
-
- end
-
 end
