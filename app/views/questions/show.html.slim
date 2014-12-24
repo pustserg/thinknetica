@@ -4,7 +4,7 @@
   p Attachments:
   ul 
     -@resource.attachments.each do |attach|
-      li = attach.file.file.filename
+      li = link_to attach.file.identifier, attach.file.url
 
 .col-md-9.question-comments
 
