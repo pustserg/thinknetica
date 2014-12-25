@@ -32,6 +32,7 @@ gem 'devise'
 
 gem 'carrierwave'
 gem 'remotipart'
+gem 'nested_form'
 
 # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
 gem 'spring',        group: :development

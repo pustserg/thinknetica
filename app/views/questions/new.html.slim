@@ -1,6 +1,6 @@
 .row
   .col-md-6.offset-col-md-3
-    =form_for @question do |f|
+    =nested_form_for @question do |f|
       =f.label :title
       br
       =f.text_field :title
@@ -16,6 +16,8 @@
         =f.fields_for :attachments do |a|
           =a.label :file
           =a.file_field :file
+          br
+      =f.link_to_add 'Add else', :attachments
       br
 
       =f.submit 'Create question'
