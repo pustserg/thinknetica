@@ -3,15 +3,21 @@
 .col-md-9
   p.body
     =question.body
--unless current_user == question.user      
+-if current_user and current_user != question.user      
   .col-md-1.vote
     ul.nav.nav-stacked
-      li =link_to '+', vote_up_question_path
-      li =link_to '-', vote_down_question_path
+      li =link_to '+', vote_up_question_path(question), method: :patch
+      li =link_to '-', vote_down_question_path(question), method: :patch
 - if question.user == current_user
   .col-md-2.actions
     ul.nav.nav-stacked 
       li =link_to 'Edit question', edit_question_path(question), remote: true
       li =link_to 'Delete question', question, method: :delete
 .col-md-12.question-stats
-  ="#{question.answers.count} answers"
+  .col-md-2
+    ="#{question.answers.count} answers"
+  .col-md-2.likes
+    p.likes
+      ="Likes: #{question.votes.likes.count}"
+    p.dislikes
+      ="Dislikes: #{question.votes.dislikes.count}"

@@ -15,4 +15,7 @@ class Vote < ActiveRecord::Base
   belongs_to :user
   belongs_to :voteable, polymorphic: true
   validates :status, presence: true
+
+  scope :likes, -> { where(status: "+") }
+  scope :dislikes, -> { where(status: "-") }
 end
