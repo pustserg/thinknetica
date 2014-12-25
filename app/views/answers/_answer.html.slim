@@ -3,7 +3,13 @@
     | Best answer
 .col-md-8
   =answer.body
-.col-md-4.actions
+.col-md-2.votes
+  -if current_user and current_user != answer.user      
+ 
+    ul.nav.nav-stacked
+      li =link_to '+', vote_up_answer_path(answer), method: :patch
+      li =link_to '-', vote_down_answer_path(answer), method: :patch
+.col-md-2.actions
   ul.nav.nav-stacked 
     li =link_to answer.user.email, '#'
     li =link_to 'Edit answer', edit_answer_path(answer), remote: true if answer.user == current_user
@@ -12,10 +18,16 @@
     - if answer.question.user == current_user and !answer.best
       li= link_to 'Mark as best', make_best_answer_path(answer), method: :patch
 .col-md-12
-  p Attachments:
-  ul 
-    -answer.attachments.each do |attach|
-      li = link_to attach.file.identifier, attach.file.url
+  .col-md-6.answer-likes
+    p.likes
+      ="Likes: #{answer.votes.likes.count}"
+    p.dislikes
+      ="Dislikes: #{answer.votes.dislikes.count}"
+  .col-md-6
+    p Attachments:
+    ul 
+      -answer.attachments.each do |attach|
+        li = link_to attach.file.identifier, attach.file.url
 
 =content_tag :div, class: "col-md-10 col-md-offset-1 answer-comments", id: "answer-#{answer.id}-comments"
   =render answer.comments

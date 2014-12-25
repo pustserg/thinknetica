@@ -20,6 +20,7 @@ class Answer < ActiveRecord::Base
 
   has_many :comments, as: :commentable
   has_many :attachments, as: :attachmentable
+  has_many :votes, as: :voteable
 
   accepts_nested_attributes_for :attachments
 
@@ -35,4 +36,12 @@ class Answer < ActiveRecord::Base
 
   end
 
+  def vote_up(user)
+    votes.create(user: user, status: "+")
+  end
+
+  def vote_down(user)
+    votes.create(user: user, status: "-")
+  end
+  
 end

@@ -6,6 +6,7 @@ class AnswersController < ApplicationController
   before_action :set_answer, except: [:new, :create]
   before_action :check_author, only: [:destroy, :edit, :update]
   before_action :check_question_author, only: :make_best
+  before_action :check_for_voting, only: [:vote_down, :vote_up]
 
   def create
     @answer = @question.answers.create(answer_params.merge(user: current_user))
@@ -32,6 +33,16 @@ class AnswersController < ApplicationController
     redirect_to @answer.question  
   end
 
+  def vote_up
+    @answer.vote_up(current_user)
+    redirect_to @answer.question
+  end
+
+  def vote_down
+    @answer.vote_down(current_user)
+    redirect_to @answer.question
+  end
+
   private
 
   def set_answer
@@ -55,6 +66,12 @@ class AnswersController < ApplicationController
   def check_question_author
     if current_user != @answer.question.user
       render json: { error: "fufufu" }, status: 403
+    end
+  end
+
+  def check_for_voting
+    if current_user == @answer.user
+      render json: { error: 'fufufu' }, status: 403
     end
   end
 

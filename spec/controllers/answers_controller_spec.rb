@@ -181,5 +181,49 @@ RSpec.describe AnswersController, :type => :controller do
 
   end
 
+  describe 'PATCH #vote_up' do
+    sign_in_user
+
+    context 'answer author tries to vote_up answer' do
+      it "does not creates a new vote" do
+        expect{ patch :vote_up, id: answer }.to_not change(answer.votes, :count)
+      end
+
+      it 'response status must be 403' do
+        patch :vote_up, id: answer
+        
+        expect(response.status).to eq 403
+      end  
+    end
+
+    context 'another user tries to vote_up answer' do
+      it 'create a new vote' do
+        expect{ patch :vote_up, id: another_answer }.to change(another_answer.votes, :count)
+      end
+    end
+  end
+
+  describe 'PATCH #vote_down' do
+    sign_in_user
+
+    context 'answer author tries to vote_down answer' do
+      it "does not creates a new vote" do
+        expect{ patch :vote_down, id: answer }.to_not change(answer.votes, :count)
+      end
+
+      it 'response status must be 403' do
+        patch :vote_down, id: answer
+        
+        expect(response.status).to eq 403
+      end  
+    end
+
+    context 'another user tries to vote_down answer' do
+      it 'create a new vote' do
+        expect{ patch :vote_down, id: another_answer }.to change(another_answer.votes, :count)
+      end
+    end
+  end
+
 
 end
