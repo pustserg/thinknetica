@@ -2,8 +2,9 @@ class QuestionsController < ApplicationController
 
   before_action :authenticate_user!, except: [:index, :show] 
   
-  before_action :set_resource, only: [:show, :edit, :update, :destroy]
+  before_action :set_resource, only: [:show, :edit, :update, :destroy, :vote_up, :vote_down]
   before_action :check_author, only: [:destroy, :edit, :update]
+  before_action :check_for_voting, only: [:vote_down, :vote_up]
 
   def index
     @questions = Question.all
@@ -41,6 +42,16 @@ class QuestionsController < ApplicationController
     redirect_to questions_path
   end
 
+  def vote_up
+    @resource.vote_up(current_user)
+    redirect_to @resource
+  end
+
+  def vote_down
+    @resource.vote_down(current_user)
+    redirect_to @resource
+  end
+
   private
 
   def set_resource
@@ -51,10 +62,10 @@ class QuestionsController < ApplicationController
     params.require(:question).permit(:title, :body, attachments_attributes: [:file])
   end
 
-  # def check_author
-  #   if current_user != @question.user
-  #     render json: { error: 'fufufu' }, status: 403
-  #   end
-  # end
+  def check_for_voting
+    if current_user == @resource.user
+      render json: { error: 'fufufu' }, status: 403
+    end
+  end
 
 end

@@ -26,4 +26,12 @@ class Question < ActiveRecord::Base
     answers.where(best: true).first
   end
 
+  def vote_up(user)
+    votes.create(user: user, status: "+")
+  end
+
+  def vote_down(user)
+    votes.create(user: user, status: "-")
+  end
+
 end
