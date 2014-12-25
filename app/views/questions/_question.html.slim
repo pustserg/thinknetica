@@ -6,8 +6,8 @@
 -unless current_user == question.user      
   .col-md-1.vote
     ul.nav.nav-stacked
-      li =link_to '+', '#'
-      li =link_to '-', '#'
+      li =link_to '+', vote_up_question_path
+      li =link_to '-', vote_down_question_path
 - if question.user == current_user
   .col-md-2.actions
     ul.nav.nav-stacked 

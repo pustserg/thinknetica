@@ -7,12 +7,17 @@ Rails.application.routes.draw do
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
+  concern :voteable do
+    patch :vote_up, on: :member
+    patch :vote_down, on: :member
+  end
+
   concern :commentable do
     resources :comments
   end
 
-  resources :questions, concerns: :commentable, shallow: true do
-    resources :answers, concerns: :commentable do
+  resources :questions, concerns: [:commentable, :voteable], shallow: true do
+    resources :answers, concerns: [:commentable, :voteable] do
       patch :make_best, on: :member
     end
   end
