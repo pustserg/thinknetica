@@ -2,12 +2,13 @@
 #
 # Table name: comments
 #
-#  id             :integer          not null, primary key
-#  body           :text             not null
-#  commentable_id :integer
-#  created_at     :datetime
-#  updated_at     :datetime
-#  user_id        :integer
+#  id               :integer          not null, primary key
+#  body             :text             not null
+#  commentable_id   :integer
+#  created_at       :datetime
+#  updated_at       :datetime
+#  user_id          :integer
+#  commentable_type :string(255)
 #
 
 FactoryGirl.define do
