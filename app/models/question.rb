@@ -13,9 +13,9 @@
 #
 
 class Question < ActiveRecord::Base
-  before_validation :create_slug
+  before_save :create_slug
 
-  validates :title, :body, :user_id, :slug, presence: true
+  validates :title, :body, :user_id, presence: true
 
   has_many :answers
   has_many :comments, as: :commentable
@@ -38,11 +38,11 @@ class Question < ActiveRecord::Base
   end
 
   def to_param
-    "#{id}_#{title}".parameterize
+    "#{id}_#{slug}".parameterize
   end
 
   def create_slug
-      self.slug = self.title if !self.slug
+      self.slug = Russian::transliterate(self.title) if !self.slug
   end
 
 end
