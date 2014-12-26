@@ -134,4 +134,48 @@ RSpec.describe CommentsController, :type => :controller do
 
   end
 
+  describe 'PATCH #vote_up' do
+    sign_in_user
+
+    context 'comment author tries to vote_up comment' do
+      it "does not creates a new vote" do
+        expect{ patch :vote_up, id: comment }.to_not change(comment.votes, :count)
+      end
+
+      it 'response status must be 403' do
+        patch :vote_up, id: comment
+        
+        expect(response.status).to eq 403
+      end  
+    end
+
+    context 'another user tries to vote_up comment' do
+      it 'create a new vote' do
+        expect{ patch :vote_up, id: another_comment }.to change(another_comment.votes, :count)
+      end
+    end
+  end
+
+  describe 'PATCH #vote_down' do
+    sign_in_user
+
+    context 'comment author tries to vote_down comment' do
+      it "does not creates a new vote" do
+        expect{ patch :vote_down, id: comment }.to_not change(comment.votes, :count)
+      end
+
+      it 'response status must be 403' do
+        patch :vote_down, id: comment
+        
+        expect(response.status).to eq 403
+      end  
+    end
+
+    context 'another user tries to vote_down comment' do
+      it 'create a new vote' do
+        expect{ patch :vote_down, id: another_comment }.to change(another_comment.votes, :count)
+      end
+    end
+  end
+
 end

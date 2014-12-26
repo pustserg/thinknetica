@@ -1,8 +1,9 @@
 class CommentsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_commentable, only: [:new, :create]
-  before_action :set_resource, only: [:edit, :update, :destroy]
+  before_action :set_resource, only: [:edit, :update, :destroy, :vote_up, :vote_down]
   before_action :check_author, only: [:edit, :update, :destroy]
+  before_action :check_for_voting, only: [:vote_up, :vote_down]
 
   def new
     @resource = @commentable.comments.new
@@ -28,6 +29,16 @@ class CommentsController < ApplicationController
     end
   end
 
+  def vote_up
+    @resource.vote_up(current_user)
+    redirect_to @resource.commentable
+  end
+
+  def vote_down
+    @resource.vote_down(current_user)
+    redirect_to @resource.commentable
+  end
+
   private
 
   def comment_params
@@ -45,6 +56,12 @@ class CommentsController < ApplicationController
 
   def set_resource
     @resource = Comment.find(params[:id])
+  end
+
+  def check_for_voting
+    if current_user == @resource.user
+      render json: { error: 'fufufu' }, status: 403
+    end
   end
 
 end

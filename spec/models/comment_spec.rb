@@ -18,4 +18,5 @@ RSpec.describe Comment, :type => :model do
   it { should validate_presence_of :commentable_id }
   it { should belong_to :commentable }
   it { should belong_to :user }
+  it { should have_many :votes }
 end

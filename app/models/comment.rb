@@ -16,4 +16,13 @@ class Comment < ActiveRecord::Base
   validates :body, :user_id, :commentable_id, presence: true
   belongs_to :commentable, polymorphic: true
   belongs_to :user
+  has_many :votes, as: :voteable
+
+  def vote_up(user)
+    votes.create(user: user, status: "+")
+  end
+
+  def vote_down(user)
+    votes.create(user: user, status: "-")
+  end
 end
