@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 require 'feature_helper'
 
 feature 'Guests are able to see questions and answers', %q{

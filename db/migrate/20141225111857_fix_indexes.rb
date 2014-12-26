@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class FixIndexes < ActiveRecord::Migration
   def change
     remove_index :attachments, :attachmentable_id

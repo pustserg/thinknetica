@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 module ControllerMacros
   
   def sign_in_user

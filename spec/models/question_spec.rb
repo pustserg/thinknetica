@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 # == Schema Information
 #
 # Table name: questions
@@ -8,6 +9,7 @@
 #  created_at :datetime
 #  updated_at :datetime
 #  user_id    :integer
+#  slug       :string(255)
 #
 
 require 'rails_helper'
@@ -22,6 +24,7 @@ RSpec.describe Question, :type => :model do
   it { should validate_presence_of :title }
   it { should validate_presence_of :body }
   it { should validate_presence_of :user_id }
+  it { should validate_presence_of :slug }
 
   it { should  accept_nested_attributes_for :attachments}
 

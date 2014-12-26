@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 require 'feature_helper'
 
 feature 'User can create comment to a question', %q{

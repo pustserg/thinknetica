@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 require 'feature_helper'
 
 feature 'User adds vote for question', %q{

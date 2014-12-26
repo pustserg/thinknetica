@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class CommentsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_commentable, only: [:new, :create]

@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 # == Schema Information
 #
 # Table name: questions
@@ -8,6 +9,7 @@
 #  created_at :datetime
 #  updated_at :datetime
 #  user_id    :integer
+#  slug       :string(255)
 #
 
 FactoryGirl.define do

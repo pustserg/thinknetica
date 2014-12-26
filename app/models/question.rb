@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 # == Schema Information
 #
 # Table name: questions
@@ -8,11 +9,13 @@
 #  created_at :datetime
 #  updated_at :datetime
 #  user_id    :integer
+#  slug       :string(255)
 #
 
 class Question < ActiveRecord::Base
+  before_validation :create_slug
 
-  validates :title, :body, :user_id, presence: true
+  validates :title, :body, :user_id, :slug, presence: true
 
   has_many :answers
   has_many :comments, as: :commentable
@@ -32,6 +35,14 @@ class Question < ActiveRecord::Base
 
   def vote_down(user)
     votes.create(user: user, status: "-")
+  end
+
+  def to_param
+    "#{id}_#{title}".parameterize
+  end
+
+  def create_slug
+      self.slug = self.title if !self.slug
   end
 
 end

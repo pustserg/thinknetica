@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 module FeatureHelpers
   
   def sign_in(user)
