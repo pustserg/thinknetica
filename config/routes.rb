@@ -23,6 +23,8 @@ Rails.application.routes.draw do
     end
   end
 
+  get '/profile/:id', to: 'users#show', as: 'profile'
+
   root 'questions#index'
 
   # You can have the root of your site routed with "root"
