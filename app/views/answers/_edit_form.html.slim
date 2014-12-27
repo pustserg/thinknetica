@@ -1,9 +1,8 @@
-.row
-  .col-md-6.offset-col-md-3
-    =form_for @answer, remote: true do |f|
-      .form-group
-        =f.label :body
-        br
-        =f.text_area :body, cols: 40, rows: 10
-      .form-group
-        =f.submit 'Update answer', class: "btn btn-success"
+.col-md-6.offset-col-md-3
+  =form_for @answer, remote: true do |f|
+    .form-group
+      =f.label :body
+      br
+      =f.text_area :body, cols: 40, rows: 10
+    .form-group
+      =f.submit 'Update answer', class: "btn btn-success"

@@ -1,16 +1,15 @@
-.row
-  .col-md-6.offset-col-md-3
-    =form_for @question do |f|
-      =f.label :title
-      br
-      =f.text_field :title
+.col-md-6.offset-col-md-3
+  =form_for @question do |f|
+    =f.label :title
+    br
+    =f.text_field :title
 
-      br
+    br
 
-      =f.label :body
-      br
-      =f.text_area :body
+    =f.label :body
+    br
+    =f.text_area :body
 
-      br
+    br
 
-      =f.submit 'Update question'
+    =f.submit 'Update question'
