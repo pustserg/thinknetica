@@ -4,6 +4,7 @@ class UsersController < ApplicationController
 
   def show
     @questions = @user.questions
+    @answers = @user.answers
   end
 
   private

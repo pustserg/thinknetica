@@ -2,6 +2,10 @@
   h1
     =@user.email
   hr
-  .questions
+  .questions.col-md-12
+    h3 Questions
     =render @questions
+  .answers.col-md-12
+    h3 Answers
+    =render @answers
 
