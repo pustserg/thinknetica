@@ -24,7 +24,36 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
+  USER_ACTIONS = ['questions', 'answers', 'comments']
+
   has_many :questions
   has_many :answers
+  has_many :comments
+  has_many :votes
   
+  def karma
+    likes_count - dislikes_count
+  end
+
+  def likes_count
+    result = 0
+    USER_ACTIONS.each do |type|
+      result += votes_for(type).likes.count
+    end
+    result
+  end
+
+  def dislikes_count
+    result = 0
+    USER_ACTIONS.each do |type|
+      result += votes_for(type).dislikes.count
+    end
+    result
+  end
+
+  private
+  def votes_for(type)
+    Vote.joins("join #{type} on votes.voteable_id=#{type}.id").where("#{type}.user_id = ?", self.id)
+  end
+
 end
