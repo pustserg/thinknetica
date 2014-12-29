@@ -1,10 +1,14 @@
 # -*- encoding : utf-8 -*-
 class CommentsController < ApplicationController
-  before_action :authenticate_user!
+  before_action :authenticate_user!, except: :show
   before_action :set_commentable, only: [:new, :create]
-  before_action :set_resource, only: [:edit, :update, :destroy, :vote_up, :vote_down]
+  before_action :set_resource, only: [:edit, :update, :destroy, :vote_up, :vote_down, :show]
   before_action :check_author, only: [:edit, :update, :destroy]
   before_action :check_for_voting, only: [:vote_up, :vote_down]
+
+  def show
+    redirect_to @resource.commentable
+  end
 
   def new
     @resource = @commentable.comments.new
