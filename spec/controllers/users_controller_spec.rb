@@ -7,6 +7,7 @@ RSpec.describe UsersController, :type => :controller do
   describe 'GET #show' do
     let(:questions) { create_list(:question, 2, user: user) }
     let(:answers) { create_list(:answer, 2, user: user) }
+    let(:comments) { create_list(:question_comment, 2, user: user) }
     
     it 'assigns requested user as user' do
       get :show, id: user
@@ -18,6 +19,12 @@ RSpec.describe UsersController, :type => :controller do
       get :show, id: questions[0].user
 
       expect(assigns(:questions)).to match_array(questions)
+    end
+
+    it "populates array of comments" do
+      get :show, id: comments[0].user
+
+      expect(assigns(:comments)).to match_array(comments)
     end
 
     it 'populates array of answers' do
