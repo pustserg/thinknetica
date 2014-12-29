@@ -8,7 +8,11 @@ class QuestionsController < ApplicationController
   before_action :check_for_voting, only: [:vote_down, :vote_up]
 
   def index
-    @questions = Question.all
+    if params[:tag]
+      @questions = Question.tagged_with(params[:tag])
+    else
+      @questions = Question.all
+    end
   end
 
   def show
@@ -60,7 +64,7 @@ class QuestionsController < ApplicationController
   end
 
   def question_params
-    params.require(:question).permit(:title, :body, attachments_attributes: [:file])
+    params.require(:question).permit(:title, :body, :tag_list, attachments_attributes: [:file])
   end
 
   def check_for_voting

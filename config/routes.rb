@@ -24,6 +24,7 @@ Rails.application.routes.draw do
   end
 
   get '/profile/:id', to: 'users#show', as: 'profile'
+  get 'tags/:tag', to: 'questions#index', as: :tag
 
   root 'questions#index'
 

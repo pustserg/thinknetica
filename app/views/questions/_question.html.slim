@@ -13,6 +13,11 @@
     ul.nav.nav-stacked 
       li =link_to 'Edit question', edit_question_path(question), remote: true
       li =link_to 'Delete question', question, method: :delete
+.col-md-12.tags
+   p.
+    |Tags 
+    - question.tags.each do |t| 
+      =link_to "#{t.name}, ", tag_path(t.name)
 .col-md-12.question-stats
   .col-md-2
     ="#{question.answers.count} answers"
