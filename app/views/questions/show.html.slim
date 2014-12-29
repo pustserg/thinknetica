@@ -1,11 +1,11 @@
-=content_tag :div, class: "question col-md-9", id: "question-#{@resource.id}"
-  =render @resource
 
-  .col-md-12.attachments
-    p Attachments:
-    ul 
-      -@resource.attachments.each do |attach|
-        li = link_to attach.file.identifier, attach.file.url
+=render @resource
+
+.col-md-9.attachments
+  p Attachments:
+  ul 
+    -@resource.attachments.each do |attach|
+      li = link_to attach.file.identifier, attach.file.url
 
 .col-md-9.question-comments
 

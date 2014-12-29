@@ -1,28 +1,29 @@
-.col-md-12.title
-  =link_to_unless_current(question.title, { controller: 'questions', action: 'show', id: question })
-.col-md-9
-  p.body
-    =question.body
--if current_user and current_user != question.user      
-  .col-md-1.vote
-    ul.nav.nav-stacked
-      li =link_to '+', vote_up_question_path(question), method: :patch
-      li =link_to '-', vote_down_question_path(question), method: :patch
-- if question.user == current_user
-  .col-md-2.actions
-    ul.nav.nav-stacked 
-      li =link_to 'Edit question', edit_question_path(question), remote: true
-      li =link_to 'Delete question', question, method: :delete
-.col-md-12.tags
-   p.
-    |Tags 
-    - question.tags.each do |t| 
-      =link_to "#{t.name}, ", tag_path(t.name)
-.col-md-12.question-stats
-  .col-md-2
-    ="#{question.answers.count} answers"
-  .col-md-2.likes
-    p.likes
-      ="Likes: #{question.votes.likes.count}"
-    p.dislikes
-      ="Dislikes: #{question.votes.dislikes.count}"
+=content_tag :div, class: "question col-md-9", id: "question-#{question.id}"
+  .col-md-12.title
+    =link_to_unless_current(question.title, { controller: 'questions', action: 'show', id: question })
+  .col-md-9
+    p.body
+      =question.body
+  -if current_user and current_user != question.user      
+    .col-md-1.vote
+      ul.nav.nav-stacked
+        li =link_to '+', vote_up_question_path(question), method: :patch
+        li =link_to '-', vote_down_question_path(question), method: :patch
+  - if question.user == current_user
+    .col-md-2.actions
+      ul.nav.nav-stacked 
+        li =link_to 'Edit question', edit_question_path(question), remote: true
+        li =link_to 'Delete question', question, method: :delete
+  .col-md-12.tags
+     p.tags
+      |Tags: 
+      - question.tags.each do |t| 
+        ='link_to "#{t.name}", tag_path(t.name)
+  .col-md-12.question-stats
+    .col-md-2
+      ="#{question.answers.count} answers"
+    .col-md-2.likes
+      p.likes
+        ="Likes: #{question.votes.likes.count}"
+      p.dislikes
+        ="Dislikes: #{question.votes.dislikes.count}"
