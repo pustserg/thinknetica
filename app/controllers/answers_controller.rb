@@ -1,13 +1,17 @@
 # -*- encoding : utf-8 -*-
 class AnswersController < ApplicationController
 
-  before_action :authenticate_user!
+  before_action :authenticate_user!, except: :show
   
   before_action :set_question, only: [:new, :create]
   before_action :set_answer, except: [:new, :create]
   before_action :check_author, only: [:destroy, :edit, :update]
   before_action :check_question_author, only: :make_best
   before_action :check_for_voting, only: [:vote_down, :vote_up]
+
+  def show
+    redirect_to @answer.question
+  end
 
   def create
     @answer = @question.answers.create(answer_params.merge(user: current_user))

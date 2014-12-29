@@ -32,21 +32,29 @@ class User < ActiveRecord::Base
   has_many :votes
   
   def karma
-    likes_count - dislikes_count
+    likes.count - dislikes.count
   end
 
-  def likes_count
-    result = 0
+  def likes
+    result = Vote.none
     USER_ACTIONS.each do |type|
-      result += votes_for(type).likes.count
+      result += votes_for(type).likes
     end
     result
   end
 
-  def dislikes_count
-    result = 0
+  def dislikes
+    result = Vote.none
     USER_ACTIONS.each do |type|
-      result += votes_for(type).dislikes.count
+      result += votes_for(type).dislikes
+    end
+    result
+  end
+
+  def user_votes
+    result = Vote.none
+     USER_ACTIONS.each do |type|
+      result += votes_for(type)
     end
     result
   end

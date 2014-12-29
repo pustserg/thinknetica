@@ -1,14 +1,23 @@
 .col-md-9
   h1
     ="#{@user.email} karma: #{@user.karma}"
-  hr
-  .questions.col-md-12
+  #questions.col-md-12
     h3 Questions
     =render @questions
-  .answers.col-md-12
-    h3 Answers
-    =render @answers
-  .comments.col-md-12
-    h3 Comments
-    =render @comments
+  #answers.col-md-12
+      h3 Answers
+      =render @answers
+  #comments.col-md-12
+      h3 Comments
+      =render @comments
+  #votes.col-md-12
+      h3 Votes
+      - @user.user_votes.each do |vote|
+          p.time 
+            =vote.created_at
+          p.status
+            =vote.status
+          p.voteable
+            =link_to vote.voteable.body, polymorphic_path(vote.voteable)
+          hr
 

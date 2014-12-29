@@ -9,6 +9,17 @@ RSpec.describe AnswersController, :type => :controller do
   let(:answer) { create(:answer, user: @user, question: question) }
   let(:another_answer) { create(:answer, user: another_user, question: another_question) }
 
+  describe 'GET #show' do
+    before { another_answer }
+
+    it 'redirects to question' do
+      get :show, id: another_answer
+
+      expect(response).to redirect_to another_answer.question
+    end
+
+  end
+
   describe 'POST #create' do
     sign_in_user
 
