@@ -8,7 +8,7 @@ class QuestionsController < ApplicationController
   before_action :check_for_voting, only: [:vote_down, :vote_up]
 
   def index
-    @tags = Question.tag_counts_on(:tags)
+    # @tags = Question.tag_counts_on(:tags)
     if params[:tag]
       @questions = Question.tagged_with(params[:tag])
     else

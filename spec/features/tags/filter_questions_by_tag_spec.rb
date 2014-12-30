@@ -8,9 +8,11 @@ feature 'Guest can filter question list by tag' do
 
   scenario 'when visit question index page with tag' do
     visit tag_path('first')
-    
-    expect(page).to have_content 'first'
-    expect(page).to_not have_content 'second'
+
+    within('.questions') do
+      expect(page).to have_content 'first'
+      expect(page).to_not have_content 'second'
+    end
   end
 
 end
