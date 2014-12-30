@@ -8,13 +8,18 @@ RSpec.describe QuestionsController, :type => :controller do
   let(:another_question) { create(:question, user: another_user) }
 
   describe 'GET #index' do
-    let(:questions) { create_list(:question, 2, user: user) }
+    let(:questions) { create_list(:question, 2, user: user, tag_list: "first, second") }
 
     before { get :index }
 
     it "populates array of questions" do
       expect(assigns(:questions)).to match_array(questions)
     end
+
+    # it "populates array of tags" do
+    #   puts assigns(:tags)
+    #   expect(assigns(:tags)).to match_array(['first', 'second'])
+    # end
 
     it 'render index view' do
       expect(response).to render_template :index

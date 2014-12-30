@@ -7,3 +7,8 @@
       li =link_to 'Sign in', new_user_session_path
 
     li =link_to 'All questions', questions_path
+  hr
+  p Tags
+  ul.nav.nav-pills.nav-stacked.tag_cloud
+    -@tags.each do |tag|
+      li=link_to "#{tag.name}  #{tag.taggings_count}", tag_path(tag.name)
