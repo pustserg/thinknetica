@@ -21,9 +21,12 @@ class Question < ActiveRecord::Base
   has_many :comments, as: :commentable
   has_many :attachments, as: :attachmentable 
   has_many :votes, as: :voteable
+  has_many :taggings
+  has_many :tags, through: :taggings
   belongs_to :user
 
   accepts_nested_attributes_for :attachments
+  accepts_nested_attributes_for :tags
 
   def best_answer
     answers.where(best: true).first

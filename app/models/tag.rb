@@ -4,9 +4,11 @@
 #
 #  id             :integer          not null, primary key
 #  name           :string(255)
-#  taggings_count :integer          default(0)
 #
 
 class Tag < ActiveRecord::Base
   validates :name, presence: true
+
+  has_many :taggings
+  has_many :questions, through: :taggings
 end
