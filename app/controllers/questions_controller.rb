@@ -19,6 +19,7 @@ class QuestionsController < ApplicationController
   def new
     @question = Question.new
     @question.attachments.build
+    @question.tags.build
   end
 
   def create
