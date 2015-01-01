@@ -49,14 +49,19 @@ class Question < ActiveRecord::Base
   end
 
   def tag_list
-    self.tags.join(', ')
+    list = []
+    self.tags.each do |t|
+      list << t.name
+    end
+    list.join(', ')
   end
 
   def tag_list=(tag_list)
+    self.tags = []
     tags = tag_list.split(', ')
     tags.each do |t|
       tag = Tag.find_or_create_by(name: t)
-      self.tags << tag
+      self.tags << tag unless self.tags.include?(tag)
     end
   end
 
