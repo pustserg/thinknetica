@@ -19,11 +19,13 @@ class QuestionsController < ApplicationController
   def new
     @question = Question.new
     @question.attachments.build
-    @question.tags.build
+    @question.tag_list
+    # @question.tags.build
   end
 
   def create
     @question = current_user.questions.new(question_params)
+
     if @question.save
       redirect_to @question
     else
@@ -61,7 +63,7 @@ class QuestionsController < ApplicationController
   end
 
   def question_params
-    params.require(:question).permit(:title, :body, attachments_attributes: [:file])
+    params.require(:question).permit(:title, :body, :tag_list, attachments_attributes: [:file])
   end
 
   def check_for_voting

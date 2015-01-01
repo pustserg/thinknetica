@@ -48,4 +48,15 @@ class Question < ActiveRecord::Base
       self.slug = Russian::transliterate(self.title) if !self.slug
   end
 
+  def tag_list
+    self.tags.join(', ')
+  end
+
+  def tag_list=(tag_list)
+    tags = tag_list.split(', ')
+    tags.each do |tag|
+      self.tags.new(name: tag)
+    end
+  end
+
 end
