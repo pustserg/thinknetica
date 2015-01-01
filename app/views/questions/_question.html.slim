@@ -15,7 +15,7 @@
       li =link_to 'Delete question', question, method: :delete
 .col-md-12.question-tags
   -question.tags.each do |tag|
-    ="#{tag.name}, "
+    =' link_to tag.name, tag_path(tag.name)
 .col-md-12.question-stats
   .col-md-2
     ="#{question.answers.count} answers"

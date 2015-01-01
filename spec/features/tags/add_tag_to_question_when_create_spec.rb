@@ -8,7 +8,7 @@ feature 'User adds a tags to a question when creates a question' do
     visit new_question_path
     fill_in 'Title', with: 'test question'
     fill_in 'Body', with: 'text of test question'
-    fill_in 'Tags', with: 'test, tag'
+    fill_in 'question[tag_list]', with: 'test, tag'
     click_on 'Create question'
 
     expect(page).to have_link 'test'

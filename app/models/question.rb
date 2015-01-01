@@ -54,8 +54,9 @@ class Question < ActiveRecord::Base
 
   def tag_list=(tag_list)
     tags = tag_list.split(', ')
-    tags.each do |tag|
-      self.tags.new(name: tag)
+    tags.each do |t|
+      tag = Tag.find_or_create_by(name: t)
+      self.tags << tag
     end
   end
 

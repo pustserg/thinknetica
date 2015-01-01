@@ -8,7 +8,11 @@ class QuestionsController < ApplicationController
   before_action :check_for_voting, only: [:vote_down, :vote_up]
 
   def index
-    @questions = Question.all
+    if params[:tag_name]
+      @questions = Tag.find_by(name: params[:tag_name]).questions
+    else
+      @questions = Question.all
+    end
   end
 
   def show
@@ -19,8 +23,7 @@ class QuestionsController < ApplicationController
   def new
     @question = Question.new
     @question.attachments.build
-    @question.tag_list
-    # @question.tags.build
+    # @question.tag_list
   end
 
   def create
