@@ -75,8 +75,13 @@ class AnswersController < ApplicationController
   end
 
   def check_for_voting
-    if current_user == @answer.user
-      render json: { error: 'fufufu' }, status: 403
+ 
+    render json: { error: 'fufufu' }, status: 403 if current_user == @answer.user
+    
+    @answer.votes.each do |vote|
+      if vote.user == current_user
+        redirect_to @answer
+      end
     end
   end
 

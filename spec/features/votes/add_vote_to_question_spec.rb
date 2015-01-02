@@ -30,16 +30,29 @@ feature 'User adds vote for question', %q{
     end
   end
 
-  scenario 'user tries to vote for another user question', js: true do
+  scenario 'user tries to like for another user question', js: true do
     sign_in dave
     visit question_path(question)
 
     within('.question') do
       click_on "+"
-      click_on "-"
+      click_on "+"
 
       expect(page).to have_content 'Likes: 1'
+
+    end
+  end
+
+  scenario 'user tries to dislike for another user question', js: true do
+    sign_in dave
+    visit question_path(question)
+
+    within('.question') do
+      click_on "-"
+      click_on "-"
+
       expect(page).to have_content 'Dislikes: 1'
+
     end
   end
 
