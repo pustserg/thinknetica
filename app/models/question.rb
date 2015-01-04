@@ -44,17 +44,8 @@ class Question < ActiveRecord::Base
     "#{id}-#{slug}".parameterize
   end
 
-  private
-  def create_slug
-      self.slug = Russian::transliterate(self.title) if !self.slug
-  end
-
   def tag_list
-    list = []
-    self.tags.each do |t|
-      list << t.name
-    end
-    list.join(', ')
+    self.tags.map(&:name).join(', ')
   end
 
   def tag_list=(tag_list)
@@ -64,6 +55,11 @@ class Question < ActiveRecord::Base
       tag = Tag.find_or_create_by(name: t)
       self.tags << tag unless self.tags.include?(tag)
     end
+  end
+
+  private
+  def create_slug
+      self.slug = Russian::transliterate(self.title) if !self.slug
   end
 
 end
