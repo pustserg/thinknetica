@@ -26,7 +26,6 @@ class Question < ActiveRecord::Base
   belongs_to :user
 
   accepts_nested_attributes_for :attachments
-  accepts_nested_attributes_for :tags
 
   def best_answer
     answers.where(best: true).first
@@ -41,7 +40,7 @@ class Question < ActiveRecord::Base
   end
 
   def to_param
-    "#{id}_#{slug}".parameterize
+    "#{id}-#{slug}".parameterize
   end
 
   def create_slug
