@@ -13,17 +13,18 @@
 #
 
 class Question < ActiveRecord::Base
-  before_save :create_slug
+
+  has_many :answers, dependent: :restrict_with_error
+  has_many :comments, as: :commentable, dependent: :restrict_with_error
+  has_many :attachments, as: :attachmentable, dependent: :destroy
+  has_many :votes, as: :voteable, dependent: :restrict_with_error
+  has_many :taggings, dependent: :destroy
+  has_many :tags, through: :taggings
+  belongs_to :user
 
   validates :title, :body, :user_id, presence: true
 
-  has_many :answers
-  has_many :comments, as: :commentable
-  has_many :attachments, as: :attachmentable 
-  has_many :votes, as: :voteable
-  has_many :taggings
-  has_many :tags, through: :taggings
-  belongs_to :user
+  before_save :create_slug
 
   accepts_nested_attributes_for :attachments
 
@@ -43,6 +44,7 @@ class Question < ActiveRecord::Base
     "#{id}-#{slug}".parameterize
   end
 
+  private
   def create_slug
       self.slug = Russian::transliterate(self.title) if !self.slug
   end

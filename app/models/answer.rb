@@ -14,14 +14,14 @@
 
 class Answer < ActiveRecord::Base
 
-  validates :body, :question_id, :user_id, presence: true
-
   belongs_to :question
   belongs_to :user
 
-  has_many :comments, as: :commentable
-  has_many :attachments, as: :attachmentable
-  has_many :votes, as: :voteable
+  has_many :comments, as: :commentable, dependent: :restrict_with_error
+  has_many :attachments, as: :attachmentable, dependent: :destroy
+  has_many :votes, as: :voteable, dependent: :restrict_with_error
+
+  validates :body, :question_id, :user_id, presence: true
 
   accepts_nested_attributes_for :attachments
 

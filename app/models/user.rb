@@ -26,10 +26,10 @@ class User < ActiveRecord::Base
 
   USER_ACTIONS = ['questions', 'answers', 'comments']
 
-  has_many :questions
-  has_many :answers
-  has_many :comments
-  has_many :votes
+  has_many :questions, dependent: :restrict_with_error
+  has_many :answers, dependent: :restrict_with_error
+  has_many :comments, dependent: :restrict_with_error
+  has_many :votes, dependent: :restrict_with_error
   
   def karma
     likes.count - dislikes.count
