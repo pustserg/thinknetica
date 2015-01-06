@@ -80,7 +80,7 @@ class AnswersController < ApplicationController
     
     @answer.votes.each do |vote|
       if vote.user == current_user
-        redirect_to @answer
+        redirect_to @answer and return
       end
     end
   end

@@ -69,7 +69,7 @@ class CommentsController < ApplicationController
     
     @resource.votes.each do |vote|
       if vote.user == current_user
-        redirect_to @resource
+        redirect_to @resource and return
       end
     end
   end
