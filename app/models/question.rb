@@ -28,6 +28,10 @@ class Question < ActiveRecord::Base
 
   accepts_nested_attributes_for :attachments
 
+  searchable do
+    text :title, :body
+  end
+
   def best_answer
     answers.where(best: true).first
   end

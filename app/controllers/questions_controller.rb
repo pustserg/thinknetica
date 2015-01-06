@@ -10,6 +10,11 @@ class QuestionsController < ApplicationController
   def index
     if params[:tag_name]
       @questions = Tag.find_by(name: params[:tag_name]).questions
+    elsif params[:search]
+      @query = Question.search do
+        fulltext params[:search]
+      end
+      @questions = @query.results
     else
       @questions = Question.all
     end

@@ -36,6 +36,7 @@ gem 'nested_form'
 
 gem 'russian'
 
+gem 'sunspot_rails'
 # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
 gem 'spring',        group: :development
 
@@ -54,6 +55,8 @@ end
 
 group :development do
   gem 'annotate'
+  gem 'sunspot_solr'
+  gem 'progress_bar'
 end
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
