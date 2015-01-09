@@ -10,6 +10,7 @@
 #  updated_at :datetime
 #  user_id    :integer
 #  slug       :string(255)
+#  answered   :boolean          default(FALSE)
 #
 
 require 'rails_helper'
@@ -54,18 +55,18 @@ RSpec.describe Question, :type => :model do
     end
   end
 
-  describe 'has_best_answer and without_best_answer methods' do
-    context 'has_best_answer' do
-      it 'returns question with best answer' do
-        expect(Question.has_best_answer.first).to eq question
-      end
-    end
+  # describe 'has_best_answer and without_best_answer methods' do
+  #   context 'has_best_answer' do
+  #     it 'returns question with best answer' do
+  #       expect(Question.has_best_answer.first).to eq question
+  #     end
+  #   end
 
-    context 'not answered questions' do
-      it 'returns question without best answer' do
-        expect(Question.without_best_answer.first).to eq another_question
-      end
-    end
-  end
+  #   context 'not answered questions' do
+  #     it 'returns question without best answer' do
+  #       expect(Question.without_best_answer.first).to eq another_question
+  #     end
+  #   end
+  # end
 
 end

@@ -35,6 +35,7 @@ class AnswersController < ApplicationController
 
   def make_best
     @answer.make_best
+    @answer.question.make_answered
     redirect_to @answer.question  
   end
 

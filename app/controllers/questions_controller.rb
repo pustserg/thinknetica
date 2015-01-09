@@ -15,6 +15,12 @@ class QuestionsController < ApplicationController
         fulltext params[:search]
       end
       @questions = @query.results
+    elsif params[:filter]
+      if params[:filter] == 'answered'
+        @questions = Question.answered
+      elsif params[:filter] == 'not_answered'
+        @questions = Question.not_answered
+      end   
     else
       @questions = Question.all
     end

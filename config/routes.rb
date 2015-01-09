@@ -25,6 +25,7 @@ Rails.application.routes.draw do
 
   get '/profile/:id', to: 'users#show', as: 'profile'
   get '/tag/:tag_name', to: 'questions#index', as: 'tag'
+  get '/questions/(:filter)', to: 'questions#index'
 
   root 'questions#index'
 

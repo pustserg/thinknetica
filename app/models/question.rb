@@ -10,6 +10,7 @@
 #  updated_at :datetime
 #  user_id    :integer
 #  slug       :string(255)
+#  answered   :boolean          default(FALSE)
 #
 
 class Question < ActiveRecord::Base
@@ -26,6 +27,9 @@ class Question < ActiveRecord::Base
 
   before_save :create_slug
 
+  scope :answered, -> { where(answered: true) }
+  scope :not_answered, -> { where(answered: false) }
+
   accepts_nested_attributes_for :attachments
 
   searchable do
@@ -36,25 +40,29 @@ class Question < ActiveRecord::Base
     answers.where(best: true).first
   end
 
-  def answered?
-    !best_answer.nil?
+  def make_answered
+    update(answered: true)
   end
 
-  def self.has_best_answer
-    result = []
-    Question.all.each do |question|
-      result << question if question.answered?
-    end
-    result
-  end
+  # def answered?
+  #   !best_answer.nil?
+  # end
 
-  def self.without_best_answer
-    result = []
-    Question.all.each do |question|
-      result << question unless question.answered?
-    end
-    result
-  end
+  # def self.has_best_answer
+  #   result = []
+  #   Question.all.each do |question|
+  #     result << question if question.answered?
+  #   end
+  #   result
+  # end
+
+  # def self.without_best_answer
+  #   result = []
+  #   Question.all.each do |question|
+  #     result << question unless question.answered?
+  #   end
+  #   result
+  # end
 
   def vote_up(user)
     votes.create(user: user, status: "+")

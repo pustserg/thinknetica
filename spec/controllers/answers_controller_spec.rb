@@ -178,6 +178,7 @@ RSpec.describe AnswersController, :type => :controller do
         answer.reload
         
         expect(answer.best).to be true
+        expect(answer.question.answered).to be true
       end
     end
 

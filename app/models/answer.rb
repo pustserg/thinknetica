@@ -27,14 +27,12 @@ class Answer < ActiveRecord::Base
 
 
   def make_best
-    
     if question.best_answer.nil?
       update(best: true)
     elsif question.best_answer != self
       question.best_answer.update(best: false)
       update(best: true)
     end
-
   end
 
   def vote_up(user)
