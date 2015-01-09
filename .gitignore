@@ -17,5 +17,5 @@
 /.idea
 /public/uploads
 /config/database.yml
-/solr/*
-solr/
+/solr
+solr/*
