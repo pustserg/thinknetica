@@ -20,6 +20,8 @@
       =content_tag :div, class: "col-md-12", id: "answer-#{answer.id}"
         =render answer
 
+  =subscribe_to "/questions/#{@resource.id}/answers"
+
 .col-md-9
   -if current_user
     =render 'answers/new_form'
