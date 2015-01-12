@@ -3,6 +3,8 @@
     .col-md-2.logo
       =link_to 'Think', root_path
     .col-md-8.search
-      | search form
+      =form_tag questions_path, method: :get
+        =text_field_tag :search, params[:search]
+        =submit_tag 'Find', name: nil, class: "btn btn-success"
     .col-md-2
       = link_to 'Ask question', new_question_path, class: 'btn btn-success center-block'
