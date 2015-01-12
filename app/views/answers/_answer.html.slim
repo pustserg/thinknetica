@@ -31,3 +31,4 @@
 
 =content_tag :div, class: "col-md-10 col-md-offset-1 answer-comments", id: "answer-#{answer.id}-comments"
   =render answer.comments
+  =subscribe_to "/answer/#{answer.id}/comments"

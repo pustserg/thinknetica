@@ -34,7 +34,6 @@ class QuestionsController < ApplicationController
   def new
     @question = Question.new
     @question.attachments.build
-    # @question.tag_list
   end
 
   def create

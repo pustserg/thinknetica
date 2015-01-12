@@ -3,6 +3,8 @@
     $('#comment-errors').html('<%= j msg %>');
   <% end %>
 <% else %>
-  $('#<%= "#{@comment.commentable_type.downcase}-#{@commentable.id}-comments" %>').html('<%= j render @commentable.comments %>');
+  <% publish_to "/#{@comment.commentable_type.downcase}/#{@commentable.id}/comments" do %>
+    $('#<%= "#{@comment.commentable_type.downcase}-#{@commentable.id}-comments" %>').html('<%= j render @commentable.comments %>');
+  <% end %>
   $('#comment-form').remove();
 <% end %>
