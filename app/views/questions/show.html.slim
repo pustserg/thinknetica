@@ -12,6 +12,7 @@
   =link_to 'Add comment', new_polymorphic_path([@resource, :comment]), remote: true if current_user
   =content_tag :div, id: "question-#{@resource.id}-comments", class: "col-md-10 col-md-offset-1"
     =render @resource.comments
+  =subscribe_to "/question/#{@resource.id}/comments"
   
 .col-md-9.answers
   

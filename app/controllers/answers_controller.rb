@@ -15,7 +15,6 @@ class AnswersController < ApplicationController
 
   def create
     @answer = @question.answers.create(answer_params.merge(user: current_user))
-    # redirect_to @question
   end
 
   def edit
