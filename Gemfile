@@ -35,6 +35,7 @@ gem 'remotipart'
 gem 'nested_form'
 
 gem 'russian'
+gem 'foreman'
 
 gem 'sunspot_rails'
 
