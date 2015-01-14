@@ -15,6 +15,6 @@ class ApplicationController < ActionController::Base
   end
 
   def set_tags
-    @tags = Question.tag_counts_on(:tags) || []
+    @tags = Tag.all
   end
 end

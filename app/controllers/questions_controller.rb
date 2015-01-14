@@ -8,11 +8,6 @@ class QuestionsController < ApplicationController
   before_action :check_for_voting, only: [:vote_down, :vote_up]
 
   def index
-<<<<<<< HEAD
-    # @tags = Question.tag_counts_on(:tags)
-    if params[:tag]
-      @questions = Question.tagged_with(params[:tag])
-=======
     if params[:tag_name]
       @questions = Tag.find_by(name: params[:tag_name]).questions
     elsif params[:search]
@@ -26,7 +21,6 @@ class QuestionsController < ApplicationController
       elsif params[:filter] == 'not_answered'
         @questions = Question.not_answered
       end   
->>>>>>> bfbda3bfdda277e18e6025965f219bf4c19bae6e
     else
       @questions = Question.all
     end
