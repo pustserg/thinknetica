@@ -13,8 +13,6 @@
 #  answered   :boolean          default(FALSE)
 #
 
-require 'acts-as-taggable-on'
-
 class Question < ActiveRecord::Base
 
   has_many :answers, dependent: :restrict_with_error
@@ -94,10 +92,6 @@ class Question < ActiveRecord::Base
   private
   def create_slug
       self.slug = Russian::transliterate(self.title) if !self.slug
-  end
-
-  def tag_list
-    self.tags.map(&:name).join(', ')
   end
 
 end

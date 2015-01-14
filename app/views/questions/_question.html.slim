@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 =content_tag :div, class: "question col-md-9", id: "question-#{question.id}"
   .col-md-12.title
     =link_to_unless_current(question.title, { controller: 'questions', action: 'show', id: question })
@@ -28,31 +27,3 @@
         ="Likes: #{question.votes.likes.count}"
       p.dislikes
         ="Dislikes: #{question.votes.dislikes.count}"
-=======
-.col-md-12.title
-  =link_to_unless_current(question.title, { controller: 'questions', action: 'show', id: question })
-.col-md-9
-  p.body
-    =question.body
--if current_user and current_user != question.user      
-  .col-md-1.vote
-    ul.nav.nav-stacked
-      li =link_to '+', vote_up_question_path(question), method: :patch
-      li =link_to '-', vote_down_question_path(question), method: :patch
-- if question.user == current_user
-  .col-md-2.actions
-    ul.nav.nav-stacked 
-      li =link_to 'Edit question', edit_question_path(question), remote: true
-      li =link_to 'Delete question', question, method: :delete
-.col-md-12.question-tags
-  -question.tags.each do |tag|
-    =' link_to tag.name, tag_path(tag.name)
-.col-md-12.question-stats
-  .col-md-2
-    ="#{question.answers.count} answers"
-  .col-md-2.likes
-    p.likes
-      ="Likes: #{question.votes.likes.count}"
-    p.dislikes
-      ="Dislikes: #{question.votes.dislikes.count}"
->>>>>>> bfbda3bfdda277e18e6025965f219bf4c19bae6e

@@ -15,6 +15,6 @@ class ApplicationController < ActionController::Base
   end
 
   def set_tags
-    @tags = Tag.all
+    @tag_cloud = Tag.all
   end
 end
