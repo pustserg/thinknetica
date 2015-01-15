@@ -9,8 +9,6 @@ class AnswersController < ApplicationController
   before_action :check_question_author, only: :make_best
   before_action :check_for_voting, only: [:vote_down, :vote_up]
 
-  respond_to :js
-
   def create
     respond_with(@answer = @question.answers.create(answer_params.merge(user: current_user)))
   end
@@ -79,7 +77,7 @@ class AnswersController < ApplicationController
     
     @answer.votes.each do |vote|
       if vote.user == current_user
-        redirect_to @answer and return
+        redirect_to @answer.question and return
       end
     end
   end

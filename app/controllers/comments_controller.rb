@@ -11,20 +11,22 @@ class CommentsController < ApplicationController
   end
 
   def new
-    @resource = @commentable.comments.new
+    respond_with(@resource = @commentable.comments.new)
   end
 
   def create
-    @comment = @commentable.comments.create(comment_params.merge(user: current_user))
+    respond_with(@comment = @commentable.comments.create(comment_params.merge(user: current_user)))
   end
 
   def edit
     @commentable = @resource.commentable
+    respond_with @resource
   end
 
   def update
     @commentable = @resource.commentable
     @resource.update(comment_params)
+    respond_with @resource
   end
 
   def destroy

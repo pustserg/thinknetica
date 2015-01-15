@@ -9,8 +9,6 @@ class QuestionsController < ApplicationController
 
   before_action :build_answer, only: :show
 
-  respond_to :js
-
   def index
     respond_with(@questions = filter)
   end
