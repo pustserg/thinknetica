@@ -28,12 +28,6 @@ RSpec.describe User, :type => :model do
   let!(:answer) { create(:answer, user: user, question: question) }
   let!(:comment) { create(:question_comment, commentable: question, user: user) }
 
-  before do
-    question.vote_up(another_user)
-    answer.vote_up(another_user)
-    comment.vote_down(another_user)
-  end
-
   it { should validate_presence_of :email }
   it { should validate_presence_of :password }
 
@@ -41,6 +35,12 @@ RSpec.describe User, :type => :model do
   it { should have_many :answers }
   it { should have_many :comments }
   it { should have_many :votes }
+
+  before do
+    question.vote_up(another_user)
+    answer.vote_up(another_user)
+    comment.vote_down(another_user)
+  end
 
   describe 'user_votes' do
     it 'returns votes which user got for his questions/answers/comments' do

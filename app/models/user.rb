@@ -40,7 +40,7 @@ class User < ActiveRecord::Base
     USER_ACTIONS.each do |type|
       result += votes_for(type).likes
     end
-    result
+    result.uniq
   end
 
   def dislikes
@@ -48,7 +48,7 @@ class User < ActiveRecord::Base
     USER_ACTIONS.each do |type|
       result += votes_for(type).dislikes
     end
-    result
+    result.uniq
   end
 
   def user_votes
@@ -56,7 +56,7 @@ class User < ActiveRecord::Base
      USER_ACTIONS.each do |type|
       result += votes_for(type)
     end
-    result
+    result.uniq
   end
 
   private
