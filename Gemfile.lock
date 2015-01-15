@@ -263,6 +263,7 @@ DEPENDENCIES
   progress_bar
   rails (= 4.1.8)
   remotipart
+  responders
   rspec-rails
   russian
   sass-rails (~> 4.0.3)

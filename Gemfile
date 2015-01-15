@@ -41,6 +41,7 @@ gem 'foreman'
 gem 'sunspot_rails'
 
 gem 'private_pub'
+gem 'responders'
 gem 'thin'
 # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
 gem 'spring',        group: :development

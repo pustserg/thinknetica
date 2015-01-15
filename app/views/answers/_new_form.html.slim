@@ -5,7 +5,7 @@
     =f.text_area :body, class: "col-md-9", rows: 10
   .form-group.col-md-9
     p Attachments:
-    =f.fields_for :attachments do |a|
+    =f.fields_for :attachments, @answer.attachments.build do |a|
       =a.label :file
       =a.file_field :file
     =f.link_to_add 'Add else', :attachments

@@ -7,56 +7,38 @@ class QuestionsController < ApplicationController
   before_action :check_author, only: [:destroy, :edit, :update]
   before_action :check_for_voting, only: [:vote_down, :vote_up]
 
+  before_action :build_answer, only: :show
+
+  respond_to :js
+
   def index
-    if params[:tag_name]
-      @questions = Tag.find_by(name: params[:tag_name]).questions
-    elsif params[:search]
-      @query = Question.search do
-        fulltext params[:search]
-      end
-      @questions = @query.results
-    elsif params[:filter]
-      if params[:filter] == 'answered'
-        @questions = Question.answered
-      elsif params[:filter] == 'not_answered'
-        @questions = Question.not_answered
-      end   
-    else
-      @questions = Question.all
-    end
+    respond_with(@questions = filter)
   end
 
   def show
-    @answer = @resource.answers.build
-    @answer.attachments.build
+    respond_with @resource
   end
 
   def new
-    @question = Question.new
-    @question.attachments.build
+    respond_with(@question = Question.new)
   end
 
   def create
-    @question = current_user.questions.new(question_params)
-
-    if @question.save
-      redirect_to @question
-    else
-      render :new
-    end
+    respond_with (@question = current_user.questions.create(question_params))
   end
 
   def edit
     @question = @resource
+    respond_with @question
   end
 
   def update
     @resource.update(question_params)
+    respond_with(@resource)
   end
 
   def destroy
-    @resource.destroy
-    redirect_to questions_path
+    respond_with(@resource.destroy)
   end
 
   def vote_up
@@ -77,6 +59,29 @@ class QuestionsController < ApplicationController
 
   def question_params
     params.require(:question).permit(:title, :body, :tag_list, attachments_attributes: [:file])
+  end
+
+  def build_answer
+    @answer = @resource.answers.build  
+  end
+
+  def filter
+    if params[:tag_name]
+      Tag.find_by(name: params[:tag_name]).questions
+    elsif params[:search]
+      @query = Question.search do
+        fulltext params[:search]
+      end
+      @query.results
+    elsif params[:filter]
+      if params[:filter] == 'answered'
+        Question.answered
+      elsif params[:filter] == 'not_answered'
+        Question.not_answered
+      end   
+    else
+      Question.all
+    end
   end
 
   def check_for_voting
