@@ -13,18 +13,11 @@
 #
 
 class Comment < ActiveRecord::Base
-
+  include VoteableModel
+  
   belongs_to :commentable, polymorphic: true
   belongs_to :user
-  has_many :votes, as: :voteable, dependent: :destroy
 
   validates :body, :user_id, :commentable_id, presence: true
 
-  def vote_up(user)
-    votes.create(user: user, status: "+")
-  end
-
-  def vote_down(user)
-    votes.create(user: user, status: "-")
-  end
 end

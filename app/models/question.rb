@@ -14,11 +14,11 @@
 #
 
 class Question < ActiveRecord::Base
+  include VoteableModel
 
   has_many :answers, dependent: :restrict_with_error
   has_many :comments, as: :commentable, dependent: :restrict_with_error
   has_many :attachments, as: :attachmentable, dependent: :destroy
-  has_many :votes, as: :voteable, dependent: :restrict_with_error
   has_many :taggings, dependent: :destroy
   has_many :tags, through: :taggings
   belongs_to :user
@@ -42,14 +42,6 @@ class Question < ActiveRecord::Base
 
   def make_answered
     update(answered: true)
-  end
-
-  def vote_up(user)
-    votes.create(user: user, status: "+")
-  end
-
-  def vote_down(user)
-    votes.create(user: user, status: "-")
   end
 
   def to_param
