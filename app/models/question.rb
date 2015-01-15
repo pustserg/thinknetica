@@ -44,26 +44,6 @@ class Question < ActiveRecord::Base
     update(answered: true)
   end
 
-  # def answered?
-  #   !best_answer.nil?
-  # end
-
-  # def self.has_best_answer
-  #   result = []
-  #   Question.all.each do |question|
-  #     result << question if question.answered?
-  #   end
-  #   result
-  # end
-
-  # def self.without_best_answer
-  #   result = []
-  #   Question.all.each do |question|
-  #     result << question unless question.answered?
-  #   end
-  #   result
-  # end
-
   def vote_up(user)
     votes.create(user: user, status: "+")
   end

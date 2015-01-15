@@ -21,6 +21,7 @@ RSpec.describe Question, :type => :model do
   let!(:question) { create(:question, user: user) }
   let!(:another_question) { create(:question, user: user) }
   let!(:answer) { create(:answer, question: question, best: true) }
+  let!(:another_answer) { create(:answer, question: question, best: true) }
 
   it { should have_many :answers }
   it { should belong_to :user }
@@ -33,6 +34,35 @@ RSpec.describe Question, :type => :model do
   it { should validate_presence_of :user_id }
 
   it { should  accept_nested_attributes_for :attachments}
+
+  describe 'best answer method' do
+    it 'returns only 1 record' do
+      answer.make_best
+      another_answer.make_best
+
+      expect(question.best_answer).to eq another_answer
+    end
+  end
+
+  describe 'make answered method' do
+    it 'updates answered attribute' do
+      question.make_answered
+
+      expect(question.answered).to eq true
+    end
+  end
+
+  describe 'vote_up method' do
+    it 'creates 1 like for question' do
+      expect{ question.vote_up(user) }.to change(question.votes.likes, :count).by(1)
+    end
+  end
+
+  describe 'vote_down method' do
+    it 'creates 1 dislike for question' do
+      expect{ question.vote_down(user) }.to change(question.votes.dislikes, :count).by(1)
+    end
+  end
 
   describe "tag_list method" do
     it 'tag_list returns tags names' do
@@ -54,19 +84,5 @@ RSpec.describe Question, :type => :model do
       expect{ another_question.tag_list=("first") }.to_not change(Tag, :count)
     end
   end
-
-  # describe 'has_best_answer and without_best_answer methods' do
-  #   context 'has_best_answer' do
-  #     it 'returns question with best answer' do
-  #       expect(Question.has_best_answer.first).to eq question
-  #     end
-  #   end
-
-  #   context 'not answered questions' do
-  #     it 'returns question without best answer' do
-  #       expect(Question.without_best_answer.first).to eq another_question
-  #     end
-  #   end
-  # end
 
 end
