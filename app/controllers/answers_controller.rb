@@ -9,20 +9,20 @@ class AnswersController < ApplicationController
   before_action :check_question_author, only: :make_best
   before_action :check_for_voting, only: [:vote_down, :vote_up]
 
-  def show
-    redirect_to @answer.question
-  end
+  respond_to :js
 
   def create
-    @answer = @question.answers.create(answer_params.merge(user: current_user))
+    respond_with(@answer = @question.answers.create(answer_params.merge(user: current_user)))
   end
 
   def edit
     @question = @answer.question
+    respond_with @answer
   end
 
   def update
     @answer.update(answer_params)
+    respond_with @answer
   end
 
   def destroy
