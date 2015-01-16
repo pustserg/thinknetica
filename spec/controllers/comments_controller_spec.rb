@@ -13,17 +13,6 @@ RSpec.describe CommentsController, :type => :controller do
 
   sign_in_user
 
-  describe 'GET #show' do
-    before { another_comment }
-
-    it 'redirects to question' do
-      get :show, id: another_comment
-
-      expect(response).to redirect_to question
-    end
-
-  end
-
   describe 'GET #new' do
     
     before { xhr :get, :new, question_id: question }

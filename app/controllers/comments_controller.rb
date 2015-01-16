@@ -1,15 +1,12 @@
 # -*- encoding : utf-8 -*-
 class CommentsController < ApplicationController
   before_action :authenticate_user!, except: :show
-  before_action :set_commentable, only: [:new, :create]
+  before_action :set_commentable, only: [:new, :create, :show, :destroy]
   before_action :set_resource, only: [:edit, :update, :destroy, :vote_up, :vote_down, :show]
   before_action :check_author, only: [:edit, :update, :destroy]
+  before_action :set_question, only: [:show, :destroy]
 
   include VoteableController
-
-  def show
-    redirect_to @resource.commentable
-  end
 
   def new
     respond_with(@resource = @commentable.comments.new)
@@ -31,10 +28,8 @@ class CommentsController < ApplicationController
   end
 
   def destroy
-    @commentable = @resource.commentable
-    if @resource.destroy
-      redirect_to @commentable
-    end
+    @question = set_question
+    respond_with(@resource.destroy, location: question_path(@question))
   end
 
   private
@@ -50,6 +45,15 @@ class CommentsController < ApplicationController
                     Answer.find(params[:answer_id])
                   end
                     
+  end
+
+  def set_question
+    if @commentable.class == Answer
+      @question = @resource.commentable.question 
+    else
+      @question = @resource.commentable
+    end
+    @question
   end
 
   def set_resource
