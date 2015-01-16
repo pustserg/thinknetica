@@ -26,8 +26,7 @@ class QuestionsController < ApplicationController
   end
 
   def edit
-    @question = @resource
-    respond_with @question
+    respond_with(@question = @resource)
   end
 
   def update
@@ -64,5 +63,12 @@ class QuestionsController < ApplicationController
       Question.all
     end
   end
+
+  # def filter
+  #   Tag.find_by(name: params[:tag_name]).questions if params[:tag_name]
+  #   (Question.search { fulltext params[:search] }).results if params[:search]
+  #   Question.answered(params[:answered]) if params[:answered]
+  #   false
+  # end
 
 end

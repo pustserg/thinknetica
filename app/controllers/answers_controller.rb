@@ -27,13 +27,12 @@ class AnswersController < ApplicationController
 
   def destroy
     @question = @resource.question
-    redirect_to @question if @resource.destroy
-    # respond_with @resource.destroy, location: -> { @question }
+    respond_with(@resource.destroy, location: question_path(@question))
   end
 
   def make_best
     @resource.make_best
-    redirect_to :back
+    respond_with(@resource, location: @resource.question)
   end
 
   private
