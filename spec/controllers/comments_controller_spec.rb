@@ -9,6 +9,8 @@ RSpec.describe CommentsController, :type => :controller do
   let(:comment) { create(:question_comment, commentable: question, user: @user) }
   let(:another_comment) { create(:question_comment, commentable: question, user: another_user) }
 
+  before(:each) { request.env["HTTP_REFERER"] = "where_i_came_from" unless request.nil? or request.env.nil? }
+
   sign_in_user
 
   describe 'GET #show' do

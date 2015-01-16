@@ -7,6 +7,8 @@ RSpec.describe QuestionsController, :type => :controller do
   let(:question) { create(:question, user: @user) }
   let(:another_question) { create(:question, user: another_user) }
 
+  before(:each) { request.env["HTTP_REFERER"] = "where_i_came_from" unless request.nil? or request.env.nil? }
+
   describe 'GET #index' do
     let(:questions) { create_list(:question, 2, user: user, tag_list: "first, second") }
 

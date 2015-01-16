@@ -19,7 +19,7 @@ module VoteableController
   def check_for_voting
     render json: { error: 'fufufu' }, status: 403 if current_user == @resource.user
     
-    votes.each do |vote|
+    @resource.votes.each do |vote|
       if vote.user == current_user
         redirect_to :back and return
       end

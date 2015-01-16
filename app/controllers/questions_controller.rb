@@ -1,14 +1,13 @@
 # -*- encoding : utf-8 -*-
 class QuestionsController < ApplicationController
-  # include VoteableController
-
   before_action :authenticate_user!, except: [:index, :show] 
   
   before_action :set_resource, only: [:show, :edit, :update, :destroy, :vote_up, :vote_down]
   before_action :check_author, only: [:destroy, :edit, :update]
-  before_action :check_for_voting, only: [:vote_down, :vote_up]
 
   before_action :build_answer, only: :show
+
+  include VoteableController
 
   def index
     respond_with(@questions = filter)
@@ -40,16 +39,6 @@ class QuestionsController < ApplicationController
     respond_with(@resource.destroy)
   end
 
-  def vote_up
-    @resource.vote_up(current_user)
-    redirect_to @resource
-  end
-
-  def vote_down
-    @resource.vote_down(current_user)
-    redirect_to @resource
-  end
-
   private
 
   def set_resource
@@ -73,15 +62,6 @@ class QuestionsController < ApplicationController
       Question.answered(params[:answered])
     else
       Question.all
-    end
-  end
-
-  def check_for_voting
- 
-    render json: { error: 'fufufu' }, status: 403 if current_user == @resource.user
-    
-    @resource.votes.each do |vote|
-      redirect_to :back and return if vote.user == current_user
     end
   end
 
