@@ -53,7 +53,7 @@ RSpec.describe AnswersController, :type => :controller do
       before { xhr :get, :edit, id: answer, format: :js }
 
       it 'assigns requested answer as @answer' do
-        expect(assigns(:answer)).to eq answer
+        expect(assigns(:resource)).to eq answer
       end
 
       it 'render edit view' do
@@ -86,7 +86,7 @@ RSpec.describe AnswersController, :type => :controller do
 
         it 'assigns requested answer as answer' do
           patch :update, question_id: answer.question, id: answer, answer: attributes_for(:answer), format: :js
-          expect(assigns(:answer)).to eq answer
+          expect(assigns(:resource)).to eq answer
         end
 
         it 'changes answer attributes' do
