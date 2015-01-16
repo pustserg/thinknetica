@@ -9,6 +9,8 @@ RSpec.describe AnswersController, :type => :controller do
   let(:answer) { create(:answer, user: @user, question: question) }
   let(:another_answer) { create(:answer, user: another_user, question: another_question) }
 
+  before(:each) { request.env["HTTP_REFERER"] = "where_i_came_from" unless request.nil? or request.env.nil? }
+
   describe 'POST #create' do
     sign_in_user
 

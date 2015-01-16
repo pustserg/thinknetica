@@ -25,14 +25,13 @@ class AnswersController < ApplicationController
 
   def destroy
     @question = @answer.question
-    if @answer.destroy
-      redirect_to @question
-    end
+    redirect_to @question if @answer.destroy
+    # respond_with @answer.destroy, location: -> { @question }
   end
 
   def make_best
     @answer.make_best
-    redirect_to @answer.question  
+    redirect_to :back
   end
 
   def vote_up
@@ -76,9 +75,7 @@ class AnswersController < ApplicationController
     render json: { error: 'fufufu' }, status: 403 if current_user == @answer.user
     
     @answer.votes.each do |vote|
-      if vote.user == current_user
-        redirect_to @answer.question and return
-      end
+      redirect_to @answer.question and return if vote.user == current_user
     end
   end
 

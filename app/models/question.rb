@@ -27,8 +27,8 @@ class Question < ActiveRecord::Base
 
   before_save :create_slug
 
-  scope :answered, -> { where(answered: true) }
-  scope :not_answered, -> { where(answered: false) }
+  scope :answered, -> (answered){ where(answered: answered) }
+  # scope :not_answered, -> { where(answered: false) }
 
   accepts_nested_attributes_for :attachments
 

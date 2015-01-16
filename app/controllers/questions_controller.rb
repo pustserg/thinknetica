@@ -1,5 +1,6 @@
 # -*- encoding : utf-8 -*-
 class QuestionsController < ApplicationController
+  # include VoteableController
 
   before_action :authenticate_user!, except: [:index, :show] 
   
@@ -67,16 +68,9 @@ class QuestionsController < ApplicationController
     if params[:tag_name]
       Tag.find_by(name: params[:tag_name]).questions
     elsif params[:search]
-      @query = Question.search do
-        fulltext params[:search]
-      end
-      @query.results
-    elsif params[:filter]
-      if params[:filter] == 'answered'
-        Question.answered
-      elsif params[:filter] == 'not_answered'
-        Question.not_answered
-      end   
+      (Question.search { fulltext params[:search] }).results
+    elsif params[:answered]
+      Question.answered(params[:answered])
     else
       Question.all
     end
@@ -87,9 +81,7 @@ class QuestionsController < ApplicationController
     render json: { error: 'fufufu' }, status: 403 if current_user == @resource.user
     
     @resource.votes.each do |vote|
-      if vote.user == current_user
-        redirect_to @resource and return
-      end
+      redirect_to :back and return if vote.user == current_user
     end
   end
 
