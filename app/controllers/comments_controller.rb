@@ -1,10 +1,10 @@
 # -*- encoding : utf-8 -*-
 class CommentsController < ApplicationController
   before_action :authenticate_user!, except: :show
-  before_action :set_commentable, only: [:new, :create, :show, :destroy]
-  before_action :set_resource, only: [:edit, :update, :destroy, :vote_up, :vote_down, :show]
+  before_action :set_commentable, only: [:new, :create]
+  before_action :set_resource, only: [:edit, :update, :destroy, :vote_up, :vote_down]
   before_action :check_author, only: [:edit, :update, :destroy]
-  before_action :set_question, only: [:show, :destroy]
+  before_action :set_question, only: :destroy
 
   include VoteableController
 
@@ -17,12 +17,10 @@ class CommentsController < ApplicationController
   end
 
   def edit
-    @commentable = @resource.commentable
     respond_with @resource
   end
 
   def update
-    @commentable = @resource.commentable
     @resource.update(comment_params)
     respond_with @resource
   end
@@ -43,8 +41,7 @@ class CommentsController < ApplicationController
                     Question.find(params[:question_id])
                   elsif params[:answer_id].present?
                     Answer.find(params[:answer_id])
-                  end
-                    
+                  end                   
   end
 
   def set_question
