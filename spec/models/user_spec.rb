@@ -106,7 +106,7 @@ RSpec.describe User, :type => :model do
       context 'new user' do
         let(:auth) { OmniAuth::AuthHash.new(provider: 'facebook', uid: '123456', info: { email: 'new@email.test' }) } 
 
-        it 'does not create a new user' do
+        it 'creates a new user' do
           expect{ User.find_for_oauth(auth) }.to change(User, :count).by(1)
         end
 
