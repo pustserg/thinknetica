@@ -8,6 +8,14 @@ class UsersController < ApplicationController
     @comments = @user.comments
   end
 
+  def finish_signup
+    if @user.email !~ /.temp/
+      @user.update(email: user.email)
+      @user.save!
+      sign_in_and_redirect @user, event: :authentication
+    end
+  end
+
   private
 
   def set_user

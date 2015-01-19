@@ -1,0 +1,15 @@
+#add-email.container
+  h1 Add email
+  = form_for @user, url: finish_signup_path(@user), html: { role: 'form' } do |f|
+    -if @user.errors.any?
+      #errors
+        -@user.errors.each do |msg|
+          =msg
+          br
+    .form-group
+      =f.label :email
+      .controls
+        =f.email_field :email, autofocus: true
+      .actions
+        =f.submit 'Save', class: 'btn btn-primary'
+      
