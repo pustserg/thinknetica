@@ -68,17 +68,12 @@ class User < ActiveRecord::Base
     authorization = Authorization.where(provider: auth.provider, uid: auth.uid.to_s).first
     return authorization.user if authorization
 
-<<<<<<< HEAD
     email = auth.info.email || "#{auth.uid}@#{auth.provider}.temp"
-=======
-    email = auth.info.email
->>>>>>> user can sign_in with facebook
     user = User.where(email: email).first
     if user
       user.create_authorization(auth)
     else
       password = Devise.friendly_token[0,20]
-<<<<<<< HEAD
       if email !~ /.temp/
         user = User.new(email: email, password: password, password_confirmation: password)
         user.skip_confirmation!
@@ -87,13 +82,7 @@ class User < ActiveRecord::Base
       else
         user = User.new(email: email, password: password, password_confirmation: password)
         user.authorizations.new(provider: auth.provider, uid: auth.uid)
-        # session[:user] = user
-        # session[:user][:auth] = auth
       end
-=======
-      user = User.create!(email: auth.info.email, password: password, password_confirmation: password)
-      user.create_authorization(auth)
->>>>>>> user can sign_in with facebook
     end
     user
   end
@@ -102,17 +91,6 @@ class User < ActiveRecord::Base
     self.authorizations.create(provider: auth.provider, uid: auth.uid)
   end
 
-<<<<<<< HEAD
-  def check_code=(code)
-    self.check_code = code
-  end
-
-  def check_code
-    # Devise.friendly_token[0,20]
-  end
-
-=======
->>>>>>> user can sign_in with facebook
   private
   def votes_for(type)
     Vote.joins("join #{type} on votes.voteable_id=#{type}.id").where("#{type}.user_id = ?", self.id)
