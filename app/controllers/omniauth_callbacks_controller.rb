@@ -9,4 +9,12 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
     end
   end
 
+  def twitter
+    render json: request.env['omniauth.auth']
+  end
+
+  def github
+    render json: request.env['omniauth.auth']
+  end
+
 end
