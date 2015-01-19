@@ -23,7 +23,7 @@ class User < ActiveRecord::Base
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable, 
-         :omniauthable, omniauth_providers: [:facebook]
+         :omniauthable
 
   USER_ACTIONS = ['questions', 'answers', 'comments']
 
