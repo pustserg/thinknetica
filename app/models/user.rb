@@ -66,12 +66,19 @@ class User < ActiveRecord::Base
     return authorization.user if authorization
 
     email = auth.info.email
-    user = User.where(email: email).first
-    if user
-      user.create_authorization(auth)
+    if email
+      user = User.where(email: email).first
+      if user
+        user.create_authorization(auth)
+      else
+        password = Devise.friendly_token[0,20]
+        user = User.create!(email: auth.info.email, password: password, password_confirmation: password)
+        user.create_authorization(auth)
+      end
     else
+      temp_email = "#{auth.uid}@#{auth.provider}.temp"
       password = Devise.friendly_token[0,20]
-      user = User.create!(email: auth.info.email, password: password, password_confirmation: password)
+      user = User.create!(email: temp_email, password: password, password_confirmation: password)
       user.create_authorization(auth)
     end
     user
