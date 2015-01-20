@@ -10,6 +10,10 @@
       =f.label :email
       .controls
         =f.email_field :email, autofocus: true
-      .actions
-        =f.submit 'Save', class: 'btn btn-primary'
+    .form-group
+      =f.label :check_code, 'Check code'
+      .controls
+        =f.text_field :check_code
+    .actions
+      =f.submit 'Save', class: 'btn btn-primary'
       
