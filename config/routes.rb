@@ -28,9 +28,9 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :users do
-
-  end
+  # resources :users do
+  #   get :profile, on: :member
+  # end
 
   get '/profile/:id', to: 'users#show', as: 'profile'
   match 'finish_signup', to: 'users#finish_signup', as: 'finish_signup', via: [:get]

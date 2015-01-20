@@ -323,6 +323,7 @@ DEPENDENCIES
   omniauth-facebook
   omniauth-github
   omniauth-twitter
+  omniauth-vkontakte
   pg
   private_pub
   progress_bar
