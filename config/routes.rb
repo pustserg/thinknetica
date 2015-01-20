@@ -23,6 +23,10 @@ Rails.application.routes.draw do
     end
   end
 
+  # resources :users do
+  #   get :profile, on: :member
+  # end
+
   get '/profile/:id', to: 'users#show', as: 'profile'
   match '/users/:id/finish_signup', to: 'users#finish_signup', as: 'finish_signup', via: [:get, :patch]
   get '/tag/:tag_name', to: 'questions#index', as: 'tag'
