@@ -40,23 +40,18 @@ class UsersController < ApplicationController
     @provider = session[:provider]
   end
 
-  def update
-    @user.update(user_params)
-    respond_with(@user)
+  def edit
   end
 
-  def finish_signup
-    if request.patch? && params[:user]
-      existed_user = User.find_by(email: params[:user][:email])
-      if existed_user
-        existed_user.create_authorization(@user.authorizations.first)
-        @user.destroy
-        sign_in_and_redirect existed_user, event: :authentication
-      else
-        if @user.update(user_params)
-          sign_in_and_redirect @user, event: :authentication
-        end
-      end
+  def update
+    existed_user = User.find_by(email: params[:user][:email])
+    if existed_user
+      existed_user.create_authorization(@user.authorizations.first)
+      @user.destroy
+      sign_in_and_redirect existed_user, event: :authentication
+    else
+      @user.update!(user_params)
+      sign_in_and_redirect @user, event: :authentication
     end
   end
 
