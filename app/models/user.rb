@@ -93,4 +93,8 @@ class User < ActiveRecord::Base
     Vote.joins("join #{type} on votes.voteable_id=#{type}.id").where("#{type}.user_id = ?", self.id)
   end
 
+  def check_code
+    Devise.friendly_token[0,20]
+  end
+
 end
