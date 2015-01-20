@@ -83,13 +83,17 @@ class User < ActiveRecord::Base
     self.authorizations.create(provider: auth.provider, uid: auth.uid)
   end
 
-  private
-  def votes_for(type)
-    Vote.joins("join #{type} on votes.voteable_id=#{type}.id").where("#{type}.user_id = ?", self.id)
+  def check_code=(code)
+    self.check_code = code
   end
 
   def check_code
-    Devise.friendly_token[0,20]
+    # Devise.friendly_token[0,20]
+  end
+
+  private
+  def votes_for(type)
+    Vote.joins("join #{type} on votes.voteable_id=#{type}.id").where("#{type}.user_id = ?", self.id)
   end
 
 end
