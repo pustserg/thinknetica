@@ -28,6 +28,7 @@ FactoryGirl.define do
     email
     password 'testpassword'
     password_confirmation 'testpassword'
+    confirmed_at Time.now
   end
 
 end
