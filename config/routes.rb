@@ -6,7 +6,8 @@ Rails.application.routes.draw do
   devise_for :users, controllers: { omniauth_callbacks: 'omniauth_callbacks', registrations: 'registrations' }, :path => '', :path_names => {
     :sign_up => 'signup',
     :sign_in => 'login', 
-    :sign_out => 'logout'
+    :sign_out => 'logout',
+    # :finish_signup => 'users#finish_signup'
   }
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
@@ -27,10 +28,11 @@ Rails.application.routes.draw do
   end
 
   resources :users do
+
   end
 
   get '/profile/:id', to: 'users#show', as: 'profile'
-  # match '/users/:id/finish_signup', to: 'users#finish_signup', as: 'finish_signup', via: [:get, :patch]
+  match 'finish_signup', to: 'users#finish_signup', as: 'finish_signup', via: [:get]
   get '/tag/:tag_name', to: 'questions#index', as: 'tag'
   get '/questions/(:filter)', to: 'questions#index'
 
