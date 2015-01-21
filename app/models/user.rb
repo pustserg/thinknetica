@@ -20,7 +20,7 @@
 
 class User < ActiveRecord::Base
 
-  # TEMP_EMAIL_REGEX = /.temp/
+  TEMP_EMAIL_REGEX = /.temp/
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
@@ -73,8 +73,17 @@ class User < ActiveRecord::Base
       user.create_authorization(auth)
     else
       password = Devise.friendly_token[0,20]
-      user = User.create!(email: email, password: password, password_confirmation: password)
-      user.create_authorization(auth)
+      if email !~ /.temp/
+        user = User.new(email: email, password: password, password_confirmation: password)
+        user.skip_confirmation!
+        user.save!
+        user.create_authorization(auth)
+      else
+        user = User.new(email: email, password: password, password_confirmation: password)
+        user.authorizations.new(provider: auth.provider, uid: auth.uid)
+        # session[:user] = user
+        # session[:user][:auth] = auth
+      end
     end
     user
   end
