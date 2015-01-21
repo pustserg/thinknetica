@@ -69,6 +69,7 @@ group :development do
   gem 'annotate'
   gem 'sunspot_solr'
   gem 'progress_bar'
+  gem 'letter_opener'
 end
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
