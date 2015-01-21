@@ -18,19 +18,19 @@ RSpec.describe UsersController, :type => :controller do
     it "populates array of questions" do
       get :show, id: questions[0].user
 
-      expect(assigns(:questions)).to match_array(questions)
+      expect(assigns(:user).questions).to match_array(questions)
     end
 
     it "populates array of comments" do
       get :show, id: comments[0].user
 
-      expect(assigns(:comments)).to match_array(comments)
+      expect(assigns(:user).comments).to match_array(comments)
     end
 
     it 'populates array of answers' do
       get :show, id: answers[0].user
 
-      expect(assigns(:answers)).to match_array(answers)
+      expect(assigns(:user).answers).to match_array(answers)
     end
 
     it 'renders show template' do
