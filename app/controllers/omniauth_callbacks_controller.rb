@@ -2,8 +2,6 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
   before_action :oauth_user
 
-  before_action :oauth_user
-
   def facebook
   end
 
@@ -44,11 +42,16 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
   private
   def oauth_user
     @user = User.find_for_oauth(request.env['omniauth.auth'])
-    if @user.email =~ TEMP_EMAIL_REGEX
-      redirect_to edit_user_path(@user)
-    else
+    if @user.persisted?
       sign_in_and_redirect @user, event: :authentication
       set_flash_message(:notice, :success, kind: 'facebook') if is_navigational_format?
+    else
+      session[:password] = @user.password
+      session[:email] = @user.email
+      auth = @user.authorizations.first
+      session[:provider] = auth.provider
+      session[:uid] = auth.uid
+      redirect_to finish_signup_path
     end
   end
 

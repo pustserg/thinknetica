@@ -82,6 +82,11 @@ class User < ActiveRecord::Base
       else
         user = User.new(email: email, password: password, password_confirmation: password)
         user.authorizations.new(provider: auth.provider, uid: auth.uid)
+<<<<<<< HEAD
+=======
+        # session[:user] = user
+        # session[:user][:auth] = auth
+>>>>>>> mailer errors
       end
     end
     user
