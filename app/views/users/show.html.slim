@@ -3,13 +3,13 @@
     ="#{@user.email} karma: #{@user.karma}"
   #questions.col-md-12
     h3 Questions
-    =render @questions
+    =render @user.questions
   #answers.col-md-12
       h3 Answers
-      =render @answers
+      =render @user.answers
   #comments.col-md-12
       h3 Comments
-      =render @comments
+      =render @user.comments
   #votes.col-md-12
       h3 Votes
       - @user.user_votes.each do |vote|
