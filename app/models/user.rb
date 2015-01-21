@@ -28,7 +28,6 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable, 
          :omniauthable, :confirmable
 
-
   USER_ACTIONS = ['questions', 'answers', 'comments']
 
   has_many :questions, dependent: :restrict_with_error
