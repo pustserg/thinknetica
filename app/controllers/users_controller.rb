@@ -3,9 +3,7 @@ class UsersController < ApplicationController
   before_action :set_user
 
   def show
-    @questions = @user.questions
-    @answers = @user.answers
-    @comments = @user.comments
+    respond_with(@user)
   end
 
   def edit
