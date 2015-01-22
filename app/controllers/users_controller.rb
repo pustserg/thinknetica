@@ -1,7 +1,6 @@
 class UsersController < ApplicationController
 
   before_action :set_user, except: :finish_signup
-
   authorize_resource
 
   def show
