@@ -32,5 +32,7 @@ class Ability
       can(:vote_up, cl) { |object| object.user != user }
       can(:vote_down, cl) { |object| object.user != user }
     end
+
+    can(:make_best, Answer) { |answer| answer.question.user == user } 
   end
 end
