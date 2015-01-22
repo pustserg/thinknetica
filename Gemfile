@@ -34,6 +34,7 @@ gem 'devise'
 gem 'carrierwave'
 gem 'remotipart'
 gem 'nested_form'
+gem 'cancancan'
 
 gem 'russian'
 gem 'foreman'

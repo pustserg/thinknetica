@@ -9,6 +9,8 @@ class QuestionsController < ApplicationController
 
   include VoteableController
 
+  authorize_resource
+
   def index
     respond_with(@questions = filter)
   end

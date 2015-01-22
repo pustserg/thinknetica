@@ -10,7 +10,8 @@ class AnswersController < ApplicationController
   
   include VoteableController
 
-
+  authorize_resource
+  
   def create
     respond_with(@resource = @question.answers.create(answer_params.merge(user: current_user)))
   end

@@ -8,6 +8,8 @@ class CommentsController < ApplicationController
 
   include VoteableController
 
+  authorize_resource
+
   def new
     respond_with(@resource = @commentable.comments.new)
   end

@@ -2,6 +2,8 @@ class UsersController < ApplicationController
 
   before_action :set_user
 
+  authorize_resource
+
   def show
     @questions = @user.questions
     @answers = @user.answers
