@@ -4,7 +4,6 @@ Rails.application.routes.draw do
   use_doorkeeper
 
   devise_for :users, controllers: { omniauth_callbacks: 'omniauth_callbacks', registrations: 'registrations' }, :path => '', :path_names => {
-
     :sign_up => 'signup',
     :sign_in => 'login', 
     :sign_out => 'logout',
