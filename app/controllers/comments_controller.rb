@@ -3,7 +3,7 @@ class CommentsController < ApplicationController
   before_action :authenticate_user!, except: :show
   before_action :set_commentable, only: [:new, :create]
   before_action :set_resource, only: [:edit, :update, :destroy, :vote_up, :vote_down]
-  before_action :check_author, only: [:edit, :update, :destroy]
+  # before_action :check_author, only: [:edit, :update, :destroy]
   before_action :set_question, only: :destroy
 
   include VoteableController
@@ -56,7 +56,7 @@ class CommentsController < ApplicationController
   end
 
   def set_resource
-    @resource = Comment.find(params[:id])
+    @resource = @comment = Comment.find(params[:id])
   end
 
 end

@@ -69,8 +69,8 @@ RSpec.describe AnswersController, :type => :controller do
         expect(response).to_not render_template :edit
       end
 
-      it 'render 403 status' do
-        expect(response.status).to eq 403
+      it 'render 302 status' do
+        expect(response.status).to eq 302
       end
 
     end
@@ -125,7 +125,7 @@ RSpec.describe AnswersController, :type => :controller do
       it 'response status 403' do
         patch :update, question_id: another_answer.question, id: another_answer, answer: { body: 'new body' }, format: :js
 
-        expect(response.status).to eq 403
+        expect(response.status).to eq 302
       end
 
     end
@@ -196,7 +196,7 @@ RSpec.describe AnswersController, :type => :controller do
       it 'response status must be 403' do
         patch :vote_up, id: answer
         
-        expect(response.status).to eq 403
+        expect(response.status).to eq 302
       end  
     end
 
@@ -218,7 +218,7 @@ RSpec.describe AnswersController, :type => :controller do
       it 'response status must be 403' do
         patch :vote_down, id: answer
         
-        expect(response.status).to eq 403
+        expect(response.status).to eq 302
       end  
     end
 

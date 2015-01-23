@@ -111,8 +111,8 @@ RSpec.describe QuestionsController, :type => :controller do
         expect(response).to_not render_template :edit
       end
 
-      it 'render 403 status' do
-        expect(response.status).to eq 403
+      it 'render 302 status' do
+        expect(response.status).to eq 302
       end
     end
 
@@ -163,8 +163,8 @@ RSpec.describe QuestionsController, :type => :controller do
 
       before {patch :update, id: another_question, question: { title: "new title", body: "new body" }, format: :js }
       
-      it 'response status 403' do
-        expect(response.status).to eq 403
+      it 'response status 302' do
+        expect(response.status).to eq 302
       end
 
     end
@@ -194,10 +194,10 @@ RSpec.describe QuestionsController, :type => :controller do
         expect{ delete :destroy, id: another_question }.to_not change(Question, :count)
       end
 
-      it 'render 403 status' do
+      it 'render 302 status' do
         delete :destroy, id: another_question
 
-        expect(response.status).to eq 403
+        expect(response.status).to eq 302
       end
 
     end
@@ -212,10 +212,10 @@ RSpec.describe QuestionsController, :type => :controller do
         expect{ patch :vote_up, id: question }.to_not change(question.votes, :count)
       end
 
-      it 'response status must be 403' do
+      it 'response status must be 302' do
         patch :vote_up, id: question
         
-        expect(response.status).to eq 403
+        expect(response.status).to eq 302
       end  
     end
 
@@ -234,10 +234,10 @@ RSpec.describe QuestionsController, :type => :controller do
         expect{ patch :vote_down, id: question }.to_not change(question.votes, :count)
       end
 
-      it 'response status must be 403' do
+      it 'response status must be 302' do
         patch :vote_down, id: question
         
-        expect(response.status).to eq 403
+        expect(response.status).to eq 302
       end  
     end
 
