@@ -1,1 +1,1 @@
-$('#<%= "#{@resource.commentable_type.downcase}-#{@resource.commentable.id}" %>').after("<%= j render 'edit_form' %>");
+$('#<%= "#{@comment.commentable_type.downcase}-#{@comment.commentable.id}" %>').after("<%= j render 'edit_form' %>");

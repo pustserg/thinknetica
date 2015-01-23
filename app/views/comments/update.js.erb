@@ -1,8 +1,8 @@
-<% if @resource.errors.present? %>
-  <% @resource.errors.full_messages.each do |msg| %>
+<% if @comment.errors.present? %>
+  <% @comment.errors.full_messages.each do |msg| %>
     $('#comment-errors').html('<%= j msg %>');
   <% end %>
 <% else %>
-  $('#<%= "#{@resource.commentable_type.downcase}-#{@resource.commentable.id}-comments" %>').html('<%= j render @resource.commentable.comments %>');
+  $('#<%= "#{@comment.commentable_type.downcase}-#{@comment.commentable.id}-comments" %>').html('<%= j render @comment.commentable.comments %>');
   $('#comment-form').remove();
 <% end %>

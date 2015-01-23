@@ -1,8 +1,9 @@
 # -*- encoding : utf-8 -*-
 class CommentsController < ApplicationController
   before_action :authenticate_user!, except: :show
+  load_resource
   before_action :set_commentable, only: [:new, :create]
-  before_action :set_resource, only: [:edit, :update, :destroy, :vote_up, :vote_down]
+  # before_action :set_resource, only: [:edit, :update, :destroy, :vote_up, :vote_down]
   # before_action :check_author, only: [:edit, :update, :destroy]
   before_action :set_question, only: :destroy
 
@@ -11,7 +12,7 @@ class CommentsController < ApplicationController
   authorize_resource
 
   def new
-    respond_with(@resource = @commentable.comments.new)
+    respond_with(@comment = @commentable.comments.new)
   end
 
   def create
@@ -19,20 +20,24 @@ class CommentsController < ApplicationController
   end
 
   def edit
-    respond_with @resource
+    respond_with @comment
   end
 
   def update
-    @resource.update(comment_params)
-    respond_with @resource
+    @comment.update(comment_params)
+    respond_with @comment
   end
 
   def destroy
     @question = set_question
-    respond_with(@resource.destroy, location: question_path(@question))
+    respond_with(@comment.destroy, location: question_path(@question))
   end
 
   private
+
+  def resource
+    @comment
+  end
 
   def comment_params
     params.require(:comment).permit(:body)
@@ -48,15 +53,11 @@ class CommentsController < ApplicationController
 
   def set_question
     if @commentable.class == Answer
-      @question = @resource.commentable.question 
+      @question = @comment.commentable.question 
     else
-      @question = @resource.commentable
+      @question = @comment.commentable
     end
     @question
-  end
-
-  def set_resource
-    @resource = @comment = Comment.find(params[:id])
   end
 
 end

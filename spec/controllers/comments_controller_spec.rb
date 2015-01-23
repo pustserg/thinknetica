@@ -17,8 +17,8 @@ RSpec.describe CommentsController, :type => :controller do
     
     before { xhr :get, :new, question_id: question }
 
-    it 'assigns new Comment as resource' do
-      expect(assigns(:resource)).to be_a_new(Comment)
+    it 'assigns new Comment as comment' do
+      expect(assigns(:comment)).to be_a_new(Comment)
     end
 
     it 'renders a new view' do
@@ -51,8 +51,8 @@ RSpec.describe CommentsController, :type => :controller do
   describe 'GET #edit' do
     before { xhr :get, :edit, id: comment, format: :js }
 
-    it 'assigns requested comment as resource' do
-      expect(assigns(:resource)).to eq comment
+    it 'assigns requested comment as comment' do
+      expect(assigns(:comment)).to eq comment
     end
 
     it 'render edit template' do
@@ -67,9 +67,9 @@ RSpec.describe CommentsController, :type => :controller do
 
       context 'with valid attributes' do
 
-        it 'assigns requested comment as resource' do
+        it 'assigns requested comment as comment' do
           patch :update, id: comment ,comment: attributes_for(:question_comment), format: :js
-          expect(assigns(:resource)).to eq comment
+          expect(assigns(:comment)).to eq comment
         end
 
         it 'changes commen attributes' do

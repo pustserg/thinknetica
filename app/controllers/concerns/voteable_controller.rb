@@ -6,12 +6,12 @@ module VoteableController
   end
 
   def vote_up
-    @resource.vote_up(current_user)
+    resource.vote_up(current_user)
     redirect_to :back
   end
 
   def vote_down
-    @resource.vote_down(current_user)
+    resource.vote_down(current_user)
     redirect_to :back
   end
 
