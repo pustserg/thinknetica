@@ -28,7 +28,7 @@ class QuestionsController < ApplicationController
   end
 
   def edit
-    respond_with(@question = @resource)
+    respond_with(@resource)
   end
 
   def update
@@ -43,7 +43,7 @@ class QuestionsController < ApplicationController
   private
 
   def set_resource
-    @resource = Question.find(params[:id])
+     @resource = @question = Question.find(params[:id])
   end
 
   def question_params
@@ -55,22 +55,10 @@ class QuestionsController < ApplicationController
   end
 
   def filter
-    if params[:tag_name]
-      Tag.find_by(name: params[:tag_name]).questions
-    elsif params[:search]
-      (Question.search { fulltext params[:search] }).results
-    elsif params[:answered]
-      Question.answered(params[:answered])
-    else
-      Question.all
-    end
+    return Tag.find_by(name: params[:tag_name]).questions if params[:tag_name]
+    return (Question.search { fulltext params[:search] }).results if params[:search]
+    return Question.answered(params[:answered]) if params[:answered]
+    Question.all
   end
-
-  # def filter
-  #   Tag.find_by(name: params[:tag_name]).questions if params[:tag_name]
-  #   (Question.search { fulltext params[:search] }).results if params[:search]
-  #   Question.answered(params[:answered]) if params[:answered]
-  #   false
-  # end
 
 end

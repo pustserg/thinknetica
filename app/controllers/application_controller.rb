@@ -12,18 +12,12 @@ class ApplicationController < ActionController::Base
   before_action :set_tags
 
   rescue_from CanCan::AccessDenied do |exception|
-    redirect_to root_url, alert: exception.message
+    redirect_to :back, alert: exception.message
   end
 
   check_authorization unless: :devise_controller?
 
   protected
-
-  def check_author
-    if current_user != @resource.user
-      render json: { error: "fufufu" }, status: 403
-    end
-  end
 
   def set_tags
     @tag_cloud = Tag.all

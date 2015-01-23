@@ -5,7 +5,7 @@ class AnswersController < ApplicationController
   
   before_action :set_question, only: [:new, :create]
   before_action :set_answer, except: [:new, :create]
-  before_action :check_author, only: [:destroy, :edit, :update]
+  # before_action :check_author, only: [:destroy, :edit, :update]
   before_action :check_question_author, only: :make_best
   
   include VoteableController
@@ -39,7 +39,7 @@ class AnswersController < ApplicationController
   private
 
   def set_answer
-    @resource = Answer.find(params[:id])
+    @resource = @answer = Answer.find(params[:id])
   end
 
   def set_question

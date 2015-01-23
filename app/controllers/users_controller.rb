@@ -28,11 +28,6 @@ class UsersController < ApplicationController
     end
   end
 
-  # def check_email
-  #   check_code = @user.check_code
-  #   UserMailer.check_email(@user, params[:user][:email], check_code).deliver_now
-  # end
-
   def finish_signup
     @user = User.new(email: session[:email], password: session[:password], password_confirmation: session[:password])
     @uid = session[:uid]

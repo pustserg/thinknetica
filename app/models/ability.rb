@@ -24,17 +24,13 @@ class Ability
   def user_ability
     guest_ability
     can :create, [Question, Answer, Comment, Vote]
-    # can :update, [Question, Answer, Comment], user: user
-    # can :destroy, [Question, Answer, Comment], user: user
-    # can(:eud, [Question, Answer, Comment]) { |resource| resource.user == user }
-    # cannot(:eud, [Question, Answer, Comment]) { |resource| resource.user != user }
+    can(:eud, [Question, Answer, Comment]) { |resource| resource.user == user }
 
-    can :edit, Question, user: user
-    cannot(:edit, Question) { |resource| resource.user != user }
+    can(:edit, Question) { |resource| resource.user == user }
 
     [Question, Answer, Comment].each do |cl|
-      can(:vote_up, cl) { |object| object.user != user }
-      can(:vote_down, cl) { |object| object.user != user }
+      can(:vote_up, cl) { |object| object.user != user && !object.votes.map(&:user).include?(user) }
+      can(:vote_down, cl) { |object| object.user != user && !object.votes.map(&:user).include?(user) }
     end
 
     can(:make_best, Answer) { |answer| answer.question.user == user } 

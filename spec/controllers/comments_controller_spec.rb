@@ -98,8 +98,8 @@ RSpec.describe CommentsController, :type => :controller do
     context 'user tries to update another user comment' do
       before { patch :update, id: another_comment, comment: { body: "edited body" }, format: :js }
 
-      it 'response status must be 403' do
-        expect(response.status).to eq 403
+      it 'response status must be 302' do
+        expect(response.status).to eq 302
       end
     end
 
@@ -114,9 +114,9 @@ RSpec.describe CommentsController, :type => :controller do
         expect{ delete :update, id: another_comment }.to_not change(Comment, :count)
       end
 
-      it 'response status must be 403' do
+      it 'response status must be 302' do
         delete :update, id: another_comment
-        expect(response.status).to eq 403
+        expect(response.status).to eq 302
       end
     end
 
@@ -145,10 +145,10 @@ RSpec.describe CommentsController, :type => :controller do
         expect{ patch :vote_up, id: comment }.to_not change(comment.votes, :count)
       end
 
-      it 'response status must be 403' do
+      it 'response status must be 302' do
         patch :vote_up, id: comment
         
-        expect(response.status).to eq 403
+        expect(response.status).to eq 302
       end  
     end
 
@@ -167,10 +167,10 @@ RSpec.describe CommentsController, :type => :controller do
         expect{ patch :vote_down, id: comment }.to_not change(comment.votes, :count)
       end
 
-      it 'response status must be 403' do
+      it 'response status must be 302' do
         patch :vote_down, id: comment
         
-        expect(response.status).to eq 403
+        expect(response.status).to eq 302
       end  
     end
 
