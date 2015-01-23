@@ -26,7 +26,11 @@ class Ability
     can :create, [Question, Answer, Comment, Vote]
     # can :update, [Question, Answer, Comment], user: user
     # can :destroy, [Question, Answer, Comment], user: user
-    can :eud, [Question, Answer, Comment], user: user
+    # can(:eud, [Question, Answer, Comment]) { |resource| resource.user == user }
+    # cannot(:eud, [Question, Answer, Comment]) { |resource| resource.user != user }
+
+    can :edit, Question, user: user
+    cannot(:edit, Question) { |resource| resource.user != user }
 
     [Question, Answer, Comment].each do |cl|
       can(:vote_up, cl) { |object| object.user != user }
