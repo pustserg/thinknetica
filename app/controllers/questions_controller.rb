@@ -3,7 +3,7 @@ class QuestionsController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show] 
   
   before_action :set_resource, only: [:show, :edit, :update, :destroy, :vote_up, :vote_down]
-  before_action :check_author, only: [:destroy, :edit, :update]
+  # before_action :check_author, only: [:destroy, :edit, :update]
 
   before_action :build_answer, only: :show
 
