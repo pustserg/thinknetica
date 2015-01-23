@@ -1,26 +1,26 @@
-=render @resource
+=render @question
 
 .col-md-9.attachments
   p Attachments:
   ul 
-    -@resource.attachments.each do |attach|
+    -@question.attachments.each do |attach|
       li = link_to attach.file.identifier, attach.file.url
 
 .col-md-9.question-comments
 
-  =link_to 'Add comment', new_polymorphic_path([@resource, :comment]), remote: true if current_user
-  =content_tag :div, id: "question-#{@resource.id}-comments", class: "col-md-10 col-md-offset-1"
-    =render @resource.comments
-  =subscribe_to "/question/#{@resource.id}/comments"
+  =link_to 'Add comment', new_polymorphic_path([@question, :comment]), remote: true if current_user
+  =content_tag :div, id: "question-#{@question.id}-comments", class: "col-md-10 col-md-offset-1"
+    =render @question.comments
+  =subscribe_to "/question/#{@question.id}/comments"
   
 .col-md-9.answers
   
-  -@resource.answers.each do |answer|
+  -@question.answers.each do |answer|
     -unless answer.new_record?
       =content_tag :div, class: "col-md-12", id: "answer-#{answer.id}"
         =render answer
 
-  =subscribe_to "/questions/#{@resource.id}/answers"
+  =subscribe_to "/questions/#{@question.id}/answers"
 
 .col-md-9
   -if current_user

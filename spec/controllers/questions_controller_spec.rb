@@ -18,11 +18,6 @@ RSpec.describe QuestionsController, :type => :controller do
       expect(assigns(:questions)).to match_array(questions)
     end
 
-    # it "populates array of tags" do
-    #   puts assigns(:tags)
-    #   expect(assigns(:tags)).to match_array(['first', 'second'])
-    # end
-
     it 'render index view' do
       expect(response).to render_template :index
     end
@@ -32,7 +27,7 @@ RSpec.describe QuestionsController, :type => :controller do
     before { get :show, id: another_question }
 
     it 'assigns requested question as @question' do
-      expect(assigns(:resource)).to eq another_question
+      expect(assigns(:question)).to eq another_question
     end
 
     it 'assigns a new answer for question' do
@@ -126,7 +121,7 @@ RSpec.describe QuestionsController, :type => :controller do
 
         it 'assigns requested question as question' do
           patch :update, id: question, question: attributes_for(:question), format: :js
-          expect(assigns(:resource)).to eq question
+          expect(assigns(:question)).to eq question
         end
         
         it 'changes question attributes' do

@@ -3,9 +3,9 @@ class AnswersController < ApplicationController
 
   before_action :authenticate_user!, except: :show
   
+  load_resource
+
   before_action :set_question, only: [:new, :create]
-  before_action :set_answer, except: [:new, :create]
-  # before_action :check_author, only: [:destroy, :edit, :update]
   before_action :check_question_author, only: :make_best
   
   include VoteableController
@@ -13,33 +13,37 @@ class AnswersController < ApplicationController
   authorize_resource
   
   def create
-    respond_with(@resource = @question.answers.create(answer_params.merge(user: current_user)))
+    respond_with(@answer = @question.answers.create(answer_params.merge(user: current_user)))
   end
 
   def edit
-    @question = @resource.question
-    respond_with @resource
+    @question = @answer.question
+    respond_with @answer
   end
 
   def update
-    @resource.update(answer_params)
-    respond_with @resource
+    @answer.update(answer_params)
+    respond_with @answer
   end
 
   def destroy
-    @question = @resource.question
-    respond_with(@resource.destroy, location: question_path(@question))
+    @question = @answer.question
+    respond_with(@answer.destroy, location: question_path(@question))
   end
 
   def make_best
-    @resource.make_best
-    respond_with(@resource, location: @resource.question)
+    @answer.make_best
+    respond_with(@answer, location: @answer.question)
   end
 
   private
 
+  def resource
+    @answer
+  end
+
   def set_answer
-    @resource = @answer = Answer.find(params[:id])
+    @answer = Answer.find(params[:id])
   end
 
   def set_question
@@ -51,7 +55,7 @@ class AnswersController < ApplicationController
   end
 
   def check_question_author
-    if current_user != @resource.question.user
+    if current_user != @answer.question.user
       render json: { error: "fufufu" }, status: 403
     end
   end

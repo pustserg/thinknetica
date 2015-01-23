@@ -2,9 +2,8 @@
 class QuestionsController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show] 
   
-  before_action :set_resource, only: [:show, :edit, :update, :destroy, :vote_up, :vote_down]
-  # before_action :check_author, only: [:destroy, :edit, :update]
-
+  load_resource
+  
   before_action :build_answer, only: :show
 
   include VoteableController
@@ -16,7 +15,7 @@ class QuestionsController < ApplicationController
   end
 
   def show
-    respond_with @resource
+    respond_with @question
   end
 
   def new
@@ -28,22 +27,26 @@ class QuestionsController < ApplicationController
   end
 
   def edit
-    respond_with(@resource)
+    respond_with(@question)
   end
 
   def update
-    @resource.update(question_params)
-    respond_with(@resource)
+    @question.update(question_params)
+    respond_with(@question)
   end
 
   def destroy
-    respond_with(@resource.destroy)
+    respond_with(@question.destroy)
   end
 
   private
 
+  def resource
+    @question
+  end
+
   def set_resource
-     @resource = @question = Question.find(params[:id])
+     @question = Question.find(params[:id])
   end
 
   def question_params
@@ -51,7 +54,7 @@ class QuestionsController < ApplicationController
   end
 
   def build_answer
-    @answer = @resource.answers.build  
+    @answer = @question.answers.build  
   end
 
   def filter
