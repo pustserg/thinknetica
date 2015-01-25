@@ -30,9 +30,9 @@ class UsersController < ApplicationController
   end
 
   def finish_signup
-    @user = User.new(email: session[:email], password: session[:password], password_confirmation: session[:password])
-    @uid = session[:uid]
-    @provider = session[:provider]
+    # @user = User.new(email: session[:email], password: session[:password], password_confirmation: session[:password])
+    # @uid = session[:uid]
+    # @provider = session[:provider]
   end
 
   private
