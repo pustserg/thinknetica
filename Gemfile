@@ -27,7 +27,7 @@ gem 'sdoc', '~> 0.4.0',          group: :doc
 gem 'bootstrap-sass', '~> 3.3.1'
 gem 'autoprefixer-rails'
 gem 'slim-rails'
-gem 'acts-as-taggable-on'
+# gem 'acts-as-taggable-on'
 
 gem 'devise'
 
@@ -35,6 +35,7 @@ gem 'carrierwave'
 gem 'remotipart'
 gem 'nested_form'
 gem 'cancancan'
+gem 'doorkeeper'
 
 gem 'russian'
 gem 'foreman'
@@ -58,6 +59,7 @@ group :test do
   gem 'launchy'
   gem 'database_cleaner'
   gem 'capybara-webkit'
+  gem 'json_spec'
 end
 
 group :development do

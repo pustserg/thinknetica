@@ -1,5 +1,6 @@
 # -*- encoding : utf-8 -*-
 Rails.application.routes.draw do
+  use_doorkeeper
   devise_for :users, :path => '', :path_names => {
     :sign_up => 'signup',
     :sign_in => 'login', 
@@ -26,6 +27,14 @@ Rails.application.routes.draw do
   get '/profile/:id', to: 'users#show', as: 'profile'
   get '/tag/:tag_name', to: 'questions#index', as: 'tag'
   get '/questions/(:filter)', to: 'questions#index'
+
+  namespace :api do
+    namespace :v1 do
+      resource :profiles do
+        get :me, on: :collection
+      end
+    end
+  end
 
   root 'questions#index'
 
