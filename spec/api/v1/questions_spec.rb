@@ -74,11 +74,11 @@ describe 'Questions API' do
 
     context 'authorized' do
       let(:user) { create(:user) }
-      let(:access_token) { create(:access_token) }
+      let(:access_token) { create(:access_token, resource_owner_id: user.id) }
       let!(:answer) { create(:answer, question: question) }
       let!(:comment) { create(:question_comment, commentable: question, user: user) }
       let!(:attachment) { create(:attachment, attachmentable: question) }
-       
+
       before { get "/api/v1/questions/#{question.id}", format: :json, access_token: access_token.token }  
 
       it 'returns 200 status code' do
@@ -134,7 +134,49 @@ describe 'Questions API' do
           expect(response.body).to be_json_eql(attachment.file.url.to_json).at_path('question/attachments/0/file/url')
         end
       end
+    end
+  end
 
+  describe 'POST #create' do
+    context 'unauthorized' do
+
+      it 'returns 401 when there not access token' do
+        post '/api/v1/questions', question: attributes_for(:question), format: :json
+        expect(response.status).to eq 401
+      end
+
+      it 'returns 401 when access token is invalid' do
+        post '/api/v1/questions', question: attributes_for(:question), format: :json, access_token: '12345'
+        expect(response.status).to eq 401
+      end
+    end
+
+    context 'authorized' do
+      let(:user) { create(:user) }
+      let(:access_token) { create(:access_token, resource_owner_id: user.id) }
+
+      it 'should be success' do
+        post '/api/v1/questions', question: attributes_for(:question), format: :json, access_token: access_token.token
+        expect(response).to be_success
+      end
+
+      it 'creates new record in db' do
+        expect { 
+          post '/api/v1/questions', 
+          question: attributes_for(:question),
+          format: :json, access_token: access_token.token
+          }.to change(Question, :count).by(1)
+      end
+
+      # context 'returns created question' do
+      #   before { post '/api/v1/questions', question: attributes_for(:question), format: :json, access_token: access_token.token }
+
+      #   # %w(id title body created_at updated_at).each do |attr|
+      #   #   it "question object contains #{attr}" do
+      #   #     expect(response.body).to be_json_eql(question.send(attr.to_sym).to_json).at_path("question/#{attr}")
+      #   #   end
+      #   # end 
+      # end
     end
   end
 end

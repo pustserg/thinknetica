@@ -2,6 +2,8 @@ require 'rails_helper'
 
 describe 'Answers API' do
 
+  let!(:question) { create(:question) }
+
   describe 'GET /answers/:id' do
     let(:user) { create(:user) }
     let!(:question) { create(:question) }
@@ -72,6 +74,37 @@ describe 'Answers API' do
       end
     end
 
+  end
+
+  describe 'POST /create' do
+    context 'unauthorized' do
+
+      it 'returns 401 when there not access token' do
+        post "/api/v1/questions/#{question.id}/answers", question_id: question, answer: attributes_for(:answer), format: :json
+        expect(response.status).to eq 401
+      end
+
+      it 'returns 401 when access token is invalid' do
+        post "/api/v1/questions/#{question.id}/answers", question_id: question, answer: attributes_for(:answer), format: :json, access_token: "12334"
+        expect(response.status).to eq 401
+      end
+
+    end
+
+    context 'authorized' do
+      let(:user) { create(:user) }
+      let(:access_token) { create(:access_token, resource_owner_id: user.id) }
+
+      it 'creates record in db' do
+        expect{ post "/api/v1/questions/#{question.id}/answers", question_id: question, answer: attributes_for(:answer), format: :json, access_token: access_token.token }.to change(Answer, :count).by(1)
+      end
+
+      it 'should be success' do
+        post "/api/v1/questions/#{question.id}/answers", question_id: question, answer: attributes_for(:answer), format: :json, access_token: access_token.token
+        expect(response).to be_success
+      end
+
+    end
   end
 
 end
