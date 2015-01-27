@@ -17,7 +17,9 @@ class RegistrationsController < Devise::RegistrationsController
       @existed_user = User.find_by(email: resource.email)
       if @existed_user
         @existed_user.create_authorization(auth)
+
         reset_session
+
         sign_in @existed_user
         respond_with @existed_user, location: after_sign_up_path_for(resource)
       else
