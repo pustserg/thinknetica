@@ -51,7 +51,7 @@ RSpec.describe User, :type => :model do
 
   describe 'likes' do
     it 'returns likes which user got for his questions/answers/comments' do
-      expect(user.likes).to match_array [question.votes.first, answer.votes.first]
+      expect(user.likes).to match("answers" => answer.votes, "questions" => question.votes)
     end
   end
 

@@ -19,4 +19,5 @@ class Vote < ActiveRecord::Base
 
   scope :likes, -> { where(status: "+") }
   scope :dislikes, -> { where(status: "-") }
+  scope :by_type, -> (type) { where(voteable_type: type) }
 end

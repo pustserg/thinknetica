@@ -21,14 +21,13 @@
 class User < ActiveRecord::Base
 
   TEMP_EMAIL_REGEX = /.temp/
+  USER_ACTIONS = ['Question', 'Answer', 'Comment']
 
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable, 
          :omniauthable, :confirmable
-
-  USER_ACTIONS = ['questions', 'answers', 'comments']
 
   has_many :questions, dependent: :restrict_with_error
   has_many :answers, dependent: :restrict_with_error
@@ -41,27 +40,21 @@ class User < ActiveRecord::Base
   end
 
   def likes
-    result = Vote.none
-    USER_ACTIONS.each do |type|
-      result += votes_for(type).likes
-    end
-    result.uniq
+    result = {}
+    USER_ACTIONS.each { |type| result[type.to_sym] = votes_for(type).likes }
+    result
   end
 
   def dislikes
-    result = Vote.none
-    USER_ACTIONS.each do |type|
-      result += votes_for(type).dislikes
-    end
-    result.uniq
+    result = {}
+    USER_ACTIONS.each { |type| result[type.to_sym] = votes_for(type).dislikes }
+    result
   end
 
   def user_votes
-    result = Vote.none
-     USER_ACTIONS.each do |type|
-      result += votes_for(type)
-    end
-    result.uniq
+    result = {}
+     USER_ACTIONS.each { |type| result[type.to_sym] = votes_for(type) }
+    result
   end
 
   def self.find_for_oauth(auth)
@@ -74,7 +67,7 @@ class User < ActiveRecord::Base
       user.create_authorization(auth)
     else
       password = Devise.friendly_token[0,20]
-      if email !~ /.temp/
+      if email !~ TEMP_EMAIL_REGEX
         user = User.new(email: email, password: password, password_confirmation: password)
         user.skip_confirmation!
         user.save!
@@ -91,17 +84,13 @@ class User < ActiveRecord::Base
     self.authorizations.create(provider: auth.provider, uid: auth.uid)
   end
 
-  def check_code=(code)
-    self.check_code = code
-  end
+  # private
 
-  def check_code
-    # Devise.friendly_token[0,20]
-  end
-
-  private
   def votes_for(type)
-    Vote.joins("join #{type} on votes.voteable_id=#{type}.id").where("#{type}.user_id = ?", self.id)
+    many_form = type.pluralize(2)
+    one_form = type.capitalize
+
+    Vote.joins("join #{many_form} on (votes.voteable_id = #{many_form}.id AND votes.voteable_type = '#{one_form}')").where("#{many_form}.user_id=?", self.id)
   end
 
 end
