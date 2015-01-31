@@ -20,4 +20,11 @@ class Vote < ActiveRecord::Base
   scope :likes, -> { where(status: "+") }
   scope :dislikes, -> { where(status: "-") }
   scope :by_type, -> (type) { where(voteable_type: type) }
+
+  after_create :calculate_user_karma
+
+  private
+  def calculate_user_karma
+    self.voteable.user.calculate_karma
+  end
 end

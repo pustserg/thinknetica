@@ -63,6 +63,7 @@ RSpec.describe User, :type => :model do
 
   describe 'karma' do
     it 'returns likes.count - dislikes.count' do
+      user.reload
       expect(user.karma).to eq 1
     end
   end

@@ -35,12 +35,12 @@ class User < ActiveRecord::Base
   has_many :votes, dependent: :restrict_with_error
   has_many :authorizations, dependent: :destroy
   
-  def karma
+  def calculate_karma
     likes_sum = 0
     USER_ACTIONS.each { |type| likes_sum += likes[type.to_sym].count }
     dislikes_sum = 0
     USER_ACTIONS.each { |type| dislikes_sum += dislikes[type.to_sym].count }
-    likes_sum - dislikes_sum
+    self.update(karma: likes_sum - dislikes_sum)
   end
 
   def likes
