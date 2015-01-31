@@ -21,7 +21,7 @@
 class User < ActiveRecord::Base
 
   TEMP_EMAIL_REGEX = /.temp/
-  USER_ACTIONS = ['Question', 'Answer', 'Comment']
+  USER_ACTIONS = ['question', 'answer', 'comment']
 
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
@@ -36,7 +36,11 @@ class User < ActiveRecord::Base
   has_many :authorizations, dependent: :destroy
   
   def karma
-    likes.count - dislikes.count
+    likes_sum = 0
+    USER_ACTIONS.each { |type| likes_sum += likes[type.to_sym].count }
+    dislikes_sum = 0
+    USER_ACTIONS.each { |type| dislikes_sum += dislikes[type.to_sym].count }
+    likes_sum - dislikes_sum
   end
 
   def likes
@@ -84,7 +88,7 @@ class User < ActiveRecord::Base
     self.authorizations.create(provider: auth.provider, uid: auth.uid)
   end
 
-  # private
+  private
 
   def votes_for(type)
     many_form = type.pluralize(2)
