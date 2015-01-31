@@ -5,6 +5,7 @@ class UsersController < ApplicationController
   authorize_resource
 
   def show
+    @user_votes = @user.user_votes.values.flatten
     respond_with(@user)
   end
 
