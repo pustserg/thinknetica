@@ -11,7 +11,6 @@ class RegistrationsController < Devise::RegistrationsController
   def create
     build_resource(sign_up_params)
     auth = Authorization.new(uid: session[:uid], provider: session[:provider])
-    resource.password = session[:password]
 
     if session[:provider] && session[:uid]
       @existed_user = User.find_by(email: resource.email)
@@ -22,6 +21,7 @@ class RegistrationsController < Devise::RegistrationsController
         sign_in @existed_user
         respond_with @existed_user, location: after_sign_up_path_for(resource)
       else
+        resource.password = session[:password]
         resource.save
         resource.create_authorization(auth)
         set_flash_message :notice, :signed_up if is_flashing_format?
