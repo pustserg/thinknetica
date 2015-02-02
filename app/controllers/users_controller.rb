@@ -5,6 +5,7 @@ class UsersController < ApplicationController
   authorize_resource
 
   def show
+    @user_votes = @user.user_votes.values.flatten
     respond_with(@user)
   end
 
@@ -27,12 +28,6 @@ class UsersController < ApplicationController
       UserMailer.change_email(@user, params[:user][:email], check_code)
       render :edit
     end
-  end
-
-  def finish_signup
-    # @user = User.new(email: session[:email], password: session[:password], password_confirmation: session[:password])
-    # @uid = session[:uid]
-    # @provider = session[:provider]
   end
 
   private

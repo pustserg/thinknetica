@@ -12,7 +12,7 @@
       =render @user.comments
   #votes.col-md-12
       h3 Votes
-      - @user.user_votes.each do |vote|
+      - @user_votes.each do |vote|
           p.time 
             ="#{vote.created_at} #{vote.user.email}"
           p.status

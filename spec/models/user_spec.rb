@@ -45,24 +45,25 @@ RSpec.describe User, :type => :model do
 
   describe 'user_votes' do
     it 'returns votes which user got for his questions/answers/comments' do
-      expect(user.user_votes).to match_array [question.votes.first, answer.votes.first, comment.votes.first]
+      expect(user.user_votes).to match(answer: answer.votes, question: question.votes, comment: comment.votes)
     end
   end
 
   describe 'likes' do
     it 'returns likes which user got for his questions/answers/comments' do
-      expect(user.likes).to match_array [question.votes.first, answer.votes.first]
+      expect(user.likes).to match(answer: answer.votes, question: question.votes, comment: [])
     end
   end
 
   describe 'dislikes' do
     it 'returns dislikes which user got for his questions/answers/comments' do
-      expect(user.dislikes).to match_array [comment.votes.first]
+      expect(user.dislikes).to match(answer: [], question: [], comment: comment.votes)
     end
   end
 
   describe 'karma' do
     it 'returns likes.count - dislikes.count' do
+      user.reload
       expect(user.karma).to eq 1
     end
   end
