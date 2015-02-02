@@ -21,6 +21,8 @@ class Question < ActiveRecord::Base
   has_many :attachments, as: :attachmentable, dependent: :destroy
   has_many :taggings, dependent: :destroy
   has_many :tags, through: :taggings
+  has_many :favorites
+  has_many :subscribers, through: :favorites, source: :user
   belongs_to :user
 
   validates :title, :body, :user_id, presence: true

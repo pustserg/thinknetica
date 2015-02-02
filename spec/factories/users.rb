@@ -16,6 +16,11 @@
 #  last_sign_in_ip        :string(255)
 #  created_at             :datetime
 #  updated_at             :datetime
+#  confirmation_token     :string(255)
+#  confirmed_at           :datetime
+#  confirmation_sent_at   :datetime
+#  admin                  :boolean          default(FALSE)
+#  karma                  :integer          default(0)
 #
 
 FactoryGirl.define do

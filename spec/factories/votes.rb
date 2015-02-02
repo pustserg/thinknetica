@@ -14,8 +14,8 @@
 
 FactoryGirl.define do
   factory :vote do
-    user nil
-status "MyString"
+    user
+    status "+"
   end
 
 end

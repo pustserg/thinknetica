@@ -16,6 +16,11 @@
 #  last_sign_in_ip        :string(255)
 #  created_at             :datetime
 #  updated_at             :datetime
+#  confirmation_token     :string(255)
+#  confirmed_at           :datetime
+#  confirmation_sent_at   :datetime
+#  admin                  :boolean          default(FALSE)
+#  karma                  :integer          default(0)
 #
 
 class User < ActiveRecord::Base
@@ -34,6 +39,8 @@ class User < ActiveRecord::Base
   has_many :comments, dependent: :restrict_with_error
   has_many :votes, dependent: :restrict_with_error
   has_many :authorizations, dependent: :destroy
+  has_many :favorites
+  has_many :favorited_questions, through: :favorites, source: :question
   
   def calculate_karma
     likes_sum = 0
