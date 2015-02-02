@@ -63,6 +63,10 @@ class Question < ActiveRecord::Base
     end
   end
 
+  def add_subscibers(user)
+    self.subscribers << user
+  end
+
   private
   def create_slug
       self.slug = Russian::transliterate(self.title) if !self.slug

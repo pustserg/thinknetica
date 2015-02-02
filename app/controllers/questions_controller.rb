@@ -39,6 +39,11 @@ class QuestionsController < ApplicationController
     respond_with(@question.destroy)
   end
 
+  def add_to_favs
+    @question.add_subscibers(current_user)
+    respond_with @question
+  end
+
   private
 
   def resource

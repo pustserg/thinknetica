@@ -22,6 +22,7 @@ Rails.application.routes.draw do
   end
 
   resources :questions, concerns: [:commentable, :voteable], shallow: true do
+    post :add_to_favs, on: :member
     resources :answers, concerns: [:commentable, :voteable] do
       patch :make_best, on: :member
     end

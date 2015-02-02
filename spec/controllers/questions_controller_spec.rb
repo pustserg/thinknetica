@@ -216,7 +216,7 @@ RSpec.describe QuestionsController, :type => :controller do
 
     context 'another user tries to vote_up question' do
       it 'create a new vote' do
-        expect{ patch :vote_up, id: another_question }.to change(another_question.votes, :count)
+        expect{ patch :vote_up, id: another_question }.to change(another_question.votes, :count).by(1)
       end
     end
   end
@@ -238,8 +238,14 @@ RSpec.describe QuestionsController, :type => :controller do
 
     context 'another user tries to vote_down question' do
       it 'create a new vote' do
-        expect{ patch :vote_down, id: another_question }.to change(another_question.votes, :count)
+        expect{ patch :vote_down, id: another_question }.to change(another_question.votes, :count).by(1)
       end
+    end
+  end
+
+  describe 'POST #add_to_favs' do
+    it 'creates question.subscribers record in db' do
+      expect{ post :add_to_favs, id: another_question }.to change(another_question.subscribers, :count).by(1)
     end
   end
 
