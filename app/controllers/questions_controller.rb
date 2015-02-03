@@ -40,7 +40,7 @@ class QuestionsController < ApplicationController
   end
 
   def add_to_favs
-    @question.add_subscibers(current_user)
+    @question.add_subscribers(current_user)
     respond_with @question
   end
 

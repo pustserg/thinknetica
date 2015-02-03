@@ -68,7 +68,7 @@ class Question < ActiveRecord::Base
   end
 
   def add_subscribers(user)
-    self.subscribers << user
+    self.subscribers << user unless self.subscribers.include?(user)
   end
 
   def send_new_answer_notification

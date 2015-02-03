@@ -20,3 +20,4 @@
 /config/database.yml
 /solr
 solr/*
+dump.rdb
