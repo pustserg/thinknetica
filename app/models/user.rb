@@ -95,6 +95,10 @@ class User < ActiveRecord::Base
     self.authorizations.create(provider: auth.provider, uid: auth.uid)
   end
 
+  def self.send_daily_digest
+    find_each.each { |user| QuestionMailer.delay.digest(user) }
+  end
+
   private
 
   def votes_for(type)

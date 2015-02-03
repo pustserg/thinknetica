@@ -25,6 +25,6 @@ class Vote < ActiveRecord::Base
 
   private
   def calculate_user_karma
-    self.voteable.user.calculate_karma
+    self.voteable.user.delay.calculate_karma
   end
 end

@@ -29,6 +29,10 @@ class Question < ActiveRecord::Base
 
   before_save :create_slug
 
+  after_create do
+    add_subscribers(self.user)
+  end
+
   scope :answered, -> (answered){ where(answered: answered) }
   # scope :not_answered, -> { where(answered: false) }
 
@@ -63,7 +67,7 @@ class Question < ActiveRecord::Base
     end
   end
 
-  def add_subscibers(user)
+  def add_subscribers(user)
     self.subscribers << user
   end
 

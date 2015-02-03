@@ -244,6 +244,8 @@ RSpec.describe QuestionsController, :type => :controller do
   end
 
   describe 'POST #add_to_favs' do
+    sign_in_user
+    
     it 'creates question.subscribers record in db' do
       expect{ post :add_to_favs, id: another_question }.to change(another_question.subscribers, :count).by(1)
     end

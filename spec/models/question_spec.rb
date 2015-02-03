@@ -18,6 +18,7 @@ require 'rails_helper'
 RSpec.describe Question, :type => :model do
   
   let(:user) { create(:user) }
+  let(:another_user) { create(:user) }
   let!(:question) { create(:question, user: user) }
   let!(:another_question) { create(:question, user: user) }
   let!(:answer) { create(:answer, question: question, best: true) }
@@ -83,6 +84,18 @@ RSpec.describe Question, :type => :model do
 
       expect{ another_question.tag_list=("first") }.to_not change(Tag, :count)
     end
+  end
+
+  describe 'add subscribers method' do
+    
+    it 'adds user to question subscribers' do
+      expect{ question.add_subscribers(another_user) }.to change(question.subscribers, :count).by(1)
+    end
+
+    it 'question author must be in subscribers' do
+      expect(question.subscribers).to include(question.user)
+    end
+
   end
 
 end

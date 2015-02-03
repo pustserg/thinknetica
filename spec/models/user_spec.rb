@@ -142,4 +142,13 @@ RSpec.describe User, :type => :model do
     end
   end
 
+  describe '.send dayly digest' do
+    let(:users) { create_list(:user, 2) }
+
+    it 'should send dayly digest to all users' do
+      users.each { |user| expect(QuestionMailer).to receive(:digest).with(user).and_call_original }
+      User.send_daily_digest
+    end
+  end
+
 end
