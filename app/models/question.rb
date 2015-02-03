@@ -71,9 +71,15 @@ class Question < ActiveRecord::Base
     self.subscribers << user
   end
 
+  def send_new_answer_notification
+    subscribers.find_each do |user|
+      QuestionMailer.delay.new_answer(user)
+    end
+  end
+
   private
   def create_slug
-      self.slug = Russian::transliterate(self.title) if !self.slug
+    self.slug = Russian::transliterate(self.title) if !self.slug
   end
 
 end

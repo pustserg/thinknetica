@@ -24,6 +24,7 @@ class Answer < ActiveRecord::Base
   validates :body, :question_id, :user_id, presence: true
 
   accepts_nested_attributes_for :attachments
+  after_save :send_notification
 
 
   def make_best
@@ -34,6 +35,12 @@ class Answer < ActiveRecord::Base
       question.best_answer.update(best: false)
       update(best: true)
     end
+  end
+
+  private
+
+  def send_notification
+    question.send_new_answer_notification
   end
 
 end

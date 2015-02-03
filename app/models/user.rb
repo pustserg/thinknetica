@@ -96,7 +96,7 @@ class User < ActiveRecord::Base
   end
 
   def self.send_daily_digest
-    find_each.each { |user| QuestionMailer.delay.digest(user) }
+    find_each { |user| QuestionMailer.delay.digest(user) }
   end
 
   private

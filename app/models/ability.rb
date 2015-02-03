@@ -34,5 +34,6 @@ class Ability
     end
 
     can(:make_best, Answer) { |answer| answer.question.user == user } 
+    can(:add_to_favs, Question)
   end
 end

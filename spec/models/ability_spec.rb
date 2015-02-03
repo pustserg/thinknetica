@@ -51,5 +51,7 @@ describe Ability do
     it { should be_able_to :make_best, create(:answer, question: create(:question, user: user)), user: user }
     it { should_not be_able_to :make_best, create(:answer, question: create(:question, user: another_user)), user: user }
 
+    it { should be_able_to :add_to_favs, create(:question) }
+
   end
 end
