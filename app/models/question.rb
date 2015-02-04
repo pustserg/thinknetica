@@ -34,7 +34,7 @@ class Question < ActiveRecord::Base
   end
 
   scope :answered, -> (answered){ where(answered: answered) }
-  # scope :not_answered, -> { where(answered: false) }
+  scope :today, -> { where("created_at >= ?", Time.zone.now.beginning_of_day ) }
 
   accepts_nested_attributes_for :attachments
 
@@ -73,7 +73,7 @@ class Question < ActiveRecord::Base
 
   def send_new_answer_notification
     subscribers.find_each do |user|
-      QuestionMailer.delay.new_answer(user)
+      QuestionMailer.delay.new_answer(user, self)
     end
   end
 

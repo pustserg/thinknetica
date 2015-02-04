@@ -1,3 +1,4 @@
-QuestionMailer#digest
-
-= @greeting + ", find me in app/views/question_mailer/digest.text.slim"
+= @greeting
+-@questions.each do |question|
+  =link_to question.title, question_url(question)
+  

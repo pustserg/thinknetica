@@ -8,7 +8,7 @@ class QuestionMailer < ActionMailer::Base
   #
   def digest(user)
     @greeting = "Hi"
-
+    @questions = Question.today
     mail to: user.email
   end
 
@@ -17,8 +17,8 @@ class QuestionMailer < ActionMailer::Base
   #
   #   en.question_mailer.new_answer.subject
   #
-  def new_answer(user)
-    @greeting = "Hi"
+  def new_answer(user, question)
+    @question = question
     mail to: user.email
   end
 end
