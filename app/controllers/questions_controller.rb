@@ -41,7 +41,7 @@ class QuestionsController < ApplicationController
 
   def add_to_favs
     @question.add_subscribers(current_user)
-    respond_with @question
+    head :ok
   end
 
   private

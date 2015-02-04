@@ -15,7 +15,7 @@
         li =link_to 'Edit question', edit_question_path(question), remote: true
         li =link_to 'Delete question', question, method: :delete
   .col-md-1
-    =link_to 'Add to favs', add_to_favs_question_path(question), method: :post
+    =link_to 'Add to favs', add_to_favs_question_path(question), method: :post, remote: true
   .col-md-12.tags
      p.tags
       |Tags: 
