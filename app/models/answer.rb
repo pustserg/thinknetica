@@ -40,7 +40,7 @@ class Answer < ActiveRecord::Base
   private
 
   def send_notification
-    question.send_new_answer_notification
+    question.delay.send_new_answer_notification
   end
 
 end

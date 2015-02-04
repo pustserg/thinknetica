@@ -73,7 +73,7 @@ class Question < ActiveRecord::Base
 
   def send_new_answer_notification
     subscribers.find_each do |user|
-      QuestionMailer.delay.new_answer(user)
+      QuestionMailer.new_answer(user)
     end
   end
 

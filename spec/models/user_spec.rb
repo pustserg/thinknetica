@@ -43,34 +43,36 @@ RSpec.describe User, :type => :model do
   it { should have_many :authorizations }
   it { should have_many :favorites }
 
-  before do
-    question.vote_up(another_user)
-    answer.vote_up(another_user)
-    comment.vote_down(another_user)
-  end
-
   describe 'user_votes' do
     it 'returns votes which user got for his questions/answers/comments' do
       expect(user.user_votes).to match(answer: answer.votes, question: question.votes, comment: comment.votes)
     end
   end
 
-  describe 'likes' do
-    it 'returns likes which user got for his questions/answers/comments' do
-      expect(user.likes).to match(answer: answer.votes, question: question.votes, comment: [])
+  context 'karma' do
+    before do
+      question.vote_up(another_user)
+      answer.vote_up(another_user)
+      comment.vote_down(another_user)
     end
-  end
-
-  describe 'dislikes' do
-    it 'returns dislikes which user got for his questions/answers/comments' do
-      expect(user.dislikes).to match(answer: [], question: [], comment: comment.votes)
+    
+    describe 'likes' do
+      it 'returns likes which user got for his questions/answers/comments' do
+        expect(user.likes).to match(answer: answer.votes, question: question.votes, comment: [])
+      end
     end
-  end
 
-  describe 'karma' do
-    it 'returns likes.count - dislikes.count' do
-      user.reload
-      expect(user.karma).to eq 1
+    describe 'dislikes' do
+      it 'returns dislikes which user got for his questions/answers/comments' do
+        expect(user.dislikes).to match(answer: [], question: [], comment: comment.votes)
+      end
+    end
+
+    describe 'karma' do
+      it 'returns likes.count - dislikes.count' do
+        user.reload
+        expect(user.karma).to eq 1
+      end
     end
   end
 
@@ -142,12 +144,14 @@ RSpec.describe User, :type => :model do
     end
   end
 
-  describe '.send dayly digest' do
-    let(:users) { create_list(:user, 2) }
+  context 'mailer' do
+    describe '.send dayly digest' do
+      let(:users) { create_list(:user, 2) }
 
-    it 'should send dayly digest to all users' do
-      users.each { |user| expect(QuestionMailer).to receive(:digest).with(user).and_call_original }
-      User.send_daily_digest
+      it 'should send dayly digest to all users' do
+        users.each { |user| expect(QuestionMailer).to receive(:digest).with(user).and_call_original }
+        User.send_daily_digest
+      end
     end
   end
 

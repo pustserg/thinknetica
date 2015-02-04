@@ -102,7 +102,7 @@ RSpec.describe Question, :type => :model do
     
     it 'should send new answer notification to all subscribers' do
       expect(QuestionMailer).to receive(:new_answer).with(question.user)
-      question.answers.create!(body: "answer", user: user)
+      question.answers.create(body: "answer", user: user)
     end
 
   end
