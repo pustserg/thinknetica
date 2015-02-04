@@ -40,6 +40,7 @@ gem 'active_model_serializers'
 gem 'oj'
 gem 'oj_mimic_json'
 gem 'sidekiq'
+gem 'sidetiq'
 
 gem 'russian'
 gem 'foreman'
