@@ -28,11 +28,7 @@ require 'rails_helper'
 RSpec.describe User, :type => :model do
 
   let(:user) { create(:user) }
-  let(:another_user) { create(:user) }
-  let!(:question) { create(:question, user: user) }
-  let!(:answer) { create(:answer, user: user, question: question) }
-  let!(:comment) { create(:question_comment, commentable: question, user: user) }
-
+  
   it { should validate_presence_of :email }
   it { should validate_presence_of :password }
 
@@ -43,19 +39,25 @@ RSpec.describe User, :type => :model do
   it { should have_many :authorizations }
   it { should have_many :favorites }
 
-  describe 'user_votes' do
-    it 'returns votes which user got for his questions/answers/comments' do
-      expect(user.user_votes).to match(answer: answer.votes, question: question.votes, comment: comment.votes)
-    end
-  end
-
   context 'karma' do
+
+    let(:another_user) { create(:user) }
+    let(:question) { create(:question, user: user) }
+    let(:answer) { create(:answer, user: user, question: question) }
+    let(:comment) { create(:question_comment, commentable: question, user: user) }
+    
     before do
       question.vote_up(another_user)
       answer.vote_up(another_user)
       comment.vote_down(another_user)
     end
     
+    describe 'user_votes' do
+      it 'returns votes which user got for his questions/answers/comments' do
+        expect(user.user_votes).to match(answer: answer.votes, question: question.votes, comment: comment.votes)
+      end
+    end
+
     describe 'likes' do
       it 'returns likes which user got for his questions/answers/comments' do
         expect(user.likes).to match(answer: answer.votes, question: question.votes, comment: [])
@@ -146,7 +148,7 @@ RSpec.describe User, :type => :model do
 
   context 'mailer' do
     describe '.send dayly digest' do
-      let(:users) { create_list(:user, 2) }
+      let!(:users) { create_list(:user, 2) }
 
       it 'should send dayly digest to all users' do
         users.each { |user| expect(QuestionMailer).to receive(:digest).with(user).and_call_original }
