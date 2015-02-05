@@ -3,9 +3,6 @@ class CommentsController < ApplicationController
   before_action :authenticate_user!, except: :show
   load_resource
   before_action :set_commentable, only: [:new, :create]
-  # before_action :set_resource, only: [:edit, :update, :destroy, :vote_up, :vote_down]
-  # before_action :check_author, only: [:edit, :update, :destroy]
-  before_action :set_question, only: :destroy
 
   include VoteableController
 
@@ -29,7 +26,7 @@ class CommentsController < ApplicationController
   end
 
   def destroy
-    @question = set_question
+    @question = @comment.question
     respond_with(@comment.destroy, location: question_path(@question))
   end
 
@@ -49,15 +46,6 @@ class CommentsController < ApplicationController
                   elsif params[:answer_id].present?
                     Answer.find(params[:answer_id])
                   end                   
-  end
-
-  def set_question
-    if @commentable.class == Answer
-      @question = @comment.commentable.question 
-    else
-      @question = @comment.commentable
-    end
-    @question
   end
 
 end

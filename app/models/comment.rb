@@ -20,4 +20,7 @@ class Comment < ActiveRecord::Base
 
   validates :body, :user_id, :commentable_id, presence: true
 
+  def question
+    commentable_type == "Question" ? commentable : commentable.question
+  end
 end
