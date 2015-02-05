@@ -38,6 +38,7 @@ Rails.application.routes.draw do
 
   get '/tag/:tag_name', to: 'questions#index', as: 'tag'
   get '/questions/(:filter)', to: 'questions#index'
+  get '/search', to: 'search#search', as: 'search'
 
   namespace :api do
     namespace :v1 do

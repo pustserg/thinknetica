@@ -64,7 +64,7 @@ class QuestionsController < ApplicationController
 
   def filter
     return Tag.find_by(name: params[:tag_name]).questions if params[:tag_name]
-    return (Question.search { fulltext params[:search] }).results if params[:search]
+    # return (Question.search { fulltext params[:search] }).results if params[:search]
     return Question.answered(params[:answered]) if params[:answered]
     Question.all
   end
