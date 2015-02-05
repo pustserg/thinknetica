@@ -17,8 +17,9 @@ class QuestionMailer < ActionMailer::Base
   #
   #   en.question_mailer.new_answer.subject
   #
-  def new_answer(user, question)
-    @question = question
-    mail to: user.email
+  def new_answer(answer)
+    @question = answer.question
+    @user = answer.question.user
+    mail to: @user.email
   end
 end

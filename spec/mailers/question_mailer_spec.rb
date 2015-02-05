@@ -21,11 +21,11 @@ RSpec.describe QuestionMailer, :type => :mailer do
 
   describe "new_answer" do
     let(:answer) { create(:answer, question: create(:question)) }
-    let(:mail) { QuestionMailer.new_answer(user, answer.question) }
+    let(:mail) { QuestionMailer.new_answer(answer) }
   
     it "renders the headers" do
       expect(mail.subject).to eq("New answer")
-      expect(mail.to).to eq([user.email])
+      expect(mail.to).to eq([answer.question.user.email])
       expect(mail.from).to eq(["from@example.com"])
     end
 

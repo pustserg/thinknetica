@@ -71,9 +71,9 @@ class Question < ActiveRecord::Base
     self.subscribers << user unless self.subscribers.include?(user)
   end
 
-  def send_new_answer_notification
+  def send_new_answer_notification(answer)
     subscribers.find_each do |user|
-      QuestionMailer.delay.new_answer(user, self)
+      QuestionMailer.delay.new_answer(answer)
     end
   end
 

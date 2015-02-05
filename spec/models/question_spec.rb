@@ -99,10 +99,10 @@ RSpec.describe Question, :type => :model do
   end
 
   describe 'send subscribers notification after creating answer' do
-    # let(:question) { create(:question) }
+    let(:mail_answer) { build(:answer, question: question, user: user) }
     it 'should send new answer notification to all subscribers' do
-      expect(QuestionMailer).to receive(:new_answer).with(answer.question.user, answer.question).and_call_original
-      question.answers.create(body: "answer", user: user)
+      expect(QuestionMailer).to receive(:new_answer).with(mail_answer).and_call_original
+      mail_answer.save
     end
 
   end
