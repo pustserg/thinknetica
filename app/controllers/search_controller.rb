@@ -2,9 +2,13 @@ class SearchController < ApplicationController
   skip_authorization_check
 
   def search
-    query = Sunspot.search(Question, Answer) { keywords params[:search] }
+    query = Sunspot.search(Question, Answer) do
+      keywords params[:search] do
+        highlight :title
+      end
+    end
+
     @objects = query.results
-    @questions = @objects
-    render 'questions/index'
+    render 'search/search_result'
   end
 end

@@ -1,0 +1,7 @@
+.col-md-9
+  -@objects.each do |result|
+    .search-result
+      - if result.class == Question
+        =render result
+      -else
+        =render result.question

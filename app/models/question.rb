@@ -39,7 +39,8 @@ class Question < ActiveRecord::Base
   accepts_nested_attributes_for :attachments
 
   searchable do
-    text :title, :body
+    text :title
+    text :body, stored: true
   end
 
   def best_answer
