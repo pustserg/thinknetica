@@ -1,3 +1,13 @@
 =form_tag search_path, method: :get
   =text_field_tag :search, params[:search]
+
+  =check_box_tag :questions_only
+  =label_tag(:questions_only, "Questions only")
+
+  =check_box_tag :answers_only
+  =label_tag(:answers_only, "Answers only")
+
+  =check_box_tag :comments_only
+  =label_tag(:comments_only, "Comments only")
+
   =submit_tag 'Find', name: nil, class: "btn btn-success"
