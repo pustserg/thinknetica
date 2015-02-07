@@ -2,14 +2,12 @@ class SearchController < ApplicationController
   skip_authorization_check
 
   def search
-    if params[:questions_only]
-      search_classes = Question
-    elsif params[:answers_only]
-      search_classes = Answer
-    elsif params[:comments_only]
-      search_classes = Comment
-    else
-      search_classes = Question, Answer, Comment
+    search_classes = []
+    search_classes << Question if params[:questions_only]
+    search_classes << Answer if params[:answers_only]
+    search_classes << Comment if params[:comments_only]
+    if search_classes.empty?
+      search_classes = [Question, Answer, Comment]
     end
 
     query = Sunspot.search(search_classes) do
