@@ -18,6 +18,8 @@
 /.idea
 /public/uploads
 /config/database.yml
+/config/private_pub.yml
 /solr
 solr/*
 dump.rdb
+/bin
