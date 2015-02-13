@@ -50,6 +50,8 @@ gem 'sunspot_rails'
 gem 'private_pub'
 gem 'responders'
 gem 'thin'
+gem 'dotenv'
+gem 'dotenv-deployment', require: 'dotenv/deployment'
 
 gem 'omniauth'
 gem 'omniauth-facebook'
@@ -80,6 +82,10 @@ group :development do
   gem 'sunspot_solr'
   gem 'progress_bar'
   gem 'letter_opener'
+  gem 'capistrano', require: false
+  gem 'capistrano-bundler', require: false
+  gem 'capistrano-rails', require: false
+  gem 'capistrano-rvm', require: false
 end
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
