@@ -29,7 +29,11 @@ class RegistrationsController < Devise::RegistrationsController
         respond_with resource, location: after_sign_up_path_for(resource)
       end
     else
-      super
+      resource.skip_confirmation!
+      resource.save!
+      set_flash_message :notice, :signed_up if is_flashing_format?
+      sign_up(resource_name, resource)
+      respond_with resource, location: after_sign_up_path_for(resource)
     end
   end
 
