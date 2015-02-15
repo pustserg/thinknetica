@@ -59,7 +59,6 @@ gem 'omniauth-facebook'
 gem 'omniauth-twitter'
 gem 'omniauth-github'
 gem 'omniauth-vkontakte'
-gem 'sunspot_solr'
 gem 'progress_bar'
 
 # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
