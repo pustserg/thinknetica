@@ -60,6 +60,7 @@ gem 'omniauth-twitter'
 gem 'omniauth-github'
 gem 'omniauth-vkontakte'
 gem 'progress_bar'
+gem 'unicorn'
 
 # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
 gem 'spring',        group: :development
@@ -87,6 +88,7 @@ group :development do
   gem 'capistrano-rails', require: false
   gem 'capistrano-rvm', require: false
   gem 'capistrano-sidekiq', require: false
+  gem 'capistrano3-unicorn', require: false
 end
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
