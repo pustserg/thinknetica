@@ -15,7 +15,7 @@
 class Comment < ActiveRecord::Base
   include VoteableModel
   
-  belongs_to :commentable, polymorphic: true
+  belongs_to :commentable, polymorphic: true, touch: true
   belongs_to :user
 
   validates :body, :user_id, :commentable_id, presence: true

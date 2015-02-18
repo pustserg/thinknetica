@@ -1,17 +1,18 @@
-.comment-body.col-md-6
-  =comment.body
-  .stats
-    p.likes
-      ="Likes: #{comment.votes.likes.count}"
-    p.dislikes
-      ="Dislikes: #{comment.votes.dislikes.count}"
+- cache comment
+  .comment-body.col-md-6
+    =comment.body
+    .stats
+      p.likes
+        ="Likes: #{comment.votes.likes.count}"
+      p.dislikes
+        ="Dislikes: #{comment.votes.dislikes.count}"
 
--if current_user and current_user != comment.user      
-  .comment-voting.mol-md-2
+  -if current_user and current_user != comment.user      
+    .comment-voting.mol-md-2
+      ul.nav.nav-stacked
+        li =link_to '+', vote_up_comment_path(comment), method: :patch
+        li =link_to '-', vote_down_comment_path(comment), method: :patch
+  .comment-actions.col-md-2
     ul.nav.nav-stacked
-      li =link_to '+', vote_up_comment_path(comment), method: :patch
-      li =link_to '-', vote_down_comment_path(comment), method: :patch
-.comment-actions.col-md-2
-  ul.nav.nav-stacked
-    li =link_to 'Edit comment', edit_comment_path(comment), remote: true if comment.user == current_user
-    li =link_to 'Delete comment', comment_path(comment), method: :delete if comment.user == current_user
+      li =link_to 'Edit comment', edit_comment_path(comment), remote: true if comment.user == current_user
+      li =link_to 'Delete comment', comment_path(comment), method: :delete if comment.user == current_user
