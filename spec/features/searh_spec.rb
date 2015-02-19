@@ -17,7 +17,7 @@ feature 'questions search', %q{
     visit questions_path
     fill_in 'search', with: 'search catch phrase'
     click_on 'Find'
-
+    save_and_open_page
     expect(page).to have_content 'Right question'
     expect(page).to_not have_content 'Wrong question'
   end
