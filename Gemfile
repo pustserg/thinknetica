@@ -45,8 +45,11 @@ gem 'sidetiq'
 gem 'russian'
 gem 'foreman'
 
-gem 'sunspot_rails'
-gem 'sunspot_solr'
+gem 'mysql2'
+gem 'thinking-sphinx'
+
+# gem 'sunspot_rails'
+# gem 'sunspot_solr'
 
 gem 'private_pub'
 gem 'responders'

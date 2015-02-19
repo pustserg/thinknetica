@@ -24,3 +24,5 @@ solr/*
 dump.rdb
 /bin
 .env
+/config/*sphinx.conf
+/db/shpinx/

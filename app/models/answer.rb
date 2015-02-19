@@ -26,10 +26,6 @@ class Answer < ActiveRecord::Base
   accepts_nested_attributes_for :attachments
   after_save :send_notification
 
-  searchable do
-    text :body
-  end
-
   def make_best
     if question.best_answer.nil?
       question.make_answered
