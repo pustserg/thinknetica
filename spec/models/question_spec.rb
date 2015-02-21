@@ -107,4 +107,10 @@ RSpec.describe Question, :type => :model do
 
   end
 
+  describe 'first_answer' do
+    it 'returns only answer' do
+      expect(question.first_answer).to eq answer
+    end
+  end
+
 end

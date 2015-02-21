@@ -43,10 +43,35 @@ class User < ActiveRecord::Base
   has_many :favorited_questions, through: :favorites, source: :question
   
   def calculate_karma
+    
+    # Если пользователь первым ответил на свой вопрос, то он получает +3 балл к рейтингу
+    
+
     likes_sum = 0
-    USER_ACTIONS.each { |type| likes_sum += likes[type.to_sym].count }
+    # При ответе на вопрос у пользователя увеличиватеся рейтинг на 1 балл
+    likes_sum += answers.count
+    # За каждый голос “за” к вопросу пользователя, пользователь получает +2 балла к рейтингу
+    likes_sum += 2 * likes[:question].count
+    # За каждый голос “за” к ответу пользователя, пользователь получает +1 балл к рейтингу
+    likes_sum += likes[:answer].count
+    
+    answers.each do |answer|
+      # Если ответ пользователя признан “лучшим”, то пользователь получает +3 балла к рейтингу
+      likes_sum += 3 if answer.best?
+      # Если пользователь первым ответил на вопрос, то он получает +1 балл к рейтингу
+      likes_sum += 1 if answer.question.first_answer == answer
+      # Если пользователь ответил на свой вопрос, но не был первым, то он поулчает +2 балла к рейтингу.
+      likes_sum += 2 if answer.question.user == self
+    end
+    
+
+
     dislikes_sum = 0
-    USER_ACTIONS.each { |type| dislikes_sum += dislikes[type.to_sym].count }
+    # За каждый голос “против” к вопросу пользователя, пользователь получает -2 балла к рейтингу
+    dislikes_sum += 2 * dislikes[:question].count
+    # За каждый голос “против” к ответу пользователя, пользователь получает -1 балл к рейтингу
+    dislikes_sum += dislikes[:answer].count
+
     self.update(karma: likes_sum - dislikes_sum)
   end
 

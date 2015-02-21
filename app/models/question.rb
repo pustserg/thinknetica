@@ -73,6 +73,10 @@ class Question < ActiveRecord::Base
     end
   end
 
+  def first_answer
+    answers.order(:created_at).first
+  end
+
   private
   def create_slug
     self.slug = Russian::transliterate(self.title) if !self.slug
