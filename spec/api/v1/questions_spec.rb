@@ -38,6 +38,7 @@ describe 'Questions API' do
 
         %w(id body created_at updated_at).each do |attr|
           it "contains #{attr}" do
+            puts response.body
             expect(response.body).to be_json_eql(answer.send(attr.to_sym).to_json).at_path("questions/0/answers/0/#{attr}")
           end
         end
