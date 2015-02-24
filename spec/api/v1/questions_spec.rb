@@ -8,7 +8,7 @@ describe 'Questions API' do
       let(:user) { create(:user) }
       let(:access_token) { create(:access_token) }
       let!(:questions) { create_list(:question, 2) }
-      let(:question) { questions.first }
+      let(:question) { questions.last }
       let!(:answer) { create(:answer, question: question) }
       
       before { get '/api/v1/questions', format: :json, access_token: access_token.token }
@@ -23,23 +23,23 @@ describe 'Questions API' do
 
       %w(id title body created_at updated_at).each do |attr|
         it "question object contains #{attr}" do
-          expect(response.body).to be_json_eql(question.send(attr.to_sym).to_json).at_path("questions/0/#{attr}")
+          expect(response.body).to be_json_eql(question.send(attr.to_sym).to_json).at_path("questions/1/#{attr}")
         end
       end
 
       it 'questions object contains short_title' do
-        expect(response.body).to be_json_eql(question.title.truncate(10).to_json).at_path('questions/0/short_title')
+        expect(response.body).to be_json_eql(question.title.truncate(10).to_json).at_path('questions/1/short_title')
       end
 
       context 'answers' do
         it 'included in question object' do
-          expect(response.body).to have_json_size(1).at_path('questions/0/answers')
+          expect(response.body).to have_json_size(1).at_path('questions/1/answers')
         end
 
         %w(id body created_at updated_at).each do |attr|
           it "contains #{attr}" do
             puts response.body
-            expect(response.body).to be_json_eql(answer.send(attr.to_sym).to_json).at_path("questions/0/answers/0/#{attr}")
+            expect(response.body).to be_json_eql(answer.send(attr.to_sym).to_json).at_path("questions/1/answers/0/#{attr}")
           end
         end
       end

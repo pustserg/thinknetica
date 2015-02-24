@@ -13,13 +13,15 @@ feature 'questions search', %q{
                             body: 'search catch phrase') }
   given!(:wrong_question) { create(:question, title: "Wrong question" ) }
 
-  scenario 'user tries to find question' do
-    visit questions_path
-    fill_in 'search', with: 'search catch phrase'
-    click_on 'Find'
-    save_and_open_page
-    expect(page).to have_content 'Right question'
-    expect(page).to_not have_content 'Wrong question'
+  scenario 'user tries to find question', js: true do
+    ThinkingSphinx::Test.run do
+      visit questions_path
+      fill_in 'search', with: 'search catch phrase'
+      click_on 'Find'
+      save_and_open_page
+      expect(page).to have_content 'Right question'
+      expect(page).to_not have_content 'Wrong question'
+    end
   end
 
 end

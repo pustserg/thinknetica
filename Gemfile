@@ -37,8 +37,8 @@ gem 'nested_form'
 gem 'cancancan'
 gem 'doorkeeper'
 gem 'active_model_serializers'
-gem 'oj'
-gem 'oj_mimic_json'
+# gem 'oj'
+# gem 'oj_mimic_json'
 gem 'sidekiq'
 gem 'sidetiq'
 
@@ -50,6 +50,8 @@ gem 'thinking-sphinx'
 
 # gem 'sunspot_rails'
 # gem 'sunspot_solr'
+
+gem 'rails-observers'
 
 gem 'private_pub'
 gem 'responders'
