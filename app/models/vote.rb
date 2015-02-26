@@ -21,7 +21,7 @@ class Vote < ActiveRecord::Base
   scope :dislikes, -> { where(status: "-") }
   scope :by_type, -> (type) { where(voteable_type: type) }
 
-  after_save :calculate_user_karma
+  # after_save :calculate_user_karma
 
   private
   def calculate_user_karma
