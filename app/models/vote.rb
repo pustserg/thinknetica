@@ -23,8 +23,8 @@ class Vote < ActiveRecord::Base
 
   # after_save :calculate_user_karma
 
-  private
-  def calculate_user_karma
-    self.voteable.user.delay.calculate_karma
-  end
+  # private
+  # def calculate_user_karma
+  #   self.voteable.user.delay.calculate_karma
+  # end
 end

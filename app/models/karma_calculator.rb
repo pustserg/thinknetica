@@ -12,21 +12,22 @@ class KarmaCalculator
     # if user answers for his question, but not first, he gets +2 karma
     
     likes_sum = 0
-    likes_sum += user.answers.count
+    # likes_sum += user.answers.count
     likes_sum += 2 * user.likes[:question].count
     likes_sum += user.likes[:answer].count
     
     user.answers.each do |answer|
       likes_sum += 3 if answer.best?
-      likes_sum += 1 if answer.question.first_answer == answer
-      likes_sum += 2 if answer.question.user == self
+      likes_sum += 1 if answer.question.first_answer == answer && answer.question.user != user
+      likes_sum += 3 if answer.question.user == user && answer.question.first_answer == answer
+      likes_sum += 2 if answer.question.user == user && answer.question.first_answer != answer
+      likes_sum += 1 if answer.question.user != user
     end
-    
+
     dislikes_sum = 0
     dislikes_sum += 2 * user.dislikes[:question].count
     dislikes_sum += user.dislikes[:answer].count
-    puts likes_sum
-    puts dislikes_sum
+
     user.update!(karma: likes_sum - dislikes_sum)
   end
 

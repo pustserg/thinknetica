@@ -1,17 +1,10 @@
 class KarmaObservers < ActiveRecord::Observer
 
-  observe :question, :answer, :vote
+  observe :answer, :vote
 
-  def after_create(question)
-    question.user.delay.calculate_karma
-  end
-
-  def after_create(answer)
-    answer.user.delay.calculate_karma
-  end
-
-  def after_create(vote)
-    vote.votable.user.delay.calculate_karma
+  def after_save(record)
+    obj = record.is_a?(Answer) ? record : record.voteable
+    KarmaCalculator.delay.calculate(obj.user)    
   end
 
 end

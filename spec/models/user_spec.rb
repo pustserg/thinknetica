@@ -39,7 +39,7 @@ RSpec.describe User, :type => :model do
   it { should have_many :authorizations }
   it { should have_many :favorites }
 
-  context 'karma' do
+  context 'votes' do
 
     let(:another_user) { create(:user) }
     let(:question) { create(:question, user: user) }
@@ -70,12 +70,6 @@ RSpec.describe User, :type => :model do
       end
     end
 
-    describe 'karma' do
-      it 'returns likes.count - dislikes.count' do
-        user.reload
-        expect(user.karma).to eq 7
-      end
-    end
   end
 
   describe '.find_for_oauth' do

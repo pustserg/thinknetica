@@ -53,10 +53,44 @@ RSpec.describe KarmaCalculator, :type => :model do
       end
     end
 
-    # when user's answer marked as best, user gets +3 karma
-    # if user's answer is the first, he gets +1 karma
-    # if user's answer is the first and answer is for user's question, he gets +3 karma
-    # if user answers for his question, but not first, he gets +2 karma
+    context "when user's answer marked as best, user gets +3 karma" do
+      let(:question) { create(:question, user: another_user) }
+      let!(:another_answer) { create(:answer, user: another_user, question: question) }
+      let!(:answer) { create(:answer, user: user, question: question) }
+      before { answer.make_best }
+
+      it "should change user karma by 1 + 3" do
+        expect{ calc(user) }.to change(user, :karma).by(4)
+      end
+    end
+
+    context "if user's answer is the first, he gets +1 karma" do
+      let(:question) { create(:question, user: another_user) }
+      let!(:answer) { create(:answer, user: user, question: question) }
+
+      it 'should change user karma by 1 + 1' do
+        expect{ calc(user) }.to change(user, :karma).by(2)
+      end
+    end
+
+    context "if user's answer is the first and answer is for user's question, he gets +3 karma" do
+      let(:question) { create(:question, user: user) }
+      let!(:answer) { create(:answer, question: question, user: user) }
+
+      it 'should change user karma by 3' do
+        expect{ calc(user) }.to change(user, :karma).by(3)
+      end
+    end
+
+    context "if user answers for his question, but not first, he gets +2 karma" do
+      let(:question) { create(:question, user: user) }
+      let!(:another_answer) { create(:answer, question: question, user: another_user) }
+      let!(:answer) { create(:answer, question: question, user: user) }
+
+      it 'should change user karma by 2' do
+        expect{ calc(user) }.to change(user, :karma).by(2)
+      end
+    end
 
     def calc(user)
       KarmaCalculator::calculate(user)
